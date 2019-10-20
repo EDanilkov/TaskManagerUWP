@@ -5,14 +5,72 @@
     xmlns:local="using:UIModule.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:vm="using:UIModule.ViewModels"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="White">
 
-    <Grid>
-        <TextBlock
-            Text="Settings"
+    <Page.DataContext>
+        <vm:SettingsViewModel/>
+    </Page.DataContext>
+
+    <i:Interaction.Behaviors>
+        <core:EventTriggerBehavior EventName="Loaded">
+            <core:InvokeCommandAction Command="{Binding Loaded}"/>
+        </core:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <Grid
+        
+        Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel
+            Margin="20 0 0 0"
+            
             VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            FontSize="33"/>
+            Orientation="Horizontal"
+            Grid.Row="0">
+            <FontIcon 
+                Foreground="Black"
+                Name="Icon"
+                Glyph="&#xE713;"/>
+            <TextBlock 
+                Foreground="Black"
+                Text="{StaticResource mSettings}"
+                Margin="15 0 0 0"
+                FontSize="28" 
+                FontWeight="Bold" />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="1">
+            <TextBlock
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+                Foreground="Black"
+                Width="100"
+                Margin="100"
+                FontSize="34"
+                Text="{StaticResource mLogin}"/>
+            <ComboBox 
+                Foreground="Black"
+                x:Name="lang"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Header="{StaticResource mMenuLanguage}"
+                ItemsSource="{Binding Languages}"
+                SelectedItem="{Binding SelectedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                DisplayMemberPath="DisplayName">
+                <i:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                        <core:InvokeCommandAction Command="{Binding SelectedChangeLanguage}"/>
+                    </core:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+            </ComboBox>
+        </StackPanel>
+        
     </Grid>
 </Page>

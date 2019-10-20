@@ -5,7 +5,6 @@ using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 
 namespace SharedServicesModule.Services
 {
@@ -14,12 +13,12 @@ namespace SharedServicesModule.Services
         public async static Task<TokenResponseModel> GetToken(User user)
         {
             string json = JsonConvert.SerializeObject(user);
-            var content = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.PostAsync("https://localhost:44316/api/accounts/token", content);
             if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
             {
-                throw new Exception(Application.Current.Resources["m_error_bad_signup"].ToString());
+                throw new Exception(Windows.UI.Xaml.Application.Current.Resources["m_error_bad_signup"].ToString());
             }
             TokenResponseModel tokenResponseModel = JsonConvert.DeserializeObject<TokenResponseModel>(await response.Content.ReadAsStringAsync());
 

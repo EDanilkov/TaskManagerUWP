@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <ResourceDictionary.MergedDictionaries>
+
+        <ResourceDictionary Source="ButtonStyles.xaml"/>
+        <ResourceDictionary Source="ComboBoxStyles.xaml"/>
+        <ResourceDictionary Source="StackPanelStyles.xaml"/>
+        <ResourceDictionary Source="FigureStyles.xaml"/>
+        <ResourceDictionary Source="GridStyles.xaml"/>
+        <ResourceDictionary Source="TextBlockStyles.xaml"/>
+        <ResourceDictionary Source="TextBoxStyles.xaml"/>
+        <ResourceDictionary Source="ShellStyles.xaml"/>
+
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

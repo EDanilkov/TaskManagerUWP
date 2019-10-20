@@ -1,0 +1,66 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Main window -->
+    <x:String x:Key="mMenuLanguage">ЯЗЫК</x:String>
+    <x:String x:Key="m_projects/">Проекты/</x:String>
+    <x:String x:Key="MNewProject">НОВЫЙ ПРОЕКТ</x:String>
+    <x:String x:Key="MNewMember">НОВЫЙ ПОЛЬЗОВАТЕЛЬ</x:String>
+    <x:String x:Key="MNewTask">НОВАЯ ЗАДАЧА</x:String>
+    <x:String x:Key="MAccept">ОК</x:String>
+    <x:String x:Key="MChangeTask">ИЗМЕНИТЬ ЗАДАЧУ</x:String>
+    <x:String x:Key="MConfirm">ПОДТВЕРЖДЕНИЕ</x:String>
+    <x:String x:Key="mMain">Главная</x:String>
+    <x:String x:Key="MOk">OK</x:String>
+    <x:String x:Key="MCancel">ОТМЕНА</x:String>
+    <x:String x:Key="MError">ОШИБКА</x:String>
+    <x:String x:Key="mLogin">Логин</x:String>
+    <x:String x:Key="mPassword">Пароль</x:String>
+    <x:String x:Key="mEnter">Войти</x:String>
+    <x:String x:Key="m_register">Зарегистрироваться</x:String>
+    <x:String x:Key="mNewProject">Новый проект</x:String>
+    <x:String x:Key="mPersonal">Личные</x:String>
+    <x:String x:Key="mFilterByName">Фильтр по имени...</x:String>
+    <x:String x:Key="mNoPersonalProjects">У этого пользователя нет никаких личных проектов</x:String>
+    <x:String x:Key="mNoTasks">У Вас нет никаких задач</x:String>
+    <x:String x:Key="mProjects">ПРОЕКТЫ</x:String>
+    <x:String x:Key="mTasks">Задачи</x:String>
+    <x:String x:Key="mDescription">Описание</x:String>
+    <x:String x:Key="mMembers">Участники</x:String>
+    <x:String x:Key="m_change_task">Изменение задачи</x:String>
+    <x:String x:Key="mName">Имя</x:String>
+    <x:String x:Key="mForUser">Для пользователя</x:String>
+    <x:String x:Key="mBeginDate">Дата выдачи</x:String>
+    <x:String x:Key="mEndDate">Дата окончания</x:String>
+    <x:String x:Key="mChange">Изменить</x:String>
+    <x:String x:Key="mAdd">Добавить</x:String>
+    <x:String x:Key="m_add_new_task">Добавить новую задачу</x:String>
+    <x:String x:Key="mDelete">Удалить</x:String>
+    <x:String x:Key="mRole">Роль:</x:String>
+    <x:String x:Key="mUser">Пользователь:</x:String>
+    <x:String x:Key="mProfile">МОЙ АККАУНТ</x:String>
+    <x:String x:Key="mTitle">Проекты</x:String>
+    <x:String x:Key="m_member_dont_have_tasks">У этого пользователя нету текущих задач</x:String>
+    <x:String x:Key="m_select_role">Пожалуйста выберите роль</x:String>
+    <x:String x:Key="m_delete_all_task">Удалить все задания этого работника?</x:String>
+    <x:String x:Key="m_delete_project">Вы действительно хотите удалить проект ?</x:String>
+    <x:String x:Key="m_identify">Вы не вошли в свой аккаунт</x:String>
+    <x:String x:Key="m_correct_entry">Введите все значения</x:String>
+    <x:String x:Key="mSettings">Настройки</x:String>
+
+    <x:String x:Key="m_error_create_project">Проект не создан !</x:String>
+    <x:String x:Key="m_error_create_task">Задание не создано !</x:String>
+    <x:String x:Key="m_error_download">Ошибка загрузки !</x:String>
+    <x:String x:Key="m_error_change_task">Ошибка изменения задания !</x:String>
+    <x:String x:Key="m_error_delete_task">Ошибка удаления задания !</x:String>
+    <x:String x:Key="m_error_add_user">Пользователь не добавлен !</x:String>
+    <x:String x:Key="m_error_delete_project">Ошибка удаления проекта !</x:String>
+    <x:String x:Key="m_error_delete_member">Ошибка удаления пользователя !</x:String>
+    <x:String x:Key="m_error_change_role">Ошибка изменения роли !</x:String>
+    <x:String x:Key="m_error_enter">Ошибка входа !</x:String>
+    <x:String x:Key="m_error_enter_all_fields">Вы обязаны ввести все поля</x:String>
+    <x:String x:Key="m_error_bad_signup">Неправильное имя пользователя или пароль</x:String>
+    <x:String x:Key="m_error_bad_login">Данный логин уже существует</x:String>
+    <x:String x:Key="m_success_registered">Успешно зарегистрированы</x:String>
+
+</ResourceDictionary>

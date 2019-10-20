@@ -77,18 +77,15 @@ namespace ServerAPI
                     RoleId = (await db.GetRole("Manager")).Id,
                     PermissionId = (await db.GetPermission("AddNewTask")).Id
                 };
-                RolePermission rolePermission2 = new RolePermission()
-                {
+                RolePermission rolePermission2 = new RolePermission() {
                     RoleId = (await db.GetRole("Manager")).Id,
                     PermissionId = (await db.GetPermission("ChangeTask")).Id
                 };
-                RolePermission rolePermission3 = new RolePermission()
-                {
+                RolePermission rolePermission3 = new RolePermission() {
                     RoleId = (await db.GetRole("Manager")).Id,
                     PermissionId = (await db.GetPermission("DeleteTask")).Id
                 };
-                RolePermission rolePermission4 = new RolePermission()
-                {
+                RolePermission rolePermission4 = new RolePermission() {
                     RoleId = (await db.GetRole("Manager")).Id,
                     PermissionId = (await db.GetPermission("VisibilityTask")).Id
                 };

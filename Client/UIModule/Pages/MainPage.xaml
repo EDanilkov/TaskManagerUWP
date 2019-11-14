@@ -10,7 +10,8 @@
     xmlns:vm="using:UIModule.ViewModels"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
-    RequestedTheme="Light">
+    RequestedTheme="Light"
+    SizeChanged="Page_SizeChanged">
 
     <Page.DataContext>
         <vm:MainPageViewModel/>
@@ -25,7 +26,7 @@
     <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-                <VisualState x:Name="WideState" >
+                <VisualState x:Name="WideState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="780"/>
                     </VisualState.StateTriggers>
@@ -40,7 +41,7 @@
                 </VisualState>
                 <VisualState x:Name="NarrowState">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
+                        <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="mySplitView.DisplayMode" Value="CompactOverlay" />
@@ -56,12 +57,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-
         <SplitView
             Grid.RowSpan="2"
             x:Name="mySplitView"
             OpenPaneLength="280"
-            IsPaneOpen="{Binding IsPaneOpen}"
+            DisplayMode="{Binding DisplayMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             CompactPaneLength="0">
             <i:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="PaneClosing">
@@ -71,7 +72,8 @@
             <SplitView.Pane>
                 <Grid 
                     x:Name="Content"
-                    Visibility="{Binding PaneVisibility}">
+                    Background="{ThemeResource SystemControlBackgroundChromeWhiteBrush}"
+                    Visibility="{Binding PaneVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <StackPanel
                         Orientation="Vertical">
                         <Button 
@@ -87,10 +89,9 @@
                             Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
                             Background="{Binding ElementName=menu, Path=Background}"
                             Content="&#xE700;">
-
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding HamHamburgerButtonClick}"/>
+                                    <core:InvokeCommandAction Command="{Binding HamburgerButtonClick}"/>
                                 </core:EventTriggerBehavior>
                             </i:Interaction.Behaviors>
                         </Button>
@@ -124,9 +125,15 @@
                                     <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="24" Text="Настройки" Margin="10 0 0 0" />
                                 </StackPanel>
                             </ListBoxItem>
+                            <ListBoxItem
+                                x:Name="exit">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="36" FontFamily="Segoe MDL2 Assets" Text="&#xE726;" />
+                                    <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="24" Text="Выход" Margin="10 0 0 0" />
+                                </StackPanel>
+                            </ListBoxItem>
                         </ListBox>
                     </StackPanel>
-                    
                 </Grid>
             </SplitView.Pane>
             <SplitView.Content>
@@ -139,11 +146,11 @@
                     <Rectangle 
                         Fill="#595F64"
                         Opacity="0.9"
-                        Visibility="{Binding InactiveAreaVisibility}"
+                        Visibility="{Binding InactiveAreaVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Grid.Row="0"/>
                     <Rectangle 
                         Fill="#595F64"
-                        Visibility="{Binding InactiveAreaVisibility}"
+                        Visibility="{Binding InactiveAreaVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Grid.Row="1"/>
                     <Button 
                         VerticalAlignment="Center"
@@ -160,13 +167,13 @@
                         Content="&#xE700;">
                         <i:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="Click">
-                                <core:InvokeCommandAction Command="{Binding HamHamburgerButtonClick}"/>
+                                <core:InvokeCommandAction Command="{Binding HamburgerButtonClick}"/>
                             </core:EventTriggerBehavior>
                         </i:Interaction.Behaviors>
                     </Button>
                     <Frame 
                         Grid.Row="1"
-                        Opacity="{Binding FrameOpacity}"
+                        Opacity="{Binding FrameOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Name="myFrame" />
                 </Grid>
             </SplitView.Content>

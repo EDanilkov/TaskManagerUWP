@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using UIModule.Pages;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,7 +25,14 @@ namespace UIModule.Utils
         {
             var rootFrame = Window.Current.Content as Frame;
             var homePage = rootFrame.Content as MainPage;
-            homePage.NavigationFrame.GoBack();
+            try
+            {
+                homePage.NavigationFrame.GoBack();
+            }
+            catch
+            {
+
+            }
         }
 
         public void Navigate(Type sourcePage, object parameter)
@@ -36,7 +44,14 @@ namespace UIModule.Utils
         public void GoBack()
         {
             var frame = (Frame)Window.Current.Content;
-            frame.GoBack();
+            try
+            {
+                frame.GoBack();
+            }
+            catch
+            {
+
+            }
         }
 
         private NavigationService() { }

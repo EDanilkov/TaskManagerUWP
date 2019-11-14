@@ -14,7 +14,7 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 string json = JsonConvert.SerializeObject(permission);
-                return await RequestService.Post("https://localhost:44316/api/permissions/new", json);
+                return await RequestService.Post("https://localhost:44393/api/permissions/new", json);
             }
             catch
             {
@@ -26,7 +26,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<Permission>("https://localhost:44316/api/permissions/" + permissionName);
+                return await RequestService.Get<Permission>("https://localhost:44393/api/permissions/" + permissionName);
 
             }
             catch
@@ -39,7 +39,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<List<Permission>>("https://localhost:44316/api/permissions/roles/" + roleId.ToString());
+                return await RequestService.Get<List<Permission>>("https://localhost:44393/api/permissions/roles/" + roleId.ToString());
 
             }
             catch

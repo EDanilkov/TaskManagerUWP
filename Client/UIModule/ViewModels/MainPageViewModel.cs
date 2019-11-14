@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using UIModule.Pages;
 using UIModule.Utils;
 using Windows.UI.Xaml;
@@ -19,7 +20,7 @@ namespace UIModule.ViewModels
             }
         }
         
-        private bool _isPaneOpen;
+        private bool _isPaneOpen = true;
         public bool IsPaneOpen
         {
             get { return _isPaneOpen; }
@@ -30,7 +31,7 @@ namespace UIModule.ViewModels
             }
         }
         
-        private Visibility _paneVisibility;
+        private Visibility _paneVisibility = Visibility.Visible;
         public Visibility PaneVisibility
         {
             get { return _paneVisibility; }
@@ -51,7 +52,7 @@ namespace UIModule.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private double _frameOpacity;
         public double FrameOpacity
         {
@@ -59,6 +60,17 @@ namespace UIModule.ViewModels
             set
             {
                 _frameOpacity = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private SplitViewDisplayMode _displayMode;
+        public SplitViewDisplayMode DisplayMode
+        {
+            get { return _displayMode; }
+            set
+            {
+                _displayMode = value;
                 OnPropertyChanged();
             }
         }
@@ -73,33 +85,53 @@ namespace UIModule.ViewModels
                     {
                         case 0:
                             NavigationService.Instance.NavigateTo(typeof(Authorization));
+                            SelectedPage = -1;
+                            IsPaneOpen = Consts.Width > 720 ? true : false;
                             break;
                         
                         case 1:
-                            NavigationService.Instance.NavigateTo(typeof(Authorization));
+                            NavigationService.Instance.NavigateTo(typeof(Projects));
+                            SelectedPage = -1;
+                            IsPaneOpen = Consts.Width > 720 ? true : false;
                             break;
                         
                         case 2:
                             NavigationService.Instance.NavigateTo(typeof(Settings));
+                            SelectedPage = -1;
+                            IsPaneOpen = Consts.Width > 720 ? true : false;
                             break;
-                        
+
+                        case 3:
+                            NavigationService.Instance.Navigate(typeof(Authorization));
+                            SelectedPage = -1;
+                            break;
+
                     }
                 });
             }
         }
 
+
+        //В ЭТОМ МЕТОДЕ ПОЛНАЯ ЖЕСТЬ, РЕШИТЬ ВОПРОС С МОБИЛЬНОЙ И ДЕСКТОПНОЙ ВЕРСИЕЙ
         public ICommand Loaded
         {
             get
             {
                 return new DelegateCommand(async (obj) =>
                 {
-
+                    /*DisplayMode = SplitViewDisplayMode.CompactOverlay;
+                    PaneVisibility = Visibility.Visible;
+                    IsPaneOpen = true ;*/
+                    SelectedPage = -1;
+                    DisplayMode = Consts.Width > 720 ? SplitViewDisplayMode.CompactInline : SplitViewDisplayMode.CompactOverlay;
+                    PaneVisibility = Consts.Width > 720 ? Visibility.Visible : Visibility.Collapsed;
+                    IsPaneOpen = Consts.Width > 720 ? true : false;
+                    NavigationService.Instance.NavigateTo(typeof(Projects));
                 });
             }
         }
 
-        public ICommand HamHamburgerButtonClick
+        public ICommand HamburgerButtonClick
         {
             get
             {
@@ -126,5 +158,6 @@ namespace UIModule.ViewModels
                 });
             }
         }
+        
     }
 }

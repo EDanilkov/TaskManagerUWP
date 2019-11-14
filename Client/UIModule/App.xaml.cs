@@ -1,13 +1,17 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using UIModule.Pages;
+using UIModule.Utils;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Globalization;
 using Windows.System.UserProfile;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -44,6 +48,8 @@ namespace UIModule
         
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested; //Button Back
+
             ApplicationLanguages.PrimaryLanguageOverride = GlobalizationPreferences.Languages[0];
 
             Frame rootFrame = Window.Current.Content as Frame;
@@ -66,11 +72,12 @@ namespace UIModule
             {
                 if (rootFrame.Content == null)
                 {
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(Authorization), e.Arguments);
                 }
                 Window.Current.Activate();
             }
         }
+
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
@@ -81,10 +88,7 @@ namespace UIModule
             var deferral = e.SuspendingOperation.GetDeferral();
             deferral.Complete();
         }
-
-
-
-
+        
         //Евент для оповещения всех окон приложения
         public static event EventHandler LanguageChanged;
 
@@ -124,6 +128,15 @@ namespace UIModule
         {
             selectedCultureInfo = Language;
             
+        }
+
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                NavigationService.Instance.NavigateBack();
+                e.Handled = true;
+            }
         }
     }
 }

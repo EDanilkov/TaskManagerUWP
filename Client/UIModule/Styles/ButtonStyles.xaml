@@ -8,12 +8,16 @@
         <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
 
+    <Style x:Key="Delete" TargetType="Button">
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+    </Style>
+
 
     <Style x:Key="Enter" TargetType="Button">
-        <Setter Property="Background" Value="#000094"/>
         <Setter Property="Width" Value="150"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="BorderBrush" Value="#320B86"/>
         <Setter Property="VerticalAlignment" Value="Bottom"/>
         <Setter Property="Margin" Value="0,65"/>
     </Style>
@@ -28,5 +32,21 @@
         <Setter Property="Foreground" Value="Gray"/>
     </Style>
 
+
+    <Style x:Key="AddNew" TargetType="Button">
+        
+        <Setter Property="Margin" Value="10 0 0 10"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="BackButton" TargetType="Button">
+
+        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeWhiteBrush}"/>
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="Content" Value="&#xE72B;"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="30"/>
+    </Style>
 
 </ResourceDictionary>

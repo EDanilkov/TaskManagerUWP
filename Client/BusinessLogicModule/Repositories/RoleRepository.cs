@@ -14,7 +14,7 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 string json = JsonConvert.SerializeObject(role);
-                return await RequestService.Post("https://localhost:44316/api/roles/new", json);
+                return await RequestService.Post("https://localhost:44393/api/roles/new", json);
 
             }
             catch
@@ -27,7 +27,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<Role>("https://localhost:44316/api/roles/" + userName + "/" + projectId.ToString());
+                return await RequestService.Get<Role>("https://localhost:44393/api/roles/" + userName + "/" + projectId.ToString());
             }
             catch
             {
@@ -39,7 +39,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<List<Role>>("https://localhost:44316/api/roles/all");
+                return await RequestService.Get<List<Role>>("https://localhost:44393/api/roles/all");
 
             }
             catch
@@ -52,7 +52,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<Role>("https://localhost:44316/api/roles?name=" + name + "&id=" + id);
+                return await RequestService.Get<Role>("https://localhost:44393/api/roles?name=" + name + "&id=" + id);
 
             }
             catch

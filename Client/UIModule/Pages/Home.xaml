@@ -8,7 +8,27 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
+    <Grid
+        Background="{ThemeResource SystemControlBackgroundChromeWhiteBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel
+            Margin="20 0 0 0"
+            VerticalAlignment="Center"
+            Orientation="Horizontal"
+            Grid.Row="0">
+            <FontIcon 
+                Foreground="Black"
+                Name="Icon"
+                Glyph="&#xE713;"/>
+            <TextBlock 
+                Foreground="Black"
+                Text="{StaticResource mHome}"
+                Margin="15 0 0 0"
+                FontSize="28" 
+                FontWeight="Bold" />
+        </StackPanel>
     </Grid>
 </Page>

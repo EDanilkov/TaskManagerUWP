@@ -16,7 +16,7 @@ namespace BusinessLogicModule.Interfaces
             {
 
                 string json = JsonConvert.SerializeObject(project);
-                return await RequestService.Post("https://localhost:44316/api/projects/new", json);
+                return await RequestService.Post("https://localhost:44393/api/projects/new", json);
             }
             catch
             {
@@ -28,7 +28,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                await RequestService.Delete("https://localhost:44316/api/projects/" + projectId.ToString());
+                await RequestService.Delete("https://localhost:44393/api/projects/" + projectId.ToString());
 
             }
             catch
@@ -41,7 +41,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                await RequestService.Delete("https://localhost:44316/api/projects/tasks/" + projectId.ToString());
+                await RequestService.Delete("https://localhost:44393/api/projects/tasks/" + projectId.ToString());
 
             }
             catch
@@ -54,7 +54,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                await RequestService.Delete("https://localhost:44316/api/projects/users/" + projectId.ToString());
+                await RequestService.Delete("https://localhost:44393/api/projects/users/" + projectId.ToString());
 
             }
             catch
@@ -67,7 +67,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<Project>("https://localhost:44316/api/projects/" + projectId.ToString());
+                return await RequestService.Get<Project>("https://localhost:44393/api/projects/" + projectId.ToString());
 
             }
             catch
@@ -80,7 +80,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<List<Project>>("https://localhost:44316/api/projects/all");
+                return await RequestService.Get<List<Project>>("https://localhost:44393/api/projects/all");
 
             }
             catch
@@ -93,7 +93,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<List<SharedServicesModule.Models.Task>>("https://localhost:44316/api/projects/tasks/" + userId.ToString());
+                return await RequestService.Get<List<SharedServicesModule.Models.Task>>("https://localhost:44393/api/projects/tasks/" + userId.ToString());
 
             }
             catch
@@ -106,7 +106,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<List<Project>>("https://localhost:44316/api/projects/users/" + userName);
+                return await RequestService.Get<List<Project>>("https://localhost:44393/api/projects/users/" + userName);
             }
             catch
             {

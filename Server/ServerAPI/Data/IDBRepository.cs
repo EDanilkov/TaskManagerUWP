@@ -83,5 +83,12 @@ namespace ServerAPI.Data
         Task<List<Project>> GetProjectsFromUser(string userName);
 
         #endregion
+
+        #region Comment
+
+        TaskThreading AddComment(Comment comment);
+        Task<List<Comment>> GetCommentByTaskId(int taskId);
+
+        #endregion
     }
 }

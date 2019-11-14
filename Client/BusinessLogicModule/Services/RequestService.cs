@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using SharedServicesModule.ResponseModel;
 using System;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Web.Http;
 
 namespace BusinessLogicModule.Services
 {
@@ -17,7 +17,7 @@ namespace BusinessLogicModule.Services
             while(attemptCount < 5)
             {
                 HttpResponseMessage response = await _client.GetAsync(new Uri(path));
-                if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                if(response.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     _client = HttpClientAccessor.HttpClient;
                     attemptCount++;
@@ -37,12 +37,13 @@ namespace BusinessLogicModule.Services
 
         public static async Task<NewResponseModel> Post(string path, string json)
         {
-            var content = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+            HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
+            //var content = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
             int attemptCount = 0;
             while (attemptCount < 5)
             {
-                HttpResponseMessage response = await _client.PostAsync(path, content);
-                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                HttpResponseMessage response = await _client.PostAsync(new Uri(path), content);
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     _client = HttpClientAccessor.HttpClient;
                     attemptCount++;
@@ -62,12 +63,13 @@ namespace BusinessLogicModule.Services
 
         public static async Task<NewResponseModel> Put(string path, string json)
         {
-            var content = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+            HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
+            //var content = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
             int attemptCount = 0;
             while (attemptCount < 5)
             {
-                HttpResponseMessage response = await _client.PutAsync(path, content);
-                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                HttpResponseMessage response = await _client.PutAsync(new Uri(path), content);
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     _client = HttpClientAccessor.HttpClient;
                     attemptCount++;
@@ -91,7 +93,7 @@ namespace BusinessLogicModule.Services
             while (attemptCount < 5)
             {
                 HttpResponseMessage response = await _client.DeleteAsync(new Uri(path));
-                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     _client = HttpClientAccessor.HttpClient;
                     attemptCount++;

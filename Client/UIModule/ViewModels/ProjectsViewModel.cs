@@ -1,11 +1,14 @@
 ﻿using BusinessLogicModule.Interfaces;
 using GalaSoft.MvvmLight.Command;
+using NLog;
 using SharedServicesModule.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using UIModule.Utils;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace UIModule.ViewModels
 {
@@ -16,16 +19,11 @@ namespace UIModule.ViewModels
 
         }
 
-        private int _height;
-        public int Height
-        {
-            get { return _height; }
-            set
-            {
-                _height = value;
-                OnPropertyChanged();
-            }
-        }
+        IUserRepository _userRepository = new UserRepository();
+        IProjectRepository _projectRepository = new ProjectRepository();
+        IRoleRepository _roleRepository = new RoleRepository();
+        
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         #region Properties
 
@@ -40,13 +38,35 @@ namespace UIModule.ViewModels
             }
         }
 
-        private string _filter;
-        public string Filter
+        private bool _isPaneOpen = true;
+        public bool IsPaneOpen
         {
-            get { return _filter; }
+            get { return _isPaneOpen; }
             set
             {
-                _filter = value;
+                _isPaneOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _paneVisibility = Visibility.Visible;
+        public Visibility PaneVisibility
+        {
+            get { return _paneVisibility; }
+            set
+            {
+                _paneVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _inactiveAreaVisibility = Visibility.Collapsed;
+        public Visibility InactiveAreaVisibility
+        {
+            get { return _inactiveAreaVisibility; }
+            set
+            {
+                _inactiveAreaVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -84,48 +104,20 @@ namespace UIModule.ViewModels
             }
         }
 
-        private bool _personal;
-        public bool Personal
-        {
-            get { return _personal; }
-            set
-            {
-                _personal = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _chipRole;
-        public string ChipRole
-        {
-            get { return _chipRole; }
-            set
-            {
-                _chipRole = value;
-                OnPropertyChanged();
-            }
-        }
-
         #endregion
 
         #region Methods
 
-        private ICommand _selectionChanged;
         public ICommand SelectionChanged
         {
             get
             {
-                if (_selectionChanged == null)
+                return new DelegateCommand(async (obj) =>
                 {
-                    _selectionChanged = new RelayCommand(() =>
-                    {
-                        //System.Windows.Application.Current.Properties["ProjectId"] = SelectedProject.Id;
-                        Navigate("Pages/Project.xaml");
-                    });
-                }
-                return _selectionChanged;
+                    Consts.ProjectId = SelectedProject.Id;
+                    NavigationService.Instance.NavigateTo(typeof(Pages.Project));
+                });
             }
-            set { _selectionChanged = value; }
         }
 
         public ICommand Loaded
@@ -134,22 +126,31 @@ namespace UIModule.ViewModels
             {
                 return new DelegateCommand(async (obj) =>
                 {
-                    ProjectRepository _projectRepository = new ProjectRepository();
-                    RoleRepository _roleRepository = new RoleRepository();
-                    string userName = "2";
-                    List<RecordListBox> recordListBoxes = new List<RecordListBox>();
-                    List<Project> projects = await _projectRepository.GetProjectsFromUser(userName);
-                    foreach (Project project in projects)
-                    {
-                        RecordListBox recordListBox = new RecordListBox() { Id = project.Id, ProjectName = project.Name, AdminId = project.AdminId, ChipRole = (await _roleRepository.GetRoleFromUser(userName, project.Id)).Name };
-                        recordListBoxes.Add(recordListBox);
-                    }
-                    CheckCountProjects(recordListBoxes);
-                    ListProjects = recordListBoxes;
+
+                    /*List<Project> projects =  new List<Project>();
+                    projects.Add(new Project() { Name = "1" });
+                    projects.Add(new Project() { Name = "2" });
+                    projects.Add(new Project() { Name = "3" });*/
+                    ListProjects = await GetRecordListBoxes();
                 });
             }
         }
-        
+
+
+        private async Task<List<RecordListBox>> GetRecordListBoxes()
+        {
+            List<RecordListBox> recordListBoxes = new List<RecordListBox>();
+            List<Project> projects = await _projectRepository.GetProjectsFromUser(Consts.UserName);
+            foreach (Project project in projects)
+            {
+                RecordListBox recordListBox = new RecordListBox() { Id = project.Id, ProjectName = project.Name, AdminId = project.AdminId, ChipRole = (await _roleRepository.GetRoleFromUser(Consts.UserName, project.Id)).Name };
+                recordListBoxes.Add(recordListBox);
+            }
+            CheckCountProjects(recordListBoxes);
+            return recordListBoxes;
+        }
+
+
         private void CheckCountProjects(List<RecordListBox> recordListBoxes)
         {
             try
@@ -167,9 +168,23 @@ namespace UIModule.ViewModels
             }
             catch (Exception ex)
             {
+                _logger.Error(ex.ToString());
             }
         }
-        
+
+        public ICommand NewProjectClick => new DelegateCommand(NewProject);
+
+        private async void NewProject(object o)
+        {
+            try
+            {
+                NavigationService.Instance.NavigateTo(typeof(Pages.AddNewProject));
+            }
+            catch (Exception ex)
+            {
+                //logger.Error(ex.ToString());
+            }
+        }
         #endregion
     }
 }

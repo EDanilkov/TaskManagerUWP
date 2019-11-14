@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:UIModule.Styles">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="Login" TargetType="TextBlock">
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -15,5 +14,31 @@
         <Setter Property="Margin" Value="10" />
         <Setter Property="TextWrapping"  Value="Wrap" />
     </Style>
-    
+
+    <Style x:Key="Role" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+    <Style x:Key="TitleAddNew" TargetType="TextBlock">
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground"  Value="#5866B8" />
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="TitleName" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="25" />
+        <Setter Property="Foreground"  Value="Black" />
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="TaskInfo" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Margin" Value="10 5 10 0"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+
 </ResourceDictionary>

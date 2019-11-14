@@ -7,12 +7,20 @@
         <Setter Property="Margin" Value="0,10"/>
         <Setter Property="FontFamily" Value="Champagne &amp; Limousines"/>
         <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Background" Value="White"/>
     </Style>
 
     <Style x:Key="PasswordTextBox" TargetType="PasswordBox">
         <Setter Property="Margin" Value="0,10"/>
         <Setter Property="FontFamily" Value="Champagne &amp; Limousines"/>
         <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Background" Value="White"/>
     </Style>
-    
+
+    <Style x:Key="TextBoxNewElement" TargetType="TextBox">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="MaxHeight" Value="100"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
 </ResourceDictionary>

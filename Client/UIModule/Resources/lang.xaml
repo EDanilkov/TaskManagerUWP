@@ -10,6 +10,8 @@
     <x:String x:Key="MChangeTask">CHANGE TASK</x:String>
     <x:String x:Key="MConfirm">CONFIRMATION</x:String>
     <x:String x:Key="mMain">Main</x:String>
+    <x:String x:Key="mComments">Comments:</x:String>
+    <x:String x:Key="MNew">NEW</x:String>
     <x:String x:Key="MOk">OK</x:String>
     <x:String x:Key="MCancel">CANCEL</x:String>
     <x:String x:Key="MError">ERROR</x:String>
@@ -22,7 +24,7 @@
     <x:String x:Key="mFilterByName">Filter by name...</x:String>
     <x:String x:Key="mNoPersonalProjects">This user doesn't have any personal projects</x:String>
     <x:String x:Key="mNoTasks">You don't have any tasks</x:String>
-    <x:String x:Key="mProjects">PROJECTS</x:String>
+    <x:String x:Key="mProjects">Projects</x:String>
     <x:String x:Key="mTasks">Tasks</x:String>
     <x:String x:Key="mDescription">Description</x:String>
     <x:String x:Key="mMembers">Members</x:String>
@@ -46,6 +48,7 @@
     <x:String x:Key="m_identify">You are not logged in to your account</x:String>
     <x:String x:Key="m_correct_entry">Enter all values</x:String>
     <x:String x:Key="mSettings">Settings</x:String>
+    <x:String x:Key="mHome">Home</x:String>
 
     <x:String x:Key="m_error_create_project">Project not created !</x:String>
     <x:String x:Key="m_error_create_task">Task not created !</x:String>

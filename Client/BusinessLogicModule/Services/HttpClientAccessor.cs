@@ -1,17 +1,21 @@
 ﻿using SharedServicesModule.Models;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using Windows.Security.Cryptography.Certificates;
+using Windows.Web.Http;
+using Windows.Web.Http.Filters;
+using Windows.Web.Http.Headers;
 
 namespace BusinessLogicModule.Services
 {
     public static class HttpClientAccessor
     {
-
         public static HttpClient CreateHttpClient()
         {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Resources.Token);
-            return client;
+            HttpBaseProtocolFilter filter = new HttpBaseProtocolFilter();
+            filter.IgnorableServerCertificateErrors.Add(ChainValidationResult.Untrusted);
+            filter.IgnorableServerCertificateErrors.Add(ChainValidationResult.InvalidName);
+            HttpClient httpClient = new HttpClient(filter);
+            httpClient.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("Bearer", Resources.Token = Resources.Token == null ? "" : Resources.Token);
+            return httpClient;
         }
 
         private static HttpClient client = CreateHttpClient();

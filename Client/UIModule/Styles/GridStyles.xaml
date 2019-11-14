@@ -8,5 +8,9 @@
         <Setter Property="Margin" Value="32,80"/>
         <Setter Property="Height" Value="250"/>
     </Style>
-    
+
+    <DataTemplate x:Key="myHeader">
+        <TextBlock Text="{Binding}" FontSize="24" />
+    </DataTemplate>
+
 </ResourceDictionary>

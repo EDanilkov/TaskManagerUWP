@@ -11,6 +11,8 @@
     <x:String x:Key="MChangeTask">ИЗМЕНИТЬ ЗАДАЧУ</x:String>
     <x:String x:Key="MConfirm">ПОДТВЕРЖДЕНИЕ</x:String>
     <x:String x:Key="mMain">Главная</x:String>
+    <x:String x:Key="mComments">Комментарии:</x:String>
+    <x:String x:Key="MNew">НОВЫЙ</x:String>
     <x:String x:Key="MOk">OK</x:String>
     <x:String x:Key="MCancel">ОТМЕНА</x:String>
     <x:String x:Key="MError">ОШИБКА</x:String>
@@ -23,7 +25,7 @@
     <x:String x:Key="mFilterByName">Фильтр по имени...</x:String>
     <x:String x:Key="mNoPersonalProjects">У этого пользователя нет никаких личных проектов</x:String>
     <x:String x:Key="mNoTasks">У Вас нет никаких задач</x:String>
-    <x:String x:Key="mProjects">ПРОЕКТЫ</x:String>
+    <x:String x:Key="mProjects">Проекты</x:String>
     <x:String x:Key="mTasks">Задачи</x:String>
     <x:String x:Key="mDescription">Описание</x:String>
     <x:String x:Key="mMembers">Участники</x:String>
@@ -47,6 +49,7 @@
     <x:String x:Key="m_identify">Вы не вошли в свой аккаунт</x:String>
     <x:String x:Key="m_correct_entry">Введите все значения</x:String>
     <x:String x:Key="mSettings">Настройки</x:String>
+    <x:String x:Key="mHome">Главная</x:String>
 
     <x:String x:Key="m_error_create_project">Проект не создан !</x:String>
     <x:String x:Key="m_error_create_task">Задание не создано !</x:String>

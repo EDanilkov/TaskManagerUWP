@@ -1,0 +1,115 @@
+﻿<Page
+    x:Class="UIModule.Pages.AddNewTask"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UIModule.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:vm="using:UIModule.ViewModels"
+    xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <Page.DataContext>
+        <vm:AddNewTaskViewModel/>
+    </Page.DataContext>
+
+    <i:Interaction.Behaviors>
+        <core:EventTriggerBehavior EventName="Loaded">
+            <core:InvokeCommandAction Command="{Binding Loaded}"/>
+        </core:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    
+    <Grid
+        Background="{ThemeResource SystemControlBackgroundChromeWhiteBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel
+            VerticalAlignment="Center"
+            Orientation="Horizontal"
+            Grid.Row="0">
+            <Button 
+                Background="{ThemeResource SystemControlBackgroundChromeWhiteBrush}"
+                FontFamily="Segoe MDL2 Assets"
+                Content="&#xE72B;"
+                Command="{Binding Back}"/>
+            <FontIcon 
+                Margin="15 0 0 0"
+                Foreground="Black"
+                Name="Icon"
+                Glyph="&#xE713;"/>
+            <TextBlock 
+                Foreground="Black"
+                Text="{StaticResource MNewTask}"
+                Margin="15 0 0 0"
+                FontSize="28" 
+                FontWeight="Bold" />
+        </StackPanel>
+        <StackPanel
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Orientation="Vertical"
+            Grid.Row="1">
+            <Grid Margin="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition 
+                        Width="305"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition 
+                        Height="70*"/>
+                    <RowDefinition 
+                        Height="30*"/>
+                </Grid.RowDefinitions>
+                <StackPanel
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Orientation="Vertical">
+                    <TextBlock
+                        Margin="5 0 0 0"
+                        Text="{StaticResource mName}"/>
+                    <TextBox
+                        MaxLength="50"
+                        Text="{Binding TaskName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource TextBoxNewElement}"/>
+                    <TextBlock
+                        Margin="5 0 0 0"
+                        Text="{StaticResource mDescription}"/>
+                    <TextBox
+                        MaxLength="250"
+                        Text="{Binding TaskDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource TextBoxNewElement}"/>
+                    <TextBlock
+                        Margin="5 0 0 0"
+                        Text="{StaticResource mForUser}"/>
+                    <ComboBox
+                        Width="295"
+                        DisplayMemberPath="Login"
+                        SelectedValue="{Binding SelectedUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ItemsSource="{Binding Users}"
+                        Margin="5"/>
+                    <DatePicker 
+                        Header="{StaticResource mEndDate}"
+                        Date="{Binding StartDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Windows10version1809:SelectedDate="{Binding TaskFinishDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="5"/>
+                </StackPanel>
+                <Grid
+                    Margin="0 10 0 0"
+                    Grid.Row="1">
+                    <Button
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        Command="{Binding Accept}"
+                        Content="{StaticResource MAccept}"/>
+                </Grid>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -23,13 +23,23 @@ namespace ServerAPI.Data
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Task> Task { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<UserProject> UserProject { get; set; }
         public virtual DbSet<RolePermission> RolePermission { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Comment>()
+            .HasKey(pt => new { pt.Id});
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(pt => pt.User);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(pt => pt.Task);
+
             modelBuilder.Entity<RolePermission>()
-            .HasKey(pt => new { pt.RoleId, pt.PermissionId });
+                .HasKey(pt => new { pt.RoleId, pt.PermissionId });
 
             modelBuilder.Entity<RolePermission>()
                 .HasOne(pt => pt.Role);
@@ -38,14 +48,14 @@ namespace ServerAPI.Data
                 .HasOne(pt => pt.Permission);
 
             modelBuilder.Entity<UserProject>()
-            .HasKey(pt => new { pt.UserId, pt.ProjectId, pt.RoleId });
+                .HasKey(pt => new { pt.UserId, pt.ProjectId, pt.RoleId });
 
             modelBuilder.Entity<UserProject>()
                 .HasOne(pt => pt.User);
 
             modelBuilder.Entity<UserProject>()
                 .HasOne(pt => pt.Project);
-            
+
             modelBuilder.Entity<Task>()
                 .Property(e => e.Description)
                 .IsUnicode(false);

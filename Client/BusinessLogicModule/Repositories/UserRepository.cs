@@ -14,7 +14,7 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 string json = JsonConvert.SerializeObject(user);
-                return await RequestService.Post("https://localhost:44316/api/users/new", json);
+                return await RequestService.Post("https://localhost:44393/api/users/new", json);
             }
             catch
             {
@@ -26,7 +26,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                await RequestService.Delete("https://localhost:44316/api/users/" + userId.ToString() + "/" + projectId.ToString());
+                await RequestService.Delete("https://localhost:44393/api/users/" + userId.ToString() + "/" + projectId.ToString());
 
             }
             catch
@@ -39,7 +39,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<List<User>>("https://localhost:44316/api/users/all");
+                return await RequestService.Get<List<User>>("https://localhost:44393/api/users/all");
 
             }
             catch
@@ -52,7 +52,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<User>("https://localhost:44316/api/users?name=" + name + "&id=" + id);
+                return await RequestService.Get<User>("https://localhost:44393/api/users?name=" + name + "&id=" + id);
 
             }
             catch
@@ -65,7 +65,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<List<User>>("https://localhost:44316/api/users/" + projectId.ToString());
+                return await RequestService.Get<List<User>>("https://localhost:44393/api/users/" + projectId.ToString());
 
             }
             catch

@@ -59,5 +59,17 @@ namespace UIModule.ViewModels
             }
         }
 
+        public ICommand Click
+        {
+            get
+            {
+                return new DelegateCommand(async (obj) =>
+                {
+                    NavigationService.Instance.Navigate(typeof(Pages.AddNewProject));
+                });
+            }
+        }
+        
+
     }
 }

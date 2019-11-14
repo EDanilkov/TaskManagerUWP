@@ -246,7 +246,19 @@ namespace ServerAPI.Data
             }
             return projects;
         }
+
+        #endregion
+
+        #region Comment
         
+        public async TaskThreading AddComment(Comment comment)
+        {
+            await _db.Comment.AddAsync(comment);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task<List<Comment>> GetCommentByTaskId(int taskId)
+            => await _db.Comment.Where(c => c.TaskId == taskId).ToListAsync();
         #endregion
     }
 }

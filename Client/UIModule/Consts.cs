@@ -13,7 +13,8 @@ namespace UIModule
         public static string UserName { get; set; }
         public static int ProjectId { get; set; }
         public static int TaskId { get; set; }
-        
+        public static int UserId { get; set; }
+
 
         public const string Success = "#64DD17";
         public const string Error = "#d50000";

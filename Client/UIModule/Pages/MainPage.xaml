@@ -16,7 +16,7 @@
     <Page.DataContext>
         <vm:MainPageViewModel/>
     </Page.DataContext>
-    
+
     <i:Interaction.Behaviors>
         <core:EventTriggerBehavior EventName="Loaded">
             <core:InvokeCommandAction Command="{Binding Loaded}"/>
@@ -164,13 +164,8 @@
                         Margin="15 15 0 0"
                         Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
                         Background="{Binding ElementName=menu, Path=Background}"
-                        Content="&#xE700;">
-                        <i:Interaction.Behaviors>
-                            <core:EventTriggerBehavior EventName="Click">
-                                <core:InvokeCommandAction Command="{Binding HamburgerButtonClick}"/>
-                            </core:EventTriggerBehavior>
-                        </i:Interaction.Behaviors>
-                    </Button>
+                        Command="{Binding HamburgerButtonClick}"
+                        Content="&#xE700;"/>
                     <Frame 
                         Grid.Row="1"
                         Opacity="{Binding FrameOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

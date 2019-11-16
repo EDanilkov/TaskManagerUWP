@@ -1,21 +1,17 @@
 ﻿using BusinessLogicModule.Interfaces;
 using BusinessLogicModule.Repositories;
-using BusinessLogicModule.Services;
 using NLog;
 using SharedServicesModule.Models;
-using SharedServicesModule.ResponseModel;
-using SharedServicesModule.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using UIModule.Utils;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Task = SharedServicesModule.Models.Task;
 
 namespace UIModule.ViewModels
@@ -28,7 +24,7 @@ namespace UIModule.ViewModels
         ITaskRepository _taskRepository = new TaskRepository();
         IPermissionRepository _permissionRepository = new PermissionRepository();
         ICommentRepository _commentRepository = new CommentRepository();
-
+        IStatusRepository _statusRepository = new StatusRepository();
 
 
         private static Logger logger = LogManager.GetCurrentClassLogger();
@@ -49,8 +45,8 @@ namespace UIModule.ViewModels
             }
         }
 
-        private List<Task> _listTasks = new List<Task>();
-        public List<Task> ListTasks
+        private List<RecordListBoxTasks> _listTasks = new List<RecordListBoxTasks>();
+        public List<RecordListBoxTasks> ListTasks
         {
             get { return _listTasks; }
             set
@@ -71,24 +67,13 @@ namespace UIModule.ViewModels
             }
         }
 
-        private Task _selectedTask;
-        public Task SelectedTask
+        private RecordListBoxTasks _selectedTask;
+        public RecordListBoxTasks SelectedTask
         {
             get { return _selectedTask; }
             set
             {
                 _selectedTask = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _selectedTaskIndex;
-        public int SelectedTaskIndex
-        {
-            get { return _selectedTaskIndex; }
-            set
-            {
-                _selectedTaskIndex = value;
                 OnPropertyChanged();
             }
         }
@@ -225,24 +210,24 @@ namespace UIModule.ViewModels
             }
         }
 
-        private Visibility _notProjectsVisibility = Visibility.Collapsed;
-        public Visibility NotProjectsVisibility
+        private Visibility _notTasksVisibility = Visibility.Collapsed;
+        public Visibility NotTasksVisibility
         {
-            get { return _notProjectsVisibility; }
+            get { return _notTasksVisibility; }
             set
             {
-                _notProjectsVisibility = value;
+                _notTasksVisibility = value;
                 OnPropertyChanged();
             }
         }
 
-        private Visibility _projectsVisibility = Visibility.Visible;
-        public Visibility ProjectsVisibility
+        private Visibility _tasksVisibility = Visibility.Visible;
+        public Visibility TasksVisibility
         {
-            get { return _projectsVisibility; }
+            get { return _tasksVisibility; }
             set
             {
-                _projectsVisibility = value;
+                _tasksVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -277,39 +262,6 @@ namespace UIModule.ViewModels
             set
             {
                 _newMembersSourse = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private double _width;
-        public double Width
-        {
-            get { return _width; }
-            set
-            {
-                _width = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private double _height;
-        public double Height
-        {
-            get { return _height; }
-            set
-            {
-                _height = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private double _heightPane;
-        public double HeightPane
-        {
-            get { return _heightPane; }
-            set
-            {
-                _heightPane = value;
                 OnPropertyChanged();
             }
         }
@@ -380,6 +332,28 @@ namespace UIModule.ViewModels
             }
         }
 
+        private Visibility _pageVisibility = Visibility.Collapsed;
+        public Visibility PageVisibility
+        {
+            get { return _pageVisibility; }
+            set
+            {
+                _pageVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _loadingVisibility = Visibility.Collapsed;
+        public Visibility LoadingVisibility
+        {
+            get { return _loadingVisibility; }
+            set
+            {
+                _loadingVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand AddComment
         {
             get
@@ -392,12 +366,12 @@ namespace UIModule.ViewModels
                         {
                             UserName = Consts.UserName,
                             DateTime = DateTime.Now,
-                            TaskId = SelectedTask.Id,
-                            UserId = (await _userRepository.GetUser(Consts.UserName)).Id,
+                            TaskId = SelectedTask.TaskId,
+                            UserId = Consts.UserId,
                             Text = Comment
                         });
                         Comment = "";
-                        Comments = (await _commentRepository.GetComment(SelectedTask.Id)).OrderByDescending(c => c.DateTime).ToList();
+                        Comments = (await _commentRepository.GetComment(SelectedTask.TaskId)).OrderByDescending(c => c.DateTime).ToList();
                     }
                     catch (Exception ex)
                     {
@@ -416,26 +390,29 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
-                        //TaskInfo = Visibility.Collapsed;
+                        PageVisibility = Visibility.Collapsed;
+                        LoadingVisibility = Visibility.Visible;
                         Role role = await _roleRepository.GetRoleFromUser(Consts.UserName, Consts.ProjectId);
+                        Project project = await _projectRepository.GetProject(Consts.ProjectId);
                         await SelectVisibility(role);
 
-                        if (string.Equals((await _roleRepository.GetRoleFromUser(Consts.UserName, Consts.ProjectId)).Name, "Admin"))
+                        if (string.Equals(role.Name, "Admin"))
                         {
                             VisibilityMembers = Visibility.Visible;
                         }
-                        if ((await _projectRepository.GetProject(Consts.ProjectId)).AdminId == (await _userRepository.GetUser(Consts.UserName)).Id)
+                        if (project.AdminId == Consts.UserId)
                         {
                             DeleteProjectVisibility = Visibility.Visible;
                         }
 
-                        Project project = await _projectRepository.GetProject(Consts.ProjectId);
                         ProjectDescription = project.Description;
-                        TitleName += project.Name;
-                        ListTasks = (await _taskRepository.GetTasksFromProject(Consts.ProjectId));
+                        TitleName = project.Name;
+                        ListTasks = await GetRecordListBoxes();
                         RoleSourse = await _roleRepository.GetRoles();
                         await RefreshUsers();
                         CheckCountTasks(ListTasks);
+                        PageVisibility = Visibility.Visible;
+                        LoadingVisibility = Visibility.Collapsed;
 
                     }
                     catch (Exception ex)
@@ -445,6 +422,38 @@ namespace UIModule.ViewModels
                     }
                 });
             }
+        }
+        
+        private async Task<List<RecordListBoxTasks>> GetRecordListBoxes()
+        {
+            List<Status> statuses = await _statusRepository.GetStatuses();
+            List<Task> tasks = await _taskRepository.GetTasksFromProject(Consts.ProjectId);
+            List<RecordListBoxTasks> records = new List<RecordListBoxTasks>();
+            foreach (Task task in tasks)
+            {
+                Project project = await _projectRepository.GetProject(task.ProjectId);
+                RecordListBoxTasks record = new RecordListBoxTasks()
+                {
+                    TaskId = task.Id,
+                    UserId = task.UserId,
+                    ProjectId = project.Id,
+                    UserName = (await _userRepository.GetUser(null,task.UserId)).Login,
+                    ProjectName = project.Name,
+                    TaskName = task.Name,
+                    FinishDate = task.EndDate.ToString(),
+                    StartDate = task.BeginDate.ToString(),
+                    Status = statuses.First(c => c.Id == task.StatusId).Name,
+                    Foreground = CheckTime(task.EndDate)
+                };
+                records.Add(record);
+            }
+            CheckCountTasks(records);
+            return records.OrderByDescending(c => c.Status).ThenByDescending(c => c.StartDate).ToList();
+        }
+
+        Brush CheckTime(DateTime dateTime)
+        {
+            return dateTime >= DateTime.Now ? new SolidColorBrush(Colors.DimGray) : new SolidColorBrush(Colors.DarkRed);
         }
 
         public async System.Threading.Tasks.Task SelectVisibility(Role role)
@@ -635,10 +644,10 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
-                        string taskName = SelectedTask.Name;
-                        await _taskRepository.DeleteTask(SelectedTask.Id);
+                        string taskName = SelectedTask.TaskName;
+                        await _taskRepository.DeleteTask(SelectedTask.TaskId);
 
-                        ListTasks = (await _taskRepository.GetTasksFromProject(Consts.ProjectId));
+                        ListTasks = await FilterTasks();
                         IsPaneOpen = false;
                         logger.Debug("user " + Consts.UserName + " deleted task " + taskName + " to the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
                     }
@@ -659,7 +668,7 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
-                        Consts.TaskId = SelectedTask.Id;
+                        Consts.TaskId = SelectedTask.TaskId;
                         NavigationService.Instance.NavigateTo(typeof(Pages.Task));
                     }
                     catch (Exception ex)
@@ -698,7 +707,7 @@ namespace UIModule.ViewModels
                             CommentsVisibility = Visibility.Visible;
                         }
                         SelectedTaskUserName = (await _userRepository.GetUser(null, SelectedTask.UserId)).Login;
-                        Comments = (await _commentRepository.GetComment(SelectedTask.Id)).OrderByDescending(c => c.DateTime).ToList();
+                        Comments = (await _commentRepository.GetComment(SelectedTask.TaskId)).OrderByDescending(c => c.DateTime).ToList();
                     }
                     IsPaneOpen = true;
                 });
@@ -714,7 +723,7 @@ namespace UIModule.ViewModels
             {
 
                 NavigationService.Instance.NavigateTo(typeof(Pages.AddNewTask));
-                ListTasks = (await _taskRepository.GetTasksFromProject(Consts.ProjectId));
+                ListTasks = await FilterTasks();
             }
             catch (Exception ex)
             {
@@ -730,7 +739,7 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
-                        List<Task> filteredTasks = await FilterProjects();
+                        List<RecordListBoxTasks> filteredTasks = await FilterTasks();
                         CheckCountTasks(filteredTasks);
                         ListTasks = filteredTasks;
                     }
@@ -743,41 +752,54 @@ namespace UIModule.ViewModels
             }
         }
 
-        private async Task<List<Task>> FilterProjects()
+        private async Task<List<RecordListBoxTasks>> FilterTasks()
         {
             if (Filter != null || Filter != "")
             {
-                List<Task> filteredTasks = new List<Task>();
+                List<Status> statuses = await _statusRepository.GetStatuses();
+                List<RecordListBoxTasks> filteredTasks = new List<RecordListBoxTasks>();
                 List<Task> tasks = await _taskRepository.GetTasksFromProject(Consts.ProjectId);
                 foreach (Task task in tasks)
                 {
                     if (task.Name.Contains(Filter))
                     {
-                        filteredTasks.Add(task);
+                        filteredTasks.Add(new RecordListBoxTasks()
+                        {
+                            TaskId = task.Id,
+                            UserId = task.UserId,
+                            ProjectId = task.ProjectId,
+                            ProjectName = (await _projectRepository.GetProject(task.ProjectId)).Name,
+                            UserName = (await _userRepository.GetUser(null, task.UserId)).Login,
+                            TaskName = task.Name,
+                            StartDate = task.BeginDate.ToString(),
+                            FinishDate = task.EndDate.ToString(),
+                            Status = statuses.First(c => c.Id == task.StatusId).Name,
+                            Foreground = CheckTime(task.EndDate)
+                        });
                     }
                 }
                 CheckCountTasks(filteredTasks);
-                return filteredTasks;
+                return filteredTasks.OrderByDescending(c => c.Status).ThenByDescending(c => c.StartDate).ToList();
             }
             else
             {
-                return await _taskRepository.GetTasksFromProject(Consts.ProjectId);
+                return await GetRecordListBoxes();
             }
         }
 
-        private void CheckCountTasks(List<Task> tasks)
+        private void CheckCountTasks(List<RecordListBoxTasks> tasks)
         {
             try
             {
                 if (tasks.Count == 0)
                 {
-                    ProjectsVisibility = Visibility.Collapsed;
-                    NotProjectsVisibility = Visibility.Visible;
+                    TasksVisibility = Visibility.Collapsed;
+                    NotTasksVisibility = Visibility.Visible;
                 }
                 else
                 {
-                    ProjectsVisibility = Visibility.Visible;
-                    NotProjectsVisibility = Visibility.Collapsed;
+                    TasksVisibility = Visibility.Visible;
+                    NotTasksVisibility = Visibility.Collapsed;
                 }
             }
             catch (Exception ex)

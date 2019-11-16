@@ -28,7 +28,16 @@
             <RowDefinition Height="AUTO" MinHeight="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <ProgressRing 
+            Grid.RowSpan="2"
+            Visibility="{Binding LoadingVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            IsActive="True"/>
+
         <Grid
+            Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Margin="20 0 20 0"
             VerticalAlignment="Center"
             Grid.Row="0">
@@ -43,6 +52,7 @@
         </Grid>
 
         <Pivot 
+            Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Grid.Row="1">
             <PivotItem 
                 Margin="5"
@@ -96,7 +106,7 @@
                                                 VerticalAlignment="Center"
                                                 FontWeight="Bold"
                                                 FontSize="24"
-                                                Text="{Binding SelectedTask.Name}"/>
+                                                Text="{Binding SelectedTask.TaskName}"/>
                                         </StackPanel>
                                         <Button
                                             HorizontalAlignment="Right"
@@ -123,7 +133,7 @@
                                             Text="{StaticResource mBeginDate}"/>
                                         <TextBlock 
                                             Style="{StaticResource TaskInfo}"
-                                            Text="{Binding SelectedTask.BeginDate}"/>
+                                            Text="{Binding SelectedTask.StartDate}"/>
                                     </StackPanel>
                                     <StackPanel
                                         Style="{StaticResource HorizontalStackPanel}">
@@ -132,7 +142,16 @@
                                             Text="{StaticResource mEndDate}"/>
                                         <TextBlock 
                                             Style="{StaticResource TaskInfo}"
-                                            Text="{Binding SelectedTask.EndDate}"/>
+                                            Text="{Binding SelectedTask.FinishDate}"/>
+                                    </StackPanel>
+                                    <StackPanel
+                                        Style="{StaticResource HorizontalStackPanel}">
+                                        <TextBlock 
+                                            Style="{StaticResource TaskInfo}"
+                                            Text="{StaticResource mStatus}"/>
+                                        <TextBlock 
+                                            Style="{StaticResource TaskInfo}"
+                                            Text="{Binding SelectedTask.Status}"/>
                                     </StackPanel>
                                 </StackPanel>
 
@@ -246,7 +265,7 @@
                                 Grid.Row="1"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center" 
-                                Visibility="{Binding NotProjectsVisibility}"
+                                Visibility="{Binding NotTasksVisibility}"
                                 Orientation="Vertical">
                                 <TextBlock 
                                     HorizontalAlignment="Center"
@@ -267,7 +286,7 @@
                                 <ListBox
                                     VerticalAlignment="Stretch"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                    Visibility="{Binding ProjectsVisibility}"
+                                    Visibility="{Binding TasksVisibility}"
                                     ItemContainerStyle="{StaticResource ListBoxStyle}"
                                     ItemsSource="{Binding ListTasks}"
                                     SelectedValue="{Binding SelectedTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
@@ -282,12 +301,55 @@
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <Grid>
-                                                <TextBlock 
-                                                Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                                FontSize="24"
-                                                TextTrimming="WordEllipsis"
-                                                TextWrapping="Wrap"
-                                                Text="{Binding Name}"/>
+                                                <StackPanel
+                                                    Orientation="Vertical">
+                                                    <TextBlock 
+                                                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
+                                                        FontSize="18"
+                                                        TextTrimming="WordEllipsis"
+                                                        TextWrapping="Wrap"
+                                                        Text="{Binding TaskName}"/>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock 
+                                                            Grid.Column="0"
+                                                            Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
+                                                            FontSize="14"
+                                                            TextWrapping="Wrap"
+                                                            TextTrimming="WordEllipsis"
+                                                            Text="{Binding UserName}"/>
+                                                        <StackPanel
+                                                            VerticalAlignment="Center"
+                                                            Grid.Column="1"
+                                                            Orientation="Horizontal">
+                                                            <TextBlock
+                                                                Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
+                                                                FontSize="6"
+                                                                Margin="5 0 5 0"
+                                                                VerticalAlignment="Center"
+                                                                FontFamily="Segoe MDL2 Assets"
+                                                                Text="&#xE91F;"/>
+                                                            <TextBlock
+                                                                Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
+                                                                FontSize="14"
+                                                                Text="{Binding Status}"/>
+                                                            <TextBlock
+                                                                Foreground="{Binding Foreground}" 
+                                                                FontSize="14"
+                                                                VerticalAlignment="Center"
+                                                                Margin="5 0 3 0"
+                                                                FontFamily="Segoe MDL2 Assets"
+                                                                Text="&#xE787;"/>
+                                                            <TextBlock
+                                                                Foreground="{Binding Foreground}" 
+                                                                FontSize="14"
+                                                                Text="{Binding FinishDate}"/>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </StackPanel>
                                             </Grid>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>

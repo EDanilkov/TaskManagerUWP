@@ -3,8 +3,10 @@ using NLog;
 using SharedServicesModule.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using UIModule.Utils;
+using Windows.UI.Xaml;
 
 namespace UIModule.ViewModels
 {
@@ -73,6 +75,28 @@ namespace UIModule.ViewModels
             }
         }
 
+        private Visibility _pageVisibility = Visibility.Collapsed;
+        public Visibility PageVisibility
+        {
+            get { return _pageVisibility; }
+            set
+            {
+                _pageVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        private Visibility _loadingVisibility = Visibility.Collapsed;
+        public Visibility LoadingVisibility
+        {
+            get { return _loadingVisibility; }
+            set
+            {
+                _loadingVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -85,6 +109,8 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
+                        PageVisibility = Visibility.Collapsed;
+                        LoadingVisibility = Visibility.Visible;
                         List<User> users = await _userRepository.GetUsersFromProject(Consts.ProjectId);
                         Users = users;
                         Task task = (await _taskRepository.GetTask(Consts.TaskId));
@@ -92,6 +118,8 @@ namespace UIModule.ViewModels
                         TaskDescription = task.Description;
                         TaskFinishDate = task.EndDate;
                         SelectedUser = (await _userRepository.GetUser(Consts.UserName));
+                        LoadingVisibility = Visibility.Collapsed;
+                        PageVisibility = Visibility.Visible;
                     }
                     catch (Exception ex)
                     {
@@ -131,7 +159,8 @@ namespace UIModule.ViewModels
                     {
                         if (TaskName != null && TaskDescription != null && SelectedUser != null && TaskFinishDate != null && TaskFinishDate >= DateTime.Today)
                         {
-                            await _taskRepository.ChangeTask((await _taskRepository.GetTask(Consts.TaskId)), TaskName, TaskDescription, SelectedUser.Id, TaskFinishDate.UtcDateTime);
+                            Task task = await _taskRepository.GetTask(Consts.TaskId);
+                            await _taskRepository.ChangeTask(task, TaskName, TaskDescription, SelectedUser.Id, task.StatusId, TaskFinishDate.UtcDateTime);
                             logger.Debug("user " + Consts.UserName + " added task " + TaskName + " to the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
 
                             NavigationService.Instance.NavigateTo(typeof(Pages.Project));

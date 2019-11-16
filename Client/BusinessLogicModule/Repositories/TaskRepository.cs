@@ -22,12 +22,12 @@ namespace BusinessLogicModule.Interfaces
             }
         }
 
-        public async System.Threading.Tasks.Task ChangeTask(SharedServicesModule.Models.Task task, string taskName, string taskDescription, int userId, DateTime taskFinishDate)
+        public async System.Threading.Tasks.Task ChangeTask(SharedServicesModule.Models.Task task, string taskName, string taskDescription, int userId, int statusId, DateTime taskFinishDate)
         {
             try
             {
 
-                UpdateTaskModel updateTaskModel = new UpdateTaskModel() { Task = task, TaskName = taskName, TaskDescription = taskDescription, UserId = userId, TaskFinishDate = taskFinishDate };
+                UpdateTaskModel updateTaskModel = new UpdateTaskModel() { Task = task, TaskName = taskName, TaskDescription = taskDescription, UserId = userId, StatusId = statusId,TaskFinishDate = taskFinishDate };
                 string json = JsonConvert.SerializeObject(updateTaskModel);
                 await RequestService.Put("https://localhost:44393/api/tasks/", json);
             }

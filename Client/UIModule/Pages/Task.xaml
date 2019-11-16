@@ -23,14 +23,14 @@
 
 
     <Grid
-        Background="{ThemeResource SystemControlBackgroundChromeWhiteBrush}">
+        Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition
                 Width="50"/>
             <ColumnDefinition 
                 Width="*"/>
             <ColumnDefinition 
-                Width="50"/>
+                Width="25"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition 
@@ -42,18 +42,29 @@
         </Grid.RowDefinitions>
 
         <Button 
+            Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Command="{Binding Back}"
+            Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
             Style="{StaticResource BackButton}">
         </Button>
 
+        <ProgressRing 
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="3"
+            Visibility="{Binding LoadingVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            IsActive="True"/>
+
         <Grid 
+            Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Grid.Row="0"    
             Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
                     Width="50*"/>
                 <ColumnDefinition 
-                    Width="130"/>
+                    Width="160"/>
             </Grid.ColumnDefinitions>
             <StackPanel 
                 Grid.Column="0"
@@ -69,17 +80,23 @@
                     Visibility="{Binding ChangeTaskVisibility}"
                     Command="{Binding ChangeTaskClick}"
                     Style="{StaticResource Button}"
+                    Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
                     Content="&#xEC87;"/>
                 <Button     
                     Visibility="{Binding DeleteTaskVisibility}"
                     Command="{Binding DeleteTask}"
                     Style="{StaticResource Button}"
+                    Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
                     Content="&#xE74D;"/>
-
+                <Button     
+                    Visibility="{Binding DeleteTaskVisibility}"
+                    Command="{Binding ChangeStatusTask}"
+                    Content="{Binding Status}"/>
             </StackPanel>
         </Grid>
 
         <StackPanel
+            Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Grid.Column="1"
             Grid.Row="1"  
             Style="{StaticResource DescriprionStackPanel}">
@@ -110,10 +127,18 @@
                     Style="{StaticResource TaskInfo}"
                     Text="{Binding TaskFinishDate}"/>
             </StackPanel>
+            <StackPanel
+                Style="{StaticResource HorizontalStackPanel}">
+                <TextBlock 
+                    Style="{StaticResource TaskInfo}"
+                    Text="{StaticResource mStatus}"/>
+                <TextBlock 
+                    Style="{StaticResource TaskInfo}"
+                    Text="{Binding Status}"/>
+            </StackPanel>
 
             <RelativePanel 
-                Visibility="{Binding CommentsVisibility}"
-                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                Visibility="{Binding CommentsVisibility}">
                 <Button 
                     x:Name="loginButton" 
                     Command="{Binding AddComment}"

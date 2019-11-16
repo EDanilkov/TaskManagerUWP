@@ -24,6 +24,7 @@ namespace UIModule.ViewModels
         IPermissionRepository _permissionRepository = new PermissionRepository();
         IProjectRepository _projectRepository = new ProjectRepository();
         ICommentRepository _commentRepository = new CommentRepository();
+        IStatusRepository _statusRepository = new StatusRepository();
 
 
         /*public TaskViewModel(IUserRepository userRepository, ITaskRepository taskRepository, IProjectRepository projectRepository, IPermissionRepository permissionRepository, IRoleRepository roleRepository, IUserProjectRepository userProjectRepository)
@@ -159,7 +160,39 @@ namespace UIModule.ViewModels
                 OnPropertyChanged();
             }
         }
+        
+        private string _status;
+        public string Status
+        {
+            get { return _status; }
+            set
+            {
+                _status = value;
+                OnPropertyChanged();
+            }
+        }
 
+        private Visibility _pageVisibility = Visibility.Collapsed;
+        public Visibility PageVisibility
+        {
+            get { return _pageVisibility; }
+            set
+            {
+                _pageVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _loadingVisibility = Visibility.Collapsed;
+        public Visibility LoadingVisibility
+        {
+            get { return _loadingVisibility; }
+            set
+            {
+                _loadingVisibility = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand Loaded
         {
@@ -170,6 +203,8 @@ namespace UIModule.ViewModels
                     try
                     {
 
+                        PageVisibility = Visibility.Collapsed;
+                        LoadingVisibility = Visibility.Visible;
                         List<Permission> permissions = await _permissionRepository.GetPermissionsFromRole((await _roleRepository.GetRoleFromUser(Consts.UserName, Consts.ProjectId)).Id);
                         if (permissions.Any(c => string.Equals(c.Name, "ChangeTask")) != false)
                         {
@@ -188,12 +223,15 @@ namespace UIModule.ViewModels
 
                         Task task = await _taskRepository.GetTask(Consts.TaskId);
                         TitleName = task.Name;
+                        Status = (await _statusRepository.GetStatus(null, task.StatusId)).Name;
                         Project project = await _projectRepository.GetProject(Consts.ProjectId);
                         TitleProject += project.Name;
                         UserName = ": " + (await _userRepository.GetUser(id: task.UserId)).Login;
                         TaskDescriprion = task.Description;
                         TaskFinishDate = ": " + task.EndDate;
                         TaskStartDate = ": " + task.BeginDate;
+                        PageVisibility = Visibility.Visible;
+                        LoadingVisibility = Visibility.Collapsed;
                     }
                     catch (Exception ex)
                     {
@@ -265,6 +303,39 @@ namespace UIModule.ViewModels
             }
         }
         
+        public ICommand ChangeStatusTask
+        {
+            get
+            {
+                return new DelegateCommand(async (obj) =>
+                {
+                    try
+                    {
+                        Task task = (await _taskRepository.GetTask(Consts.TaskId));
+                        Status = (await _statusRepository.GetStatus(null, task.StatusId)).Name;
+                        if(string.Equals(Status, "Open"))
+                        {
+                            Status = "Closed";
+                            task.StatusId = (await _statusRepository.GetStatus("Closed")).Id;
+                            await _taskRepository.ChangeTask(task, task.Name, task.Description, task.UserId, task.StatusId, task.EndDate);
+                        }
+                        else
+                        {
+                            Status = "Open";
+                            task.StatusId = (await _statusRepository.GetStatus("Open")).Id;
+                            await _taskRepository.ChangeTask(task, task.Name, task.Description, task.UserId, task.StatusId, task.EndDate);
+                        }
+                        //logger.Debug("user " + Consts.UserName + " deleted task " + task.Name + " to the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex.ToString());
+                        //ErrorHandler.Show(Application.Current.Resources["m_error_delete_task"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                    }
+                });
+            }
+        }
+
         public ICommand ChangeTaskClick
         {
             get

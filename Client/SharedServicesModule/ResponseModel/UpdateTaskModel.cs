@@ -13,6 +13,8 @@ namespace SharedServicesModule.ResponseModel
 
         public int UserId { get; set; }
 
+        public int StatusId { get; set; }
+
         public DateTime TaskFinishDate { get; set; }
 
     }

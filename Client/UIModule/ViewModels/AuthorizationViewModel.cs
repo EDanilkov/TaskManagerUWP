@@ -97,6 +97,7 @@ namespace UIModule.ViewModels
                             await TokenService.GetToken(user);
 
                             Consts.UserName = Login;
+                            Consts.UserId = (await _userRepository.GetUser(Login)).Id;//user.Id;
                             ///var displayRootRegistry = (Application.Current as App).displayRootRegistry;
                            // await displayRootRegistry.ShowModalPresentation(new MainWindowViewModel(_userRepository));
                             _logger.Debug("The user " + user.Login + " is logged in to the app");

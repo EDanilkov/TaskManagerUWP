@@ -20,8 +20,8 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
         <StackPanel
-            
             VerticalAlignment="Center"
             Orientation="Horizontal"
             Grid.Row="0">

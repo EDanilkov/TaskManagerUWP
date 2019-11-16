@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using UIModule.Utils;
+using Windows.UI.Xaml;
 
 namespace UIModule.ViewModels
 {
@@ -109,6 +110,28 @@ namespace UIModule.ViewModels
             }
         }
 
+        private Visibility _pageVisibility = Visibility.Collapsed;
+        public Visibility PageVisibility
+        {
+            get { return _pageVisibility; }
+            set
+            {
+                _pageVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _loadingVisibility = Visibility.Collapsed;
+        public Visibility LoadingVisibility
+        {
+            get { return _loadingVisibility; }
+            set
+            {
+                _loadingVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand ComboBoxNewMembersChanged
         {
             get
@@ -190,8 +213,12 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
+                        PageVisibility = Visibility.Collapsed;
+                        LoadingVisibility = Visibility.Visible;
                         RoleSourse = await _roleRepository.GetRoles();
                         await RefreshUsers();
+                        PageVisibility = Visibility.Visible;
+                        LoadingVisibility = Visibility.Collapsed;
                     }
                     catch (Exception ex)
                     {

@@ -17,6 +17,7 @@
     <x:String x:Key="MCancel">ОТМЕНА</x:String>
     <x:String x:Key="mExit">Выход</x:String>
     <x:String x:Key="MError">ОШИБКА</x:String>
+    <x:String x:Key="mStatus">Статус</x:String>
     <x:String x:Key="mLogin">Логин</x:String>
     <x:String x:Key="mPassword">Пароль</x:String>
     <x:String x:Key="mEnter">Войти</x:String>

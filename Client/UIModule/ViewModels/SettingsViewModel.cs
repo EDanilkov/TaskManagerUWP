@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Windows.Input;
 using UIModule.Utils;
 using Windows.ApplicationModel.Resources.Core;
+using Windows.UI.Xaml;
 
 namespace UIModule.ViewModels
 {
@@ -30,6 +31,29 @@ namespace UIModule.ViewModels
             }
         }
 
+
+        private Visibility _pageVisibility = Visibility.Collapsed;
+        public Visibility PageVisibility
+        {
+            get { return _pageVisibility; }
+            set
+            {
+                _pageVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _loadingVisibility = Visibility.Collapsed;
+        public Visibility LoadingVisibility
+        {
+            get { return _loadingVisibility; }
+            set
+            {
+                _loadingVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+        
         public ICommand Loaded
         {
             get
@@ -37,14 +61,17 @@ namespace UIModule.ViewModels
                 return new DelegateCommand(async (obj) =>
                 {
 
+                    PageVisibility = Visibility.Collapsed;
+                    LoadingVisibility = Visibility.Visible;
                     foreach (var lang in App.Languages)
                     {
                         Languages.Add(lang);
                     }
+                    PageVisibility = Visibility.Visible;
+                    LoadingVisibility = Visibility.Collapsed;
                 });
             }
         }
-        
 
         public ICommand SelectedChangeLanguage
         {

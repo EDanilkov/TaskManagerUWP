@@ -30,6 +30,7 @@
     <x:String x:Key="mProjects">Projects</x:String>
     <x:String x:Key="mTasks">Tasks</x:String>
     <x:String x:Key="mDescription">Description</x:String>
+    <x:String x:Key="mStatus">Status</x:String>
     <x:String x:Key="mMembers">Members</x:String>
     <x:String x:Key="m_change_task">Change Task</x:String>
     <x:String x:Key="mName">Name</x:String>

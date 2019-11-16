@@ -48,6 +48,7 @@ namespace ServerAPI.Controllers
                 task.Name = updateTaskModel.TaskName;
                 task.Description = updateTaskModel.TaskDescription;
                 task.UserId = updateTaskModel.UserId;
+                task.StatusId = updateTaskModel.StatusId;
                 task.EndDate = updateTaskModel.TaskFinishDate;
 
 

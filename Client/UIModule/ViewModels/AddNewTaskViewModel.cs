@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using UIModule.Utils;
+using Windows.UI.Xaml;
 
 namespace UIModule.ViewModels
 {
@@ -77,6 +78,28 @@ namespace UIModule.ViewModels
             }
         }
 
+        private Visibility _pageVisibility = Visibility.Collapsed;
+        public Visibility PageVisibility
+        {
+            get { return _pageVisibility; }
+            set
+            {
+                _pageVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _loadingVisibility = Visibility.Collapsed;
+        public Visibility LoadingVisibility
+        {
+            get { return _loadingVisibility; }
+            set
+            {
+                _loadingVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -89,9 +112,13 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
+                        PageVisibility = Visibility.Collapsed;
+                        LoadingVisibility = Visibility.Visible;
                         TaskFinishDate = DateTime.Now;
                         List<User> users = await _userRepository.GetUsersFromProject(Consts.ProjectId);
                         Users = users;
+                        PageVisibility = Visibility.Visible;
+                        LoadingVisibility = Visibility.Collapsed;
                     }
                     catch (Exception ex)
                     {

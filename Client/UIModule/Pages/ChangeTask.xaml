@@ -25,13 +25,21 @@
 
 
     <Grid
-        Background="{ThemeResource SystemControlBackgroundChromeWhiteBrush}">
+        Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <ProgressRing 
+            Grid.RowSpan="2"
+            Visibility="{Binding LoadingVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            IsActive="True"/>
+
         <StackPanel
+            Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             VerticalAlignment="Center"
             Orientation="Horizontal"
             Grid.Row="0">
@@ -52,6 +60,7 @@
                 FontWeight="Bold" />
         </StackPanel>
         <StackPanel
+            Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
             Orientation="Vertical"

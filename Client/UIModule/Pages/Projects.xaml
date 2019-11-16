@@ -27,7 +27,16 @@
             <RowDefinition Height="AUTO" MinHeight="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <ProgressRing 
+            Grid.RowSpan="2"
+            Visibility="{Binding LoadingVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            IsActive="True"/>
+
         <Grid
+            Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Margin="20 0 20 0"
             VerticalAlignment="Center"
             Grid.Row="0">
@@ -58,6 +67,7 @@
         </Grid>
 
         <Grid 
+            Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Grid.Row="1">
             <StackPanel
                 VerticalAlignment="Center"

@@ -97,6 +97,28 @@ namespace UIModule.ViewModels
             }
         }
 
+        private Visibility _pageVisibility = Visibility.Collapsed;
+        public Visibility PageVisibility
+        {
+            get { return _pageVisibility; }
+            set
+            {
+                _pageVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _loadingVisibility = Visibility.Collapsed;
+        public Visibility LoadingVisibility
+        {
+            get { return _loadingVisibility; }
+            set
+            {
+                _loadingVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -122,9 +144,13 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
+                        PageVisibility = Visibility.Collapsed;
+                        LoadingVisibility = Visibility.Visible;
                         Brush = new SolidColorBrush(Colors.Red);
                         UserName = Consts.UserName;
                         ListTasks = await GetRecordListBoxes();
+                        PageVisibility = Visibility.Visible;
+                        LoadingVisibility = Visibility.Collapsed;
                     }
                     catch (Exception ex)
                     {
@@ -156,7 +182,7 @@ namespace UIModule.ViewModels
                 records.Add(record);
             }
             CheckCountProjects(records);
-            return records;
+            return records.OrderByDescending(c => c.Status).ToList();
         }
 
         Brush CheckTime(DateTime dateTime)

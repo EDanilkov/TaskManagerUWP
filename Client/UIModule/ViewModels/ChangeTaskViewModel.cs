@@ -1,25 +1,21 @@
 ﻿using BusinessLogicModule.Interfaces;
-using BusinessLogicModule.Repositories;
 using NLog;
 using SharedServicesModule.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using UIModule.Utils;
 
 namespace UIModule.ViewModels
 {
-    public class AddNewTaskViewModel : NavigateViewModel
+    class ChangeTaskViewModel : NavigateViewModel
     {
         string _dialogIdentifier = "AddTaskDialog";
         private static Logger logger = LogManager.GetCurrentClassLogger();
         IUserRepository _userRepository = new UserRepository();
         ITaskRepository _taskRepository = new TaskRepository();
         IProjectRepository _projectRepository = new ProjectRepository();
-        IStatusRepository _statusRepository = new StatusRepository();
+
         #region Properties
 
         private string _taskName;
@@ -89,9 +85,13 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
-                        TaskFinishDate = DateTime.Now;
                         List<User> users = await _userRepository.GetUsersFromProject(Consts.ProjectId);
                         Users = users;
+                        Task task = (await _taskRepository.GetTask(Consts.TaskId));
+                        TaskName = task.Name;
+                        TaskDescription = task.Description;
+                        TaskFinishDate = task.EndDate;
+                        SelectedUser = (await _userRepository.GetUser(Consts.UserName));
                     }
                     catch (Exception ex)
                     {
@@ -110,7 +110,7 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
-                        NavigationService.Instance.NavigateTo(typeof(Pages.Project));
+                        NavigationService.Instance.NavigateTo(typeof(Pages.Task));
                     }
                     catch (Exception ex)
                     {
@@ -131,18 +131,7 @@ namespace UIModule.ViewModels
                     {
                         if (TaskName != null && TaskDescription != null && SelectedUser != null && TaskFinishDate != null && TaskFinishDate >= DateTime.Today)
                         {
-                            SharedServicesModule.Models.Task task = new SharedServicesModule.Models.Task()
-                            {
-                                Name = TaskName,
-                                Description = TaskDescription,
-                                BeginDate = DateTime.Now,
-                                ProjectId = Consts.ProjectId,
-                                UserId = SelectedUser.Id,
-                                StatusId = (await _statusRepository.GetStatus("Open")).Id,
-                                EndDate = TaskFinishDate.UtcDateTime
-                            };
-
-                            await _taskRepository.AddTask(task);
+                            await _taskRepository.ChangeTask((await _taskRepository.GetTask(Consts.TaskId)), TaskName, TaskDescription, SelectedUser.Id, TaskFinishDate.UtcDateTime);
                             logger.Debug("user " + Consts.UserName + " added task " + TaskName + " to the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
 
                             NavigationService.Instance.NavigateTo(typeof(Pages.Project));

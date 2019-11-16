@@ -125,6 +125,7 @@
     <Compile Include="Interfaces\IProjectRepository.cs" />
     <Compile Include="Interfaces\IRolePermissionRepository.cs" />
     <Compile Include="Interfaces\IRoleRepository.cs" />
+    <Compile Include="Interfaces\IStatusRepository.cs" />
     <Compile Include="Interfaces\ITaskRepository.cs" />
     <Compile Include="Interfaces\IUserProjectRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Repositories\ProjectRepository.cs" />
     <Compile Include="Repositories\RolePermissionRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
+    <Compile Include="Repositories\StatusRepository.cs" />
     <Compile Include="Repositories\TaskRepository.cs" />
     <Compile Include="Repositories\UserProjectRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />

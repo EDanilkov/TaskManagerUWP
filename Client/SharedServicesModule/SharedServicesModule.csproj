@@ -125,10 +125,12 @@
     <Compile Include="Models\Permission.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\RecordListBox.cs" />
+    <Compile Include="Models\RecordListBoxTasks.cs" />
     <Compile Include="Models\RecordViewModel.cs" />
     <Compile Include="Models\Resources.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\RolePermission.cs" />
+    <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserProject.cs" />

@@ -89,6 +89,16 @@ namespace ServerAPI.Data
         TaskThreading AddComment(Comment comment);
         Task<List<Comment>> GetCommentByTaskId(int taskId);
 
+
+        #endregion
+
+
+        #region Status
+
+        TaskThreading AddStatus(Status status);
+        Task<Status> GetStatus(int statusId);
+        Task<Status> GetStatus(string statusName);
+        Task<List<Status>> GetStatuses();
         #endregion
     }
 }

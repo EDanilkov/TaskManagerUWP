@@ -260,5 +260,23 @@ namespace ServerAPI.Data
         public async Task<List<Comment>> GetCommentByTaskId(int taskId)
             => await _db.Comment.Where(c => c.TaskId == taskId).ToListAsync();
         #endregion
+
+        #region Status
+
+        public async TaskThreading AddStatus(Status status)
+        {
+            await _db.Status.AddAsync(status);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task<Status> GetStatus(int statusId)
+            => await _db.Status.FirstAsync(c => c.Id == statusId);
+
+        public async Task<Status> GetStatus(string statusName)
+            => await _db.Status.FirstAsync(c => string.Equals(c.Name, statusName));
+
+        public async Task<List<Status>> GetStatuses()
+            => await _db.Status.ToListAsync();
+        #endregion
     }
 }

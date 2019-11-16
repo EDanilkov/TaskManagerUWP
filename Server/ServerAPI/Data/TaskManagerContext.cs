@@ -23,6 +23,7 @@ namespace ServerAPI.Data
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Task> Task { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<UserProject> UserProject { get; set; }
         public virtual DbSet<RolePermission> RolePermission { get; set; }
@@ -55,6 +56,9 @@ namespace ServerAPI.Data
 
             modelBuilder.Entity<UserProject>()
                 .HasOne(pt => pt.Project);
+            
+            modelBuilder.Entity<Task>()
+                .HasOne(pt => pt.Status);
 
             modelBuilder.Entity<Task>()
                 .Property(e => e.Description)

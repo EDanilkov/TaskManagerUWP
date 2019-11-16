@@ -21,10 +21,15 @@ namespace ServerAPI.Data.Models
 
         public int ProjectId { get; set; }
 
+        public int StatusId { get; set; }
+        public virtual Status Status { get; set; }
+
         public DateTime BeginDate { get; set; }
 
         public DateTime EndDate { get; set; }
 
         public virtual Project Project { get; set; }
+
+
     }
 }

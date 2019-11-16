@@ -108,28 +108,28 @@
                                 x:Name="home">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="36" FontFamily="Segoe MDL2 Assets" Text="&#xE80F;" />
-                                    <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="24" Text="{StaticResource mMain}" Margin="10 0 0 0" />
+                                    <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="24" Text="{StaticResource mProfile}" Margin="10 0 0 0" />
                                 </StackPanel>
                             </ListBoxItem>
                             <ListBoxItem
                                 x:Name="share">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="36" FontFamily="Segoe MDL2 Assets" Text="&#xE72D;" />
-                                    <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="24" Text="Поделиться" Margin="10 0 0 0" />
+                                    <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="24" Text="{StaticResource mProjects}" Margin="10 0 0 0" />
                                 </StackPanel>
                             </ListBoxItem>
                             <ListBoxItem
                                 x:Name="settings">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="36" FontFamily="Segoe MDL2 Assets" Text="&#xE713;" />
-                                    <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="24" Text="Настройки" Margin="10 0 0 0" />
+                                    <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="24" Text="{StaticResource mSettings}" Margin="10 0 0 0" />
                                 </StackPanel>
                             </ListBoxItem>
                             <ListBoxItem
                                 x:Name="exit">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="36" FontFamily="Segoe MDL2 Assets" Text="&#xE726;" />
-                                    <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="24" Text="Выход" Margin="10 0 0 0" />
+                                    <TextBlock Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" FontSize="24" Text="{StaticResource mExit}" Margin="10 0 0 0" />
                                 </StackPanel>
                             </ListBoxItem>
                         </ListBox>

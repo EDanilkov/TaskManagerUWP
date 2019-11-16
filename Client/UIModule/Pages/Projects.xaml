@@ -1,14 +1,14 @@
 ﻿<Page
     x:Class="UIModule.Pages.Projects"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:UIModule.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:vm="using:UIModule.ViewModels"
-    xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
+    MinWidth="360"
+    MinHeight="470"
     mc:Ignorable="d">
 
     <Page.DataContext>
@@ -24,85 +24,84 @@
     <Grid
         Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="AUTO" MinHeight="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel
-            Margin="20 0 0 0"
+        <Grid
+            Margin="20 0 20 0"
             VerticalAlignment="Center"
-            Orientation="Horizontal"
-            Grid.Row="0"
-            Grid.Column="1">
-            <FontIcon 
-                Foreground="Black"
-                Name="Icon"
-                Glyph="&#xE713;"/>
-            <TextBlock 
-                Foreground="Black"
-                Text="{StaticResource mProjects}"
-                Margin="15 0 0 0"
-                FontSize="28" 
-                FontWeight="Bold" />
-        </StackPanel>
+            Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <FontIcon 
+                    Grid.Column="0"
+                    Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                    Name="Icon"
+                    Glyph="&#xE713;"/>
+                <TextBlock 
+                    Grid.Column="1"
+                    Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                    Text="{StaticResource mProjects}"
+                    FontSize="28" 
+                    Margin="15 0 0 0"
+                    FontWeight="Bold" />
+            </Grid>
+            <Button 
+                Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                HorizontalAlignment="Right"
+                Style="{StaticResource Button}"
+                Content="&#xE710;"
+                Command="{Binding NewProjectClick}"/>
+        </Grid>
 
-        <StackPanel 
-            Grid.Row="1"
-            Grid.Column="1"
-            Orientation="Vertical">
-            <StackPanel>
-                <Button 
-                    HorizontalAlignment="Right"
-                    Margin="10"
-                    FontFamily="Segoe MDL2 Assets" 
-                    Content="&#xE710;"
-                    Command="{Binding NewProjectClick}"/>
-            </StackPanel>
+        <Grid 
+            Grid.Row="1">
             <StackPanel
-                Grid.Column="1"
-                Grid.Row="1">
-                <StackPanel
-                    Margin="20"
-                    Visibility="{Binding NotProjectsVisibility}"
-                    Orientation="Vertical">
-                    <TextBlock 
-                        HorizontalAlignment="Center"
-                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                        FontSize="36" 
-                        FontFamily="Segoe MDL2 Assets" 
-                        Text="&#xEC6C;" />
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        FontSize="24"
-                        Text="{StaticResource mNoPersonalProjects}"/>
-                </StackPanel>
-                <ListBox
-                    Background="{Binding ElementName=menu, Path=Background}"
-                    ItemContainerStyle="{StaticResource ListBoxStyle}"
-                    ItemsSource="{Binding ListProjects}"
-                    SelectedValue="{Binding SelectedProject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    x:Name="list">
-                    <i:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="SelectionChanged">
-                            <core:InvokeCommandAction Command="{Binding SelectionChanged}"/>
-                        </core:EventTriggerBehavior>
-                    </i:Interaction.Behaviors>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBlock 
-                                    Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                    FontSize="24"
-                                    Text="{Binding ProjectName}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                VerticalAlignment="Center"
+                Visibility="{Binding NotProjectsVisibility}"
+                Orientation="Vertical">
+                <TextBlock 
+                    HorizontalAlignment="Center"
+                    Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
+                    FontSize="36" 
+                    FontFamily="Segoe MDL2 Assets" 
+                    Text="&#xEC6C;" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap"
+                    FontSize="24"
+                    Text="{StaticResource mNoPersonalProjects}"/>
             </StackPanel>
-        </StackPanel>
+            <ListBox
+                VerticalAlignment="Stretch"
+                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                Background="{Binding ElementName=menu, Path=Background}"
+                ItemContainerStyle="{StaticResource ListBoxStyle}"
+                ItemsSource="{Binding ListProjects}"
+                SelectedValue="{Binding SelectedProject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                        <core:InvokeCommandAction Command="{Binding SelectionChanged}"/>
+                    </core:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <TextBlock 
+                                Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
+                                FontSize="24"
+                                TextTrimming="WordEllipsis"
+                                TextWrapping="Wrap"
+                                Text="{Binding ProjectName}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
     </Grid>
-
 </Page>
 

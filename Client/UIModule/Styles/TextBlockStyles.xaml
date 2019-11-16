@@ -37,7 +37,7 @@
 
     <Style x:Key="TaskInfo" TargetType="TextBlock">
         <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="Margin" Value="10 5 10 0"/>
+        <Setter Property="Margin" Value="10 5 0 0"/>
         <Setter Property="FontSize" Value="14"/>
     </Style>
 

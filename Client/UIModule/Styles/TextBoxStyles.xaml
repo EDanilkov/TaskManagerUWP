@@ -8,6 +8,7 @@
         <Setter Property="FontFamily" Value="Champagne &amp; Limousines"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="Background" Value="White"/>
+        <Setter Property="MaxLength" Value="50"/>
     </Style>
 
     <Style x:Key="PasswordTextBox" TargetType="PasswordBox">
@@ -15,6 +16,7 @@
         <Setter Property="FontFamily" Value="Champagne &amp; Limousines"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="Background" Value="White"/>
+        <Setter Property="MaxLength" Value="50"/>
     </Style>
 
     <Style x:Key="TextBoxNewElement" TargetType="TextBox">

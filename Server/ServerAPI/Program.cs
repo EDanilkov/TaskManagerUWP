@@ -93,6 +93,11 @@ namespace ServerAPI
                 await db.AddRolePermission(rolePermission2);
                 await db.AddRolePermission(rolePermission3);
                 await db.AddRolePermission(rolePermission4);
+
+                Status status1 = new Status() { Name = "Open" };
+                Status status2 = new Status() { Name = "Closed" };
+                await db.AddStatus(status1);
+                await db.AddStatus(status2);
             }
         }
     }

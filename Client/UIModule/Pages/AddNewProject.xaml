@@ -26,9 +26,7 @@
             Orientation="Horizontal"
             Grid.Row="0">
             <Button 
-                Background="{ThemeResource SystemControlBackgroundChromeWhiteBrush}"
-                FontFamily="Segoe MDL2 Assets"
-                Content="&#xE72B;"
+                Style="{StaticResource BackButton}"
                 Command="{Binding Back}"/>
             <FontIcon 
                 Margin="15 0 0 0"

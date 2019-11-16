@@ -84,7 +84,7 @@ namespace UIModule.ViewModels
                     switch (SelectedPage)
                     {
                         case 0:
-                            NavigationService.Instance.NavigateTo(typeof(Authorization));
+                            NavigationService.Instance.NavigateTo(typeof(Profile));
                             SelectedPage = -1;
                             IsPaneOpen = Consts.Width > 720 ? true : false;
                             break;

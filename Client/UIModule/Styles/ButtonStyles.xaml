@@ -35,7 +35,7 @@
 
     <Style x:Key="AddNew" TargetType="Button">
         
-        <Setter Property="Margin" Value="10 0 0 10"/>
+        <Setter Property="Margin" Value="10 0 0 0"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
@@ -45,8 +45,17 @@
         <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
         <Setter Property="Content" Value="&#xE72B;"/>
         <Setter Property="Margin" Value="5"/>
-        <Setter Property="Height" Value="30"/>
-        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Width" Value="35"/>
+    </Style>
+
+    <Style x:Key="Button" TargetType="Button">
+
+        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeWhiteBrush}"/>
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Width" Value="35"/>
     </Style>
 
 </ResourceDictionary>

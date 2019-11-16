@@ -1,0 +1,144 @@
+﻿<Page
+    x:Class="UIModule.Pages.Profile"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:vm="using:UIModule.ViewModels"
+    MinWidth="360"
+    MinHeight="470"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:ProfileViewModel/>
+    </Page.DataContext>
+
+    <i:Interaction.Behaviors>
+        <core:EventTriggerBehavior EventName="Loaded">
+            <core:InvokeCommandAction Command="{Binding Loaded}"/>
+        </core:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <Grid
+        Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO" MinHeight="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid
+            Margin="20 0 20 0"
+            VerticalAlignment="Center"
+            Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <FontIcon 
+                Grid.Column="0"
+                Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                Glyph="&#xE77B;"/>
+            <TextBlock 
+                Grid.Column="1"
+                Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
+                TextWrapping="Wrap"
+                Margin="15 0 0 0"
+                FontSize="28" 
+                FontWeight="Bold"
+                Text="{Binding UserName}"/>
+        </Grid>
+
+        <Grid 
+            Grid.Row="1">
+            <StackPanel
+                VerticalAlignment="Center"
+                Visibility="{Binding NotTasksVisibility}"
+                Orientation="Vertical">
+                <TextBlock 
+                    HorizontalAlignment="Center"
+                    Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
+                    FontSize="36" 
+                    FontFamily="Segoe MDL2 Assets" 
+                    Text="&#xEC6C;" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    TextWrapping="Wrap"
+                    TextAlignment="Center"
+                    FontSize="24"
+                    Text="{StaticResource mNoPersonalTasks}"/>
+            </StackPanel>
+            <ListBox
+                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                VerticalAlignment="Stretch"
+                Background="{Binding ElementName=menu, Path=Background}"
+                ItemContainerStyle="{StaticResource ListBoxStyle}"
+                ItemsSource="{Binding ListTasks}"
+                Visibility="{Binding TasksVisibility}"
+                SelectedValue="{Binding SelectedTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                        <core:InvokeCommandAction Command="{Binding SelectionChanged}"/>
+                    </core:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <StackPanel
+                                Orientation="Vertical">
+                                <TextBlock 
+                                    Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
+                                    FontSize="18"
+                                    TextTrimming="WordEllipsis"
+                                    TextWrapping="Wrap"
+                                    Text="{Binding TaskName}"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock 
+                                        Grid.Column="0"
+                                        Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
+                                        FontSize="14"
+                                        TextWrapping="Wrap"
+                                        TextTrimming="WordEllipsis"
+                                        Text="{Binding ProjectName}"/>
+                                    <StackPanel
+                                        VerticalAlignment="Center"
+                                        Grid.Column="1"
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
+                                            FontSize="6"
+                                            Margin="5 0 5 0"
+                                            VerticalAlignment="Center"
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Text="&#xE91F;"/>
+                                        <TextBlock
+                                            Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
+                                            FontSize="14"
+                                            Text="{Binding Status}"/>
+                                        <TextBlock
+                                            Foreground="{Binding Foreground}" 
+                                            FontSize="14"
+                                            VerticalAlignment="Center"
+                                            Margin="5 0 3 0"
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Text="&#xE787;"/>
+                                        <TextBlock
+                                            Foreground="{Binding Foreground}" 
+                                            FontSize="14"
+                                            Text="{Binding FinishDate}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </Grid>
+    </Grid>
+
+</Page>

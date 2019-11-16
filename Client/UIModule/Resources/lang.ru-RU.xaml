@@ -15,6 +15,7 @@
     <x:String x:Key="MNew">НОВЫЙ</x:String>
     <x:String x:Key="MOk">OK</x:String>
     <x:String x:Key="MCancel">ОТМЕНА</x:String>
+    <x:String x:Key="mExit">Выход</x:String>
     <x:String x:Key="MError">ОШИБКА</x:String>
     <x:String x:Key="mLogin">Логин</x:String>
     <x:String x:Key="mPassword">Пароль</x:String>
@@ -24,6 +25,9 @@
     <x:String x:Key="mPersonal">Личные</x:String>
     <x:String x:Key="mFilterByName">Фильтр по имени...</x:String>
     <x:String x:Key="mNoPersonalProjects">У этого пользователя нет никаких личных проектов</x:String>
+    <x:String x:Key="mNoPersonalTasks">У этого пользователя нет никаких личных заданий</x:String>
+    <x:String x:Key="mNoProjectTasks">У этого проекта нет никаких заданий</x:String>
+    
     <x:String x:Key="mNoTasks">У Вас нет никаких задач</x:String>
     <x:String x:Key="mProjects">Проекты</x:String>
     <x:String x:Key="mTasks">Задачи</x:String>
@@ -40,7 +44,7 @@
     <x:String x:Key="mDelete">Удалить</x:String>
     <x:String x:Key="mRole">Роль:</x:String>
     <x:String x:Key="mUser">Пользователь:</x:String>
-    <x:String x:Key="mProfile">МОЙ АККАУНТ</x:String>
+    <x:String x:Key="mProfile">Профиль</x:String>
     <x:String x:Key="mTitle">Проекты</x:String>
     <x:String x:Key="m_member_dont_have_tasks">У этого пользователя нету текущих задач</x:String>
     <x:String x:Key="m_select_role">Пожалуйста выберите роль</x:String>

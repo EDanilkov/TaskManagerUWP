@@ -37,40 +37,7 @@ namespace UIModule.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private bool _isPaneOpen = true;
-        public bool IsPaneOpen
-        {
-            get { return _isPaneOpen; }
-            set
-            {
-                _isPaneOpen = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private Visibility _paneVisibility = Visibility.Visible;
-        public Visibility PaneVisibility
-        {
-            get { return _paneVisibility; }
-            set
-            {
-                _paneVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private Visibility _inactiveAreaVisibility = Visibility.Collapsed;
-        public Visibility InactiveAreaVisibility
-        {
-            get { return _inactiveAreaVisibility; }
-            set
-            {
-                _inactiveAreaVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-
+        
         private Visibility _notProjectsVisibility = Visibility.Collapsed;
         public Visibility NotProjectsVisibility
         {
@@ -92,7 +59,7 @@ namespace UIModule.ViewModels
                 OnPropertyChanged();
             }
         }
-
+        
         private RecordListBox _selectedProject;
         public RecordListBox SelectedProject
         {
@@ -126,16 +93,10 @@ namespace UIModule.ViewModels
             {
                 return new DelegateCommand(async (obj) =>
                 {
-
-                    /*List<Project> projects =  new List<Project>();
-                    projects.Add(new Project() { Name = "1" });
-                    projects.Add(new Project() { Name = "2" });
-                    projects.Add(new Project() { Name = "3" });*/
                     ListProjects = await GetRecordListBoxes();
                 });
             }
         }
-
 
         private async Task<List<RecordListBox>> GetRecordListBoxes()
         {

@@ -14,6 +14,7 @@
     <x:String x:Key="MNew">NEW</x:String>
     <x:String x:Key="MOk">OK</x:String>
     <x:String x:Key="MCancel">CANCEL</x:String>
+    <x:String x:Key="mExit">Exit</x:String>
     <x:String x:Key="MError">ERROR</x:String>
     <x:String x:Key="mLogin">Login</x:String>
     <x:String x:Key="mPassword">Password</x:String>
@@ -23,6 +24,8 @@
     <x:String x:Key="mPersonal">Personal</x:String>
     <x:String x:Key="mFilterByName">Filter by name...</x:String>
     <x:String x:Key="mNoPersonalProjects">This user doesn't have any personal projects</x:String>
+    <x:String x:Key="mNoPersonalTasks">This user doesn't have any personal tasks</x:String>
+    <x:String x:Key="mNoProjectTasks">This project doesn't have any tasks</x:String>
     <x:String x:Key="mNoTasks">You don't have any tasks</x:String>
     <x:String x:Key="mProjects">Projects</x:String>
     <x:String x:Key="mTasks">Tasks</x:String>
@@ -39,7 +42,7 @@
     <x:String x:Key="mDelete">Delete</x:String>
     <x:String x:Key="mRole">Role: </x:String>
     <x:String x:Key="mUser">User:</x:String>
-    <x:String x:Key="mProfile">MY ACCOUNT</x:String>
+    <x:String x:Key="mProfile">Profile</x:String>
     <x:String x:Key="mTitle">Projects</x:String>
     <x:String x:Key="m_member_dont_have_tasks">This member don't have tasks</x:String>
     <x:String x:Key="m_select_role">Please choose a role</x:String>

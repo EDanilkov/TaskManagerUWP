@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace UIModule.Utils
 {
-    sealed class NavigationService
+    public sealed class NavigationService
     {
         public void Navigate(Type sourcePage)
         {

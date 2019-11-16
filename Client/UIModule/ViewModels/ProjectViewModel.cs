@@ -59,7 +59,7 @@ namespace UIModule.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private List<User> _listMembers = new List<User>();
         public List<User> ListMembers
         {
@@ -70,7 +70,7 @@ namespace UIModule.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private Task _selectedTask;
         public Task SelectedTask
         {
@@ -81,7 +81,7 @@ namespace UIModule.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private int _selectedTaskIndex;
         public int SelectedTaskIndex
         {
@@ -103,7 +103,7 @@ namespace UIModule.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private List<Task> _listUserTask = new List<Task>();
         public List<Task> ListUserTask
         {
@@ -213,7 +213,7 @@ namespace UIModule.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private Visibility _commentsVisibility = Visibility.Collapsed;
         public Visibility CommentsVisibility
         {
@@ -221,6 +221,28 @@ namespace UIModule.ViewModels
             set
             {
                 _commentsVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _notProjectsVisibility = Visibility.Collapsed;
+        public Visibility NotProjectsVisibility
+        {
+            get { return _notProjectsVisibility; }
+            set
+            {
+                _notProjectsVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _projectsVisibility = Visibility.Visible;
+        public Visibility ProjectsVisibility
+        {
+            get { return _projectsVisibility; }
+            set
+            {
+                _projectsVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -236,7 +258,7 @@ namespace UIModule.ViewModels
             }
         }
 
-        
+
         private string _titleName;
         public string TitleName
         {
@@ -280,7 +302,7 @@ namespace UIModule.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private double _heightPane;
         public double HeightPane
         {
@@ -335,7 +357,7 @@ namespace UIModule.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private string _selectedTaskUserName;
         public string SelectedTaskUserName
         {
@@ -343,6 +365,17 @@ namespace UIModule.ViewModels
             set
             {
                 _selectedTaskUserName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _filter;
+        public string Filter
+        {
+            get { return _filter; }
+            set
+            {
+                _filter = value;
                 OnPropertyChanged();
             }
         }
@@ -402,6 +435,7 @@ namespace UIModule.ViewModels
                         ListTasks = (await _taskRepository.GetTasksFromProject(Consts.ProjectId));
                         RoleSourse = await _roleRepository.GetRoles();
                         await RefreshUsers();
+                        CheckCountTasks(ListTasks);
 
                     }
                     catch (Exception ex)
@@ -540,7 +574,7 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
-                        if((await _taskRepository.GetProjectTasksByUser(SelectedMember.Id, Consts.ProjectId)).Count != 0)
+                        if ((await _taskRepository.GetProjectTasksByUser(SelectedMember.Id, Consts.ProjectId)).Count != 0)
                         {
                             ContentDialog deleteFileDialog = new ContentDialog()
                             {
@@ -649,17 +683,17 @@ namespace UIModule.ViewModels
                 });
             }
         }
-        
+
         public ICommand SelectionChanged
         {
             get
             {
                 return new DelegateCommand(async (obj) =>
                 {
-                    if(SelectedTask != null)
+                    if (SelectedTask != null)
                     {
                         string userRole = (await _roleRepository.GetRoleFromUser(Consts.UserName, Consts.ProjectId)).Name;
-                        if (string.Equals(userRole,"Admin") || SelectedTask.UserId == (await _userRepository.GetUser(Consts.UserName)).Id)
+                        if (string.Equals(userRole, "Admin") || SelectedTask.UserId == (await _userRepository.GetUser(Consts.UserName)).Id)
                         {
                             CommentsVisibility = Visibility.Visible;
                         }
@@ -688,23 +722,67 @@ namespace UIModule.ViewModels
             }
         }
 
-        public ICommand SizeChanged
+        public ICommand FilterChanged
         {
             get
             {
                 return new DelegateCommand(async (obj) =>
                 {
-                    if(Consts.Width > 720)
+                    try
                     {
-                        Height = Consts.Height - 140;
-                        HeightPane = Consts.Height - 100;
+                        List<Task> filteredTasks = await FilterProjects();
+                        CheckCountTasks(filteredTasks);
+                        ListTasks = filteredTasks;
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Height = Consts.Height - 210;
-                        HeightPane = Consts.Height - 150;
+                        logger.Error(ex.ToString());
+                        //ErrorHandler.Show(ex.Message, _dialogIdentifier);
                     }
                 });
+            }
+        }
+
+        private async Task<List<Task>> FilterProjects()
+        {
+            if (Filter != null || Filter != "")
+            {
+                List<Task> filteredTasks = new List<Task>();
+                List<Task> tasks = await _taskRepository.GetTasksFromProject(Consts.ProjectId);
+                foreach (Task task in tasks)
+                {
+                    if (task.Name.Contains(Filter))
+                    {
+                        filteredTasks.Add(task);
+                    }
+                }
+                CheckCountTasks(filteredTasks);
+                return filteredTasks;
+            }
+            else
+            {
+                return await _taskRepository.GetTasksFromProject(Consts.ProjectId);
+            }
+        }
+
+        private void CheckCountTasks(List<Task> tasks)
+        {
+            try
+            {
+                if (tasks.Count == 0)
+                {
+                    ProjectsVisibility = Visibility.Collapsed;
+                    NotProjectsVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    ProjectsVisibility = Visibility.Visible;
+                    NotProjectsVisibility = Visibility.Collapsed;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
             }
         }
 

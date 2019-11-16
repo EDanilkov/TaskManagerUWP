@@ -253,8 +253,27 @@ namespace UIModule.ViewModels
                     {
                         string taskName = (await _taskRepository.GetTask(Consts.TaskId)).Name;
                         await _taskRepository.DeleteTask(Consts.TaskId);
-                        Navigate("Pages/Project.xaml");
+                        NavigationService.Instance.NavigateTo(typeof(Pages.Project));
                         logger.Debug("user " + Consts.UserName + " deleted task " + taskName + " to the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex.ToString());
+                        //ErrorHandler.Show(Application.Current.Resources["m_error_delete_task"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                    }
+                });
+            }
+        }
+        
+        public ICommand ChangeTaskClick
+        {
+            get
+            {
+                return new DelegateCommand(async (obj) =>
+                {
+                    try
+                    {
+                        NavigationService.Instance.NavigateTo(typeof(Pages.ChangeTask));
                     }
                     catch (Exception ex)
                     {

@@ -16,11 +16,21 @@ namespace UIModule.ViewModels
     public class AddNewTaskViewModel : NavigateViewModel
     {
         string _dialogIdentifier = "AddTaskDialog";
-        private static Logger logger = LogManager.GetCurrentClassLogger();
-        IUserRepository _userRepository = new UserRepository();
-        ITaskRepository _taskRepository = new TaskRepository();
-        IProjectRepository _projectRepository = new ProjectRepository();
-        IStatusRepository _statusRepository = new StatusRepository();
+        private static Logger logger;
+        IUserRepository _userRepository;
+        ITaskRepository _taskRepository;
+        IProjectRepository _projectRepository;
+        IStatusRepository _statusRepository;
+        
+        public AddNewTaskViewModel()
+        {
+            logger = LogManager.GetCurrentClassLogger();
+            _userRepository = new UserRepository();
+            _taskRepository = new TaskRepository();
+            _projectRepository = new ProjectRepository();
+            _statusRepository = new StatusRepository();
+        }
+
         #region Properties
 
         private string _taskName;

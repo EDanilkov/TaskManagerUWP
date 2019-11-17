@@ -18,20 +18,28 @@ namespace UIModule.ViewModels
 {
     class ProjectViewModel : NavigateViewModel
     {
-        IUserRepository _userRepository = new UserRepository();
-        IRoleRepository _roleRepository = new RoleRepository();
-        IProjectRepository _projectRepository = new ProjectRepository();
-        ITaskRepository _taskRepository = new TaskRepository();
-        IPermissionRepository _permissionRepository = new PermissionRepository();
-        ICommentRepository _commentRepository = new CommentRepository();
-        IStatusRepository _statusRepository = new StatusRepository();
+        IUserRepository _userRepository;
+        IRoleRepository _roleRepository;
+        IProjectRepository _projectRepository;
+        ITaskRepository _taskRepository;
+        IPermissionRepository _permissionRepository;
+        ICommentRepository _commentRepository;
+        IStatusRepository _statusRepository;
 
 
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger logger;
 
         public ProjectViewModel()
         {
-
+            _userRepository = new UserRepository();
+            _roleRepository = new RoleRepository();
+            _projectRepository = new ProjectRepository();
+            _taskRepository = new TaskRepository();
+            _permissionRepository = new PermissionRepository();
+            _commentRepository = new CommentRepository();
+            _statusRepository = new StatusRepository();
+            
+            logger = LogManager.GetCurrentClassLogger();
         }
 
         private bool _isPaneOpen = false;

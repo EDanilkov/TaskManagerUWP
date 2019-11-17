@@ -17,26 +17,26 @@ namespace UIModule.ViewModels
     class TaskViewModel : NavigateViewModel
     {
 
-        private static Logger logger = LogManager.GetCurrentClassLogger();
-        IUserRepository _userRepository = new UserRepository();
-        ITaskRepository _taskRepository = new TaskRepository();
-        IRoleRepository _roleRepository = new RoleRepository();
-        IPermissionRepository _permissionRepository = new PermissionRepository();
-        IProjectRepository _projectRepository = new ProjectRepository();
-        ICommentRepository _commentRepository = new CommentRepository();
-        IStatusRepository _statusRepository = new StatusRepository();
-
-
-        /*public TaskViewModel(IUserRepository userRepository, ITaskRepository taskRepository, IProjectRepository projectRepository, IPermissionRepository permissionRepository, IRoleRepository roleRepository, IUserProjectRepository userProjectRepository)
+        private static Logger logger;
+        IUserRepository _userRepository;
+        ITaskRepository _taskRepository;
+        IRoleRepository _roleRepository;
+        IPermissionRepository _permissionRepository;
+        IProjectRepository _projectRepository;
+        ICommentRepository _commentRepository;
+        IStatusRepository _statusRepository;
+        
+        public TaskViewModel()
         {
-            Title = "Task";
-
-            _userRepository = userRepository;
-            _taskRepository = taskRepository;
-            _projectRepository = projectRepository;
-            _permissionRepository = permissionRepository;
-            _roleRepository = roleRepository;
-        }*/
+            logger = LogManager.GetCurrentClassLogger();
+            _userRepository = new UserRepository();
+            _taskRepository = new TaskRepository();
+            _roleRepository = new RoleRepository();
+            _permissionRepository = new PermissionRepository();
+            _projectRepository = new ProjectRepository();
+            _commentRepository = new CommentRepository();
+            _statusRepository = new StatusRepository();
+        }
 
         private string _titleName;
         public string TitleName

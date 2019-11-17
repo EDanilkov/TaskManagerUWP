@@ -14,13 +14,22 @@ namespace UIModule.ViewModels
 {
     class AddNewMemberViewModel : NavigateViewModel
     {
-        IUserRepository _userRepository = new UserRepository();
-        IProjectRepository _projectRepository = new ProjectRepository();
-        IUserProjectRepository _userProjectRepository = new UserProjectRepository();
-        IRoleRepository _roleRepository = new RoleRepository();
-        
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        IUserRepository _userRepository;
+        IProjectRepository _projectRepository;
+        IUserProjectRepository _userProjectRepository;
+        IRoleRepository _roleRepository;
 
+        private static Logger logger;
+
+        public AddNewMemberViewModel()
+        {
+            _userRepository = new UserRepository();
+            _projectRepository = new ProjectRepository();
+            _userProjectRepository = new UserProjectRepository();
+            _roleRepository = new RoleRepository();
+            
+            logger = LogManager.GetCurrentClassLogger();
+        }
 
         private Role _selectedRole;
         public Role SelectedRole

@@ -14,9 +14,16 @@ namespace UIModule.ViewModels
 {
     class AddNewProjectViewModel : NavigateViewModel
     {
-        IUserRepository _userRepository = new UserRepository();
-        IProjectRepository _projectRepository = new ProjectRepository();
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        IUserRepository _userRepository;
+        IProjectRepository _projectRepository;
+        private static Logger logger;
+
+        public AddNewProjectViewModel()
+        {
+            _userRepository = new UserRepository();
+            _projectRepository = new ProjectRepository();
+            logger = LogManager.GetCurrentClassLogger();
+        }
 
         private string _projectName;
         public string ProjectName

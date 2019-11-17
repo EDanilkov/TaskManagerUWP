@@ -14,16 +14,20 @@ namespace UIModule.ViewModels
 {
     public class ProjectsViewModel : NavigateViewModel
     {
+        IUserRepository _userRepository;
+        IProjectRepository _projectRepository;
+        IRoleRepository _roleRepository;
+
+        private static Logger _logger;
+        
         public ProjectsViewModel()
         {
+            _userRepository = new UserRepository();
+            _projectRepository = new ProjectRepository();
+            _roleRepository = new RoleRepository();
 
+            _logger = LogManager.GetCurrentClassLogger();
         }
-
-        IUserRepository _userRepository = new UserRepository();
-        IProjectRepository _projectRepository = new ProjectRepository();
-        IRoleRepository _roleRepository = new RoleRepository();
-        
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         #region Properties
 

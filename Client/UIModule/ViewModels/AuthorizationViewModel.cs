@@ -15,8 +15,15 @@ namespace UIModule.ViewModels
 {
     class AuthorizationViewModel : NavigateViewModel
     {
-        IUserRepository _userRepository = new UserRepository();
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
+        IUserRepository _userRepository;
+        private static Logger _logger;
+
+        public AuthorizationViewModel()
+        {
+            _userRepository = new UserRepository();
+            _logger = LogManager.GetCurrentClassLogger();
+
+        }
 
         #region Properties
 

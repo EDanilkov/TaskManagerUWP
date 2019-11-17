@@ -20,6 +20,9 @@
     <x:String x:Key="mStatus">Статус</x:String>
     <x:String x:Key="mLogin">Логин</x:String>
     <x:String x:Key="mPassword">Пароль</x:String>
+    <x:String x:Key="mClosed">Закрыто</x:String>
+    <x:String x:Key="mOpen">Открыто</x:String>
+    <x:String x:Key="mAll">Все</x:String>
     <x:String x:Key="mEnter">Войти</x:String>
     <x:String x:Key="m_register">Зарегистрироваться</x:String>
     <x:String x:Key="mNewProject">Новый проект</x:String>

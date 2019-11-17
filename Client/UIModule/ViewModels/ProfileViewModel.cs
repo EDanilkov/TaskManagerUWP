@@ -16,18 +16,23 @@ namespace UIModule.ViewModels
 {
     class ProfileViewModel : NavigateViewModel
     {
+        IUserRepository _userRepository;
+        IProjectRepository _projectRepository;
+        IRoleRepository _roleRepository;
+        ITaskRepository _taskRepository;
+        IStatusRepository _statusRepository;
+
+        private static Logger _logger;
+
         public ProfileViewModel()
         {
-
+            _userRepository = new UserRepository();
+            _projectRepository = new ProjectRepository();
+            _roleRepository = new RoleRepository();
+            _taskRepository = new TaskRepository();
+            _statusRepository = new StatusRepository();
+            _logger = LogManager.GetCurrentClassLogger();
         }
-
-        IUserRepository _userRepository = new UserRepository();
-        IProjectRepository _projectRepository = new ProjectRepository();
-        IRoleRepository _roleRepository = new RoleRepository();
-        ITaskRepository _taskRepository = new TaskRepository();
-        IStatusRepository _statusRepository = new StatusRepository();
-
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         #region Properties
 
@@ -38,6 +43,61 @@ namespace UIModule.ViewModels
             set
             {
                 _listTasks = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<RecordListBoxTasks> _listOpenTasks = new List<RecordListBoxTasks>();
+        public List<RecordListBoxTasks> ListOpenTasks
+        {
+            get { return _listOpenTasks; }
+            set
+            {
+                _listOpenTasks = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<RecordListBoxTasks> _listClosedTasks = new List<RecordListBoxTasks>();
+        public List<RecordListBoxTasks> ListClosedTasks
+        {
+            get { return _listClosedTasks; }
+            set
+            {
+                _listClosedTasks = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _openTasks;
+        public string OpenTasks
+        {
+            get { return _openTasks; }
+            set
+            {
+                _openTasks = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _closedTasks;
+        public string ClosedTasks
+        {
+            get { return _closedTasks; }
+            set
+            {
+                _closedTasks = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _allTasks;
+        public string AllTasks
+        {
+            get { return _allTasks; }
+            set
+            {
+                _allTasks = value;
                 OnPropertyChanged();
             }
         }
@@ -149,6 +209,11 @@ namespace UIModule.ViewModels
                         Brush = new SolidColorBrush(Colors.Red);
                         UserName = Consts.UserName;
                         ListTasks = await GetRecordListBoxes();
+                        ListOpenTasks = ListTasks.Where(c => string.Equals(c.Status, "Open")).ToList();
+                        ListClosedTasks = ListTasks.Where(c => string.Equals(c.Status, "Closed")).ToList();
+                        AllTasks = Application.Current.Resources["mAll"].ToString() + "(" + ListTasks.Count + ")";
+                        OpenTasks = Application.Current.Resources["mOpen"].ToString() + "(" + ListOpenTasks.Count + ")";
+                        ClosedTasks = Application.Current.Resources["mClosed"].ToString() + "(" + ListClosedTasks.Count + ")";
                         PageVisibility = Visibility.Visible;
                         LoadingVisibility = Visibility.Collapsed;
                     }

@@ -18,6 +18,9 @@
     <x:String x:Key="MError">ERROR</x:String>
     <x:String x:Key="mLogin">Login</x:String>
     <x:String x:Key="mPassword">Password</x:String>
+    <x:String x:Key="mClosed">Closed</x:String>
+    <x:String x:Key="mOpen">Open</x:String>
+    <x:String x:Key="mAll">All</x:String>
     <x:String x:Key="mEnter">Enter</x:String>
     <x:String x:Key="m_register">Register</x:String>
     <x:String x:Key="mNewProject">New project</x:String>

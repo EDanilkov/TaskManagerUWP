@@ -1,6 +1,7 @@
 ﻿using BusinessLogicModule.Interfaces;
 using BusinessLogicModule.Services;
 using Newtonsoft.Json;
+using SharedServicesModule;
 using SharedServicesModule.Models;
 using SharedServicesModule.ResponseModel;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace BusinessLogicModule.Repositories
             try
             {
                 string json = JsonConvert.SerializeObject(status);
-                return await RequestService.Post("https://localhost:44393/api/statuses/new", json);
+                return await RequestService.Post(Consts.BaseAddress + "api/statuses/new", json);
             }
             catch
             {
@@ -28,7 +29,7 @@ namespace BusinessLogicModule.Repositories
         {
             try
             {
-                return await RequestService.Get<List<Status>>("https://localhost:44393/api/statuses/all");
+                return await RequestService.Get<List<Status>>(Consts.BaseAddress + "api/statuses/all");
 
             }
             catch
@@ -41,7 +42,7 @@ namespace BusinessLogicModule.Repositories
         {
             try
             {
-                return await RequestService.Get<Status>("https://localhost:44393/api/statuses?name=" + name + "&id=" + id);
+                return await RequestService.Get<Status>(Consts.BaseAddress + "api/statuses?name=" + name + "&id=" + id);
 
             }
             catch

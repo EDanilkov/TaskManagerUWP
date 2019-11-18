@@ -1,5 +1,6 @@
 ﻿using BusinessLogicModule.Interfaces;
 using NLog;
+using SharedServicesModule;
 using SharedServicesModule.Models;
 using SharedServicesModule.Services;
 using System;

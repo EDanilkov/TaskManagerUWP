@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UIModule
+namespace SharedServicesModule
 {
-    static class Consts
+    public static class Consts
     {
         public static double Width { get; set; }
         public static double Height { get; set; }
@@ -16,6 +16,7 @@ namespace UIModule
         public static int UserId { get; set; }
 
 
+        public const string BaseAddress = "https://192.168.0.105:44393/";
         public const string Success = "#64DD17";
         public const string Error = "#d50000";
     }

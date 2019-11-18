@@ -119,7 +119,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Consts.cs" />
     <Compile Include="Pages\AddNewMember.xaml.cs">
       <DependentUpon>AddNewMember.xaml</DependentUpon>
     </Compile>

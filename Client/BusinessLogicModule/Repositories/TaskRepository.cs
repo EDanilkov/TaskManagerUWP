@@ -1,5 +1,6 @@
 ﻿using BusinessLogicModule.Services;
 using Newtonsoft.Json;
+using SharedServicesModule;
 using SharedServicesModule.ResponseModel;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 string json = JsonConvert.SerializeObject(task);
-                return await RequestService.Post("https://localhost:44393/api/tasks/new", json);
+                return await RequestService.Post(Consts.BaseAddress + "api/tasks/new", json);
             }
             catch
             {
@@ -29,7 +30,7 @@ namespace BusinessLogicModule.Interfaces
 
                 UpdateTaskModel updateTaskModel = new UpdateTaskModel() { Task = task, TaskName = taskName, TaskDescription = taskDescription, UserId = userId, StatusId = statusId,TaskFinishDate = taskFinishDate };
                 string json = JsonConvert.SerializeObject(updateTaskModel);
-                await RequestService.Put("https://localhost:44393/api/tasks/", json);
+                await RequestService.Put(Consts.BaseAddress + "api/tasks/", json);
             }
             catch
             {
@@ -41,7 +42,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                await RequestService.Delete("https://localhost:44393/api/tasks/" + taskId.ToString());
+                await RequestService.Delete(Consts.BaseAddress + "api/tasks/" + taskId.ToString());
             }
             catch
             {
@@ -54,7 +55,7 @@ namespace BusinessLogicModule.Interfaces
             try
             {
 
-                await RequestService.Delete("https://localhost:44393/api/tasks/" + userId.ToString() + "/" + projectId.ToString());
+                await RequestService.Delete(Consts.BaseAddress + "api/tasks/" + userId.ToString() + "/" + projectId.ToString());
             }
             catch
             {
@@ -66,7 +67,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<List<SharedServicesModule.Models.Task>>("https://localhost:44393/api/tasks/all");
+                return await RequestService.Get<List<SharedServicesModule.Models.Task>>(Consts.BaseAddress + "api/tasks/all");
 
             }
             catch
@@ -79,7 +80,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<SharedServicesModule.Models.Task>("https://localhost:44393/api/tasks/" + taskId.ToString());
+                return await RequestService.Get<SharedServicesModule.Models.Task>(Consts.BaseAddress + "api/tasks/" + taskId.ToString());
 
             }
             catch
@@ -92,7 +93,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<List<SharedServicesModule.Models.Task>>("https://localhost:44393/api/tasks/projects/" + projectId.ToString());
+                return await RequestService.Get<List<SharedServicesModule.Models.Task>>(Consts.BaseAddress + "api/tasks/projects/" + projectId.ToString());
             }
             catch
             {
@@ -104,7 +105,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<List<SharedServicesModule.Models.Task>>("https://localhost:44393/api/tasks/" + userId.ToString() + "/" + projectId.ToString());
+                return await RequestService.Get<List<SharedServicesModule.Models.Task>>(Consts.BaseAddress + "api/tasks/" + userId.ToString() + "/" + projectId.ToString());
 
             }
             catch

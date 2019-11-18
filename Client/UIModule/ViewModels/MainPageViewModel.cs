@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedServicesModule;
+using System;
 using System.Windows.Input;
 using UIModule.Pages;
 using UIModule.Utils;

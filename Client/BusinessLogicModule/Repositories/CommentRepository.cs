@@ -1,6 +1,7 @@
 ﻿using BusinessLogicModule.Interfaces;
 using BusinessLogicModule.Services;
 using Newtonsoft.Json;
+using SharedServicesModule;
 using SharedServicesModule.Models;
 using SharedServicesModule.ResponseModel;
 using System;
@@ -19,7 +20,7 @@ namespace BusinessLogicModule.Repositories
             {
 
                 string json = JsonConvert.SerializeObject(comment);
-                return await RequestService.Post("https://localhost:44393/api/comments/new", json);
+                return await RequestService.Post(Consts.BaseAddress + "api/comments/new", json);
             }
             catch
             {
@@ -31,7 +32,7 @@ namespace BusinessLogicModule.Repositories
         {
             try
             {
-                return await RequestService.Get<List<Comment>>("https://localhost:44393/api/comments/" + tasktId.ToString());
+                return await RequestService.Get<List<Comment>>(Consts.BaseAddress + "api/comments/" + tasktId.ToString());
             }
             catch
             {

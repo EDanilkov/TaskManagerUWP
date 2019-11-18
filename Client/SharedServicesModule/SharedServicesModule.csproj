@@ -120,6 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Consts.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\NavigateArgs.cs" />
     <Compile Include="Models\Permission.cs" />

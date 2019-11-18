@@ -7,8 +7,7 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:vm="using:UIModule.ViewModels"
-    MinWidth="360"
-    MinHeight="470"
+    MinWidth="300"
     mc:Ignorable="d">
 
     <Page.DataContext>

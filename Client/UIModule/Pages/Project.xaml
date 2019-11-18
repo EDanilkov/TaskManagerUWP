@@ -9,7 +9,7 @@
     xmlns:vm="using:UIModule.ViewModels"
     mc:Ignorable="d"
     Name="page"
-    MinWidth="360"
+    MinWidth="300"
     MinHeight="470">
 
     <Page.DataContext>

@@ -1,6 +1,7 @@
 ﻿using BusinessLogicModule.Interfaces;
 using GalaSoft.MvvmLight.Command;
 using NLog;
+using SharedServicesModule;
 using SharedServicesModule.Models;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,5 @@
-﻿using SharedServicesModule.Models;
+﻿using SharedServicesModule;
+using SharedServicesModule.Models;
 using System;
 using UIModule.ViewModels;
 using Windows.ApplicationModel.Core;

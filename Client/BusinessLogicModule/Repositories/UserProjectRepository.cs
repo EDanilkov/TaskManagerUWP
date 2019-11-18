@@ -1,5 +1,6 @@
 ﻿using BusinessLogicModule.Services;
 using Newtonsoft.Json;
+using SharedServicesModule;
 using SharedServicesModule.Models;
 using SharedServicesModule.ResponseModel;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 string json = JsonConvert.SerializeObject(userProject);
-                return await RequestService.Post("https://localhost:44393/api/userprojects/new", json);
+                return await RequestService.Post(Consts.BaseAddress + "api/userprojects/new", json);
             }
             catch
             {

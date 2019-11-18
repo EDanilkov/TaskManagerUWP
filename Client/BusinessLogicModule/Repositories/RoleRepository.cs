@@ -1,5 +1,6 @@
 ﻿using BusinessLogicModule.Services;
 using Newtonsoft.Json;
+using SharedServicesModule;
 using SharedServicesModule.Models;
 using SharedServicesModule.ResponseModel;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 string json = JsonConvert.SerializeObject(role);
-                return await RequestService.Post("https://localhost:44393/api/roles/new", json);
+                return await RequestService.Post(Consts.BaseAddress + "api/roles/new", json);
 
             }
             catch
@@ -27,7 +28,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<Role>("https://localhost:44393/api/roles/" + userName + "/" + projectId.ToString());
+                return await RequestService.Get<Role>(Consts.BaseAddress + "api/roles/" + userName + "/" + projectId.ToString());
             }
             catch
             {
@@ -39,7 +40,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<List<Role>>("https://localhost:44393/api/roles/all");
+                return await RequestService.Get<List<Role>>(Consts.BaseAddress + "api/roles/all");
 
             }
             catch
@@ -52,7 +53,7 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-                return await RequestService.Get<Role>("https://localhost:44393/api/roles?name=" + name + "&id=" + id);
+                return await RequestService.Get<Role>(Consts.BaseAddress + "api/roles?name=" + name + "&id=" + id);
 
             }
             catch

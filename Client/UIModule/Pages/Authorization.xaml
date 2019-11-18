@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:UIModule.Pages"  
-    MinWidth="360"
+    MinWidth="300"
     MinHeight="470"
     xmlns:vm="using:UIModule.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"

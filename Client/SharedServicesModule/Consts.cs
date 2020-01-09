@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SharedServicesModule
+﻿namespace SharedServicesModule
 {
     public static class Consts
     {
@@ -14,9 +8,8 @@ namespace SharedServicesModule
         public static int ProjectId { get; set; }
         public static int TaskId { get; set; }
         public static int UserId { get; set; }
-
-
-        public const string BaseAddress = "https://192.168.0.105:44393/";
+        
+        public const string BaseAddress = "https://192.168.100.60:44393/";
         public const string Success = "#64DD17";
         public const string Error = "#d50000";
     }

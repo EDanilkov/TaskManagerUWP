@@ -1,4 +1,5 @@
-﻿using BusinessLogicModule.Services;
+﻿using BusinessLogicModule.Interfaces;
+using BusinessLogicModule.Services;
 using Newtonsoft.Json;
 using SharedServicesModule;
 using SharedServicesModule.ResponseModel;
@@ -6,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BusinessLogicModule.Interfaces
+namespace BusinessLogicModule.Repositories
 {
     public class TaskRepository : ITaskRepository
     {
@@ -23,12 +24,18 @@ namespace BusinessLogicModule.Interfaces
             }
         }
 
-        public async System.Threading.Tasks.Task ChangeTask(SharedServicesModule.Models.Task task, string taskName, string taskDescription, int userId, int statusId, DateTime taskFinishDate)
+        public async Task ChangeTask(SharedServicesModule.Models.Task task, string taskName, string taskDescription, int userId, int statusId, DateTime taskFinishDate)
         {
             try
             {
-
-                UpdateTaskModel updateTaskModel = new UpdateTaskModel() { Task = task, TaskName = taskName, TaskDescription = taskDescription, UserId = userId, StatusId = statusId,TaskFinishDate = taskFinishDate };
+                UpdateTaskModel updateTaskModel = new UpdateTaskModel()
+                {
+                    Task = task,
+                    TaskName = taskName,
+                    TaskDescription = taskDescription,
+                    UserId = userId, StatusId = statusId,
+                    TaskFinishDate = taskFinishDate
+                };
                 string json = JsonConvert.SerializeObject(updateTaskModel);
                 await RequestService.Put(Consts.BaseAddress + "api/tasks/", json);
             }
@@ -38,7 +45,7 @@ namespace BusinessLogicModule.Interfaces
             }
         }
 
-        public async System.Threading.Tasks.Task DeleteTask(int taskId)
+        public async Task DeleteTask(int taskId)
         {
             try
             {
@@ -50,7 +57,7 @@ namespace BusinessLogicModule.Interfaces
             }
         }
 
-        public async System.Threading.Tasks.Task DeleteTasksByUser(int userId, int projectId)
+        public async Task DeleteTasksByUser(int userId, int projectId)
         {
             try
             {
@@ -106,7 +113,6 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 return await RequestService.Get<List<SharedServicesModule.Models.Task>>(Consts.BaseAddress + "api/tasks/" + userId.ToString() + "/" + projectId.ToString());
-
             }
             catch
             {

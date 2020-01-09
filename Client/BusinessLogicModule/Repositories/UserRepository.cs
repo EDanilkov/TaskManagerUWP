@@ -1,4 +1,5 @@
-﻿using BusinessLogicModule.Services;
+﻿using BusinessLogicModule.Interfaces;
+using BusinessLogicModule.Services;
 using Newtonsoft.Json;
 using SharedServicesModule;
 using SharedServicesModule.Models;
@@ -6,7 +7,7 @@ using SharedServicesModule.ResponseModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BusinessLogicModule.Interfaces
+namespace BusinessLogicModule.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -28,7 +29,6 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 await RequestService.Delete(Consts.BaseAddress + "api/users/" + userId.ToString() + "/" + projectId.ToString());
-
             }
             catch
             {
@@ -41,7 +41,6 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 return await RequestService.Get<List<User>>(Consts.BaseAddress + "api/users/all");
-
             }
             catch
             {
@@ -54,7 +53,6 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 return await RequestService.Get<User>(Consts.BaseAddress + "api/users?name=" + name + "&id=" + id);
-
             }
             catch
             {
@@ -67,7 +65,6 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 return await RequestService.Get<List<User>>(Consts.BaseAddress + "api/users/" + projectId.ToString());
-
             }
             catch
             {

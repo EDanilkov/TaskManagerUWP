@@ -9,7 +9,7 @@ namespace BusinessLogicModule.Interfaces
     {
         Task<NewResponseModel> AddPermission(Permission permission);
 
-        Task<Permission> GetPermission(string permissionName);
         Task<List<Permission>> GetPermissionsFromRole(int roleId);
+        Task<Permission> GetPermission(string permissionName);
     }
 }

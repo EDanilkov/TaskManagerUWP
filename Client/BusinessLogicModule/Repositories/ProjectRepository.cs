@@ -1,4 +1,5 @@
-﻿using BusinessLogicModule.Services;
+﻿using BusinessLogicModule.Interfaces;
+using BusinessLogicModule.Services;
 using Newtonsoft.Json;
 using SharedServicesModule;
 using SharedServicesModule.Models;
@@ -6,7 +7,7 @@ using SharedServicesModule.ResponseModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BusinessLogicModule.Interfaces
+namespace BusinessLogicModule.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {
@@ -15,7 +16,6 @@ namespace BusinessLogicModule.Interfaces
         {
             try
             {
-
                 string json = JsonConvert.SerializeObject(project);
                 return await RequestService.Post(Consts.BaseAddress + "api/projects/new", json);
             }
@@ -30,7 +30,6 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 await RequestService.Delete(Consts.BaseAddress + "api/projects/" + projectId.ToString());
-
             }
             catch
             {
@@ -43,7 +42,6 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 await RequestService.Delete(Consts.BaseAddress + "api/projects/tasks/" + projectId.ToString());
-
             }
             catch
             {
@@ -56,7 +54,6 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 await RequestService.Delete(Consts.BaseAddress + "api/projects/users/" + projectId.ToString());
-
             }
             catch
             {
@@ -69,7 +66,6 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 return await RequestService.Get<Project>(Consts.BaseAddress + "api/projects/" + projectId.ToString());
-
             }
             catch
             {
@@ -82,7 +78,6 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 return await RequestService.Get<List<Project>>(Consts.BaseAddress + "api/projects/all");
-
             }
             catch
             {
@@ -95,7 +90,6 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 return await RequestService.Get<List<SharedServicesModule.Models.Task>>(Consts.BaseAddress + "api/projects/tasks/" + userId.ToString());
-
             }
             catch
             {

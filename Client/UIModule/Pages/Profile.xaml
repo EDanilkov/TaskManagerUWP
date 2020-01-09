@@ -6,14 +6,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:vm="using:UIModule.ViewModels"
     MinWidth="300"
     MinHeight="470"
-    mc:Ignorable="d">
-
-    <Page.DataContext>
-        <vm:ProfileViewModel/>
-    </Page.DataContext>
+    RequestedTheme="Light"
+    mc:Ignorable="d"
+    DataContext="{Binding Source={StaticResource Locator}, Path=ProfileViewModel}">
 
     <i:Interaction.Behaviors>
         <core:EventTriggerBehavior EventName="Loaded">
@@ -74,7 +71,7 @@
                             Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
                             FontSize="36" 
                             FontFamily="Segoe MDL2 Assets" 
-                            Text="&#xEC6C;" />
+                            Text="&#xE998;" />
                         <TextBlock
                             HorizontalAlignment="Center"
                             TextWrapping="Wrap"

@@ -1,5 +1,4 @@
 ﻿using BusinessLogicModule.Interfaces;
-using BusinessLogicModule.Repositories;
 using NLog;
 using SharedServicesModule;
 using SharedServicesModule.Models;
@@ -15,7 +14,7 @@ using Windows.UI.Xaml.Media;
 
 namespace UIModule.ViewModels
 {
-    class ProfileViewModel : NavigateViewModel
+    public class ProfileViewModel : NavigateViewModel
     {
         IUserRepository _userRepository;
         IProjectRepository _projectRepository;
@@ -25,13 +24,14 @@ namespace UIModule.ViewModels
 
         private static Logger _logger;
 
-        public ProfileViewModel()
+        public ProfileViewModel(IUserRepository UserRepository, IProjectRepository ProjectRepository, IRoleRepository RoleRepository,
+                                    ITaskRepository TaskRepository, IStatusRepository StatusRepository)
         {
-            _userRepository = new UserRepository();
-            _projectRepository = new ProjectRepository();
-            _roleRepository = new RoleRepository();
-            _taskRepository = new TaskRepository();
-            _statusRepository = new StatusRepository();
+            _userRepository = UserRepository;
+            _projectRepository = ProjectRepository;
+            _roleRepository = RoleRepository;
+            _taskRepository = TaskRepository;
+            _statusRepository = StatusRepository;
             _logger = LogManager.GetCurrentClassLogger();
         }
 
@@ -188,7 +188,7 @@ namespace UIModule.ViewModels
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     Consts.TaskId = SelectedTask.TaskId;
                     Consts.ProjectId = SelectedTask.ProjectId;
@@ -221,6 +221,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         _logger.Error(ex.ToString());
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
             });
             }
@@ -276,8 +277,6 @@ namespace UIModule.ViewModels
                 _logger.Error(ex.ToString());
             }
         }
-
-
         #endregion
     }
 }

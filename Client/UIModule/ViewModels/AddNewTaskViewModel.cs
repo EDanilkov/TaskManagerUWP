@@ -1,13 +1,9 @@
 ﻿using BusinessLogicModule.Interfaces;
-using BusinessLogicModule.Repositories;
 using NLog;
 using SharedServicesModule;
 using SharedServicesModule.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using UIModule.Utils;
 using Windows.UI.Xaml;
@@ -16,20 +12,20 @@ namespace UIModule.ViewModels
 {
     public class AddNewTaskViewModel : NavigateViewModel
     {
-        string _dialogIdentifier = "AddTaskDialog";
         private static Logger logger;
         IUserRepository _userRepository;
         ITaskRepository _taskRepository;
         IProjectRepository _projectRepository;
         IStatusRepository _statusRepository;
         
-        public AddNewTaskViewModel()
+        public AddNewTaskViewModel(IUserRepository UserRepository, ITaskRepository TaskRepository, IProjectRepository ProjectRepository, 
+                                        IStatusRepository StatusRepository)
         {
             logger = LogManager.GetCurrentClassLogger();
-            _userRepository = new UserRepository();
-            _taskRepository = new TaskRepository();
-            _projectRepository = new ProjectRepository();
-            _statusRepository = new StatusRepository();
+            _userRepository = UserRepository;
+            _taskRepository = TaskRepository;
+            _projectRepository = ProjectRepository;
+            _statusRepository = StatusRepository;
         }
 
         #region Properties
@@ -134,7 +130,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -144,7 +140,7 @@ namespace UIModule.ViewModels
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     try
                     {
@@ -153,7 +149,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -187,14 +183,14 @@ namespace UIModule.ViewModels
                         }
                         else
                         {
-                            //ErrorHandler.Show(Application.Current.Resources["m_correct_entry"].ToString(), _dialogIdentifier);
+                            ErrorHandler.Show(Application.Current.Resources["m_correct_entry"].ToString());
                         }
 
                     }
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_create_task"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_create_task"].ToString() + "\n" + ex.Message);
                     }
                 });
             }

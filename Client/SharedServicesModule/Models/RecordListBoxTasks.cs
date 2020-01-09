@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Media;
+﻿using Windows.UI.Xaml.Media;
 
 namespace SharedServicesModule.Models
 {
@@ -24,7 +19,8 @@ namespace SharedServicesModule.Models
         public string Status { get; set; }
         public Brush Foreground { get; set; }
 
-        public RecordListBoxTasks(int idTask, int idUser, int idProject, string userName, string projectName,  string taskName, string startDate, string finishDate, string status, Brush foreground)
+        public RecordListBoxTasks(int idTask, int idUser, int idProject, string userName, string projectName,  string taskName, 
+                                                                string startDate, string finishDate, string status, Brush foreground)
         {
             TaskId = idTask;
             UserId = idUser;

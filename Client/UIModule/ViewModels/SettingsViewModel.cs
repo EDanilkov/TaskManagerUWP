@@ -1,14 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using NLog;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Input;
 using UIModule.Utils;
-using Windows.ApplicationModel.Resources.Core;
 using Windows.UI.Xaml;
 
 namespace UIModule.ViewModels
 {
-    class SettingsViewModel : NavigateViewModel
+    public class SettingsViewModel : NavigateViewModel
     {
+        private static Logger logger;
+
+        public SettingsViewModel()
+        {
+            logger = LogManager.GetCurrentClassLogger();
+        }
+
+        #region Properties
+
         private List<CultureInfo> _languages = new List<CultureInfo>();
         public List<CultureInfo> Languages
         {
@@ -53,22 +63,33 @@ namespace UIModule.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        #endregion
         
+        #region Methods
+
         public ICommand Loaded
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
-
-                    PageVisibility = Visibility.Collapsed;
-                    LoadingVisibility = Visibility.Visible;
-                    foreach (var lang in App.Languages)
+                    try
                     {
-                        Languages.Add(lang);
+                        PageVisibility = Visibility.Collapsed;
+                        LoadingVisibility = Visibility.Visible;
+                        foreach (var lang in App.Languages)
+                        {
+                            Languages.Add(lang);
+                        }
+                        PageVisibility = Visibility.Visible;
+                        LoadingVisibility = Visibility.Collapsed;
                     }
-                    PageVisibility = Visibility.Visible;
-                    LoadingVisibility = Visibility.Collapsed;
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex.ToString());
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
+                    }
                 });
             }
         }
@@ -77,7 +98,7 @@ namespace UIModule.ViewModels
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     App.Language = SelectedLanguage;
                     NavigationService.Instance.Navigate(typeof(Pages.MainPage));
@@ -86,17 +107,6 @@ namespace UIModule.ViewModels
             }
         }
 
-        public ICommand Click
-        {
-            get
-            {
-                return new DelegateCommand(async (obj) =>
-                {
-                    NavigationService.Instance.Navigate(typeof(Pages.AddNewProject));
-                });
-            }
-        }
-        
-
+        #endregion
     }
 }

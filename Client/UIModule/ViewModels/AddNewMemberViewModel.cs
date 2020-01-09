@@ -5,15 +5,13 @@ using SharedServicesModule.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using UIModule.Utils;
 using Windows.UI.Xaml;
 
 namespace UIModule.ViewModels
 {
-    class AddNewMemberViewModel : NavigateViewModel
+    public class AddNewMemberViewModel : NavigateViewModel
     {
         IUserRepository _userRepository;
         IProjectRepository _projectRepository;
@@ -22,15 +20,18 @@ namespace UIModule.ViewModels
 
         private static Logger logger;
 
-        public AddNewMemberViewModel()
+        public AddNewMemberViewModel(IUserRepository UserRepository, IProjectRepository ProjectRepository,
+                                        IUserProjectRepository UserProjectRepository, IRoleRepository RoleRepository)
         {
-            _userRepository = new UserRepository();
-            _projectRepository = new ProjectRepository();
-            _userProjectRepository = new UserProjectRepository();
-            _roleRepository = new RoleRepository();
-            
+            _userRepository = UserRepository;
+            _projectRepository = ProjectRepository;
+            _userProjectRepository = UserProjectRepository;
+            _roleRepository = RoleRepository;
+
             logger = LogManager.GetCurrentClassLogger();
         }
+
+        #region Properties
 
         private Role _selectedRole;
         public Role SelectedRole
@@ -142,6 +143,10 @@ namespace UIModule.ViewModels
             }
         }
 
+        #endregion
+
+        #region Methods
+
         public ICommand ComboBoxNewMembersChanged
         {
             get
@@ -176,7 +181,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -197,19 +202,17 @@ namespace UIModule.ViewModels
                             await _userProjectRepository.AddUserProject(userProject);
 
                             logger.Debug("user " + Consts.UserName + " added user " + SelectedNewMember.Login + " to the project " + project.Name + " with the " + SelectedRole.Name + " role");
-
                             NavigationService.Instance.NavigateTo(typeof(Pages.Project));
-                            //MaterialDesignThemes.Wpf.DialogHost.CloseDialogCommand.Execute(null, null);
                         }
                         else
                         {
-                            //ErrorHandler.Show(Application.Current.Resources["m_correct_entry"].ToString(), _dialogIdentifier);
+                            ErrorHandler.Show(Application.Current.Resources["m_correct_entry"].ToString());
                         }
                     }
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_add_user"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_add_user"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -233,7 +236,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -243,7 +246,7 @@ namespace UIModule.ViewModels
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     try
                     {
@@ -252,7 +255,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -284,5 +287,6 @@ namespace UIModule.ViewModels
             NewMembersSourse = userInOtherProject;
             ListMembers = await _userRepository.GetUsersFromProject(Consts.ProjectId);
         }
+        #endregion
     }
 }

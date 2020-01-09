@@ -1,14 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using UIModule.Pages;
 using UIModule.Utils;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Resources.Core;
 using Windows.Globalization;
 using Windows.System.UserProfile;
 using Windows.UI.Core;
@@ -42,10 +38,10 @@ namespace UIModule
             App.LanguageChanged += App_LanguageChanged;
 
             m_Languages.Clear();
-            m_Languages.Add(new CultureInfo("en-US")); //Нейтральная культура для этого проекта
+            m_Languages.Add(new CultureInfo("en-US"));
             m_Languages.Add(new CultureInfo("ru-RU"));
         }
-        
+
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested; //Button Back
@@ -53,6 +49,7 @@ namespace UIModule
             ApplicationLanguages.PrimaryLanguageOverride = GlobalizationPreferences.Languages[0];
 
             Frame rootFrame = Window.Current.Content as Frame;
+            
 
             if (rootFrame == null)
             {

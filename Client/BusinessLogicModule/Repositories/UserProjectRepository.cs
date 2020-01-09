@@ -1,11 +1,12 @@
-﻿using BusinessLogicModule.Services;
+﻿using BusinessLogicModule.Interfaces;
+using BusinessLogicModule.Services;
 using Newtonsoft.Json;
 using SharedServicesModule;
 using SharedServicesModule.Models;
 using SharedServicesModule.ResponseModel;
 using System.Threading.Tasks;
 
-namespace BusinessLogicModule.Interfaces
+namespace BusinessLogicModule.Repositories
 {
     public class UserProjectRepository : IUserProjectRepository
     {

@@ -1,12 +1,13 @@
 ﻿using BusinessLogicModule.Interfaces;
+using BusinessLogicModule.Repositories;
 using NLog;
 using SharedServicesModule;
 using SharedServicesModule.Models;
 using SharedServicesModule.Services;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using UIModule.Pages;
 using UIModule.Utils;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -14,16 +15,15 @@ using Windows.UI.Xaml.Media;
 
 namespace UIModule.ViewModels
 {
-    class AuthorizationViewModel : NavigateViewModel
+    public class AuthorizationViewModel : NavigateViewModel
     {
         IUserRepository _userRepository;
         private static Logger _logger;
 
-        public AuthorizationViewModel()
+        public AuthorizationViewModel(IUserRepository UserRepository)
         {
             _userRepository = new UserRepository();
             _logger = LogManager.GetCurrentClassLogger();
-
         }
 
         #region Properties
@@ -80,7 +80,6 @@ namespace UIModule.ViewModels
         private void ShowError(string textError, string colorError)
         {
             TextError = textError;
-            //ColorError = (Brush)new BrushConverter().ConvertFrom(colorError);
             VisibilityError = Visibility.Visible;
         }
 
@@ -92,11 +91,10 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
-                         var passwordBox = obj as PasswordBox;
+                        var passwordBox = obj as PasswordBox;
                         var password = passwordBox.Password;
                         if (!string.Equals(password, "") && !string.Equals(Login, ""))
                         {
-
                             User user = new User()
                             {
                                 Login = Login.ToString(),
@@ -105,13 +103,10 @@ namespace UIModule.ViewModels
                             await TokenService.GetToken(user);
 
                             Consts.UserName = Login;
-                            Consts.UserId = (await _userRepository.GetUser(Login)).Id;//user.Id;
-                            ///var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-                           // await displayRootRegistry.ShowModalPresentation(new MainWindowViewModel(_userRepository));
-                            _logger.Debug("The user " + user.Login + " is logged in to the app");
-                            NavigationService.Instance.Navigate(typeof(Pages.MainPage));
+                            Consts.UserId = (await _userRepository.GetUser(Login)).Id;
 
-                            //CloseAction();
+                            _logger.Debug("The user " + user.Login + " is logged in to the app");
+                            NavigationService.Instance.Navigate(typeof(MainPage));
                         }
                         else
                         {
@@ -137,6 +132,7 @@ namespace UIModule.ViewModels
                     {
                         var passwordBox = obj as PasswordBox;
                         var password = passwordBox.Password;
+
                         if (!string.Equals(password, "") && !string.Equals(Login, ""))
                         {
                             if ((await _userRepository.GetUsers()).Where(c => string.Equals(c.Login, Login)).ToList().Count == 0)

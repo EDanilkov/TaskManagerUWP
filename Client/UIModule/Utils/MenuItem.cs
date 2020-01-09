@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UIModule.Utils
 {
@@ -11,8 +7,7 @@ namespace UIModule.Utils
         private string icon;
         private string title;
         private Type pageType;
-
-
+        
         public string Icon
         {
             get { return this.icon; }

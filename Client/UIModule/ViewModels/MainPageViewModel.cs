@@ -1,5 +1,4 @@
 ﻿using SharedServicesModule;
-using System;
 using System.Windows.Input;
 using UIModule.Pages;
 using UIModule.Utils;
@@ -8,8 +7,15 @@ using Windows.UI.Xaml.Controls;
 
 namespace UIModule.ViewModels
 {
-    class MainPageViewModel : NavigateViewModel
+    public class MainPageViewModel : NavigateViewModel
     {
+        public MainPageViewModel()
+        {
+
+        }
+
+        #region Properties
+
         private int _selectedPage;
         public int SelectedPage
         {
@@ -54,6 +60,17 @@ namespace UIModule.ViewModels
             }
         }
 
+        private Visibility _frameVisibility;
+        public Visibility FrameVisibility
+        {
+            get { return _frameVisibility; }
+            set
+            {
+                _frameVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         private double _frameOpacity;
         public double FrameOpacity
         {
@@ -76,54 +93,49 @@ namespace UIModule.ViewModels
             }
         }
 
+        #endregion
+
+        #region Methods
+
         public ICommand PageChanged
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     switch (SelectedPage)
                     {
                         case 0:
                             NavigationService.Instance.NavigateTo(typeof(Profile));
-                            SelectedPage = -1;
-                            IsPaneOpen = Consts.Width > 720 ? true : false;
                             break;
                         
                         case 1:
                             NavigationService.Instance.NavigateTo(typeof(Projects));
-                            SelectedPage = -1;
-                            IsPaneOpen = Consts.Width > 720 ? true : false;
                             break;
                         
                         case 2:
                             NavigationService.Instance.NavigateTo(typeof(Settings));
-                            SelectedPage = -1;
-                            IsPaneOpen = Consts.Width > 720 ? true : false;
                             break;
 
                         case 3:
                             NavigationService.Instance.Navigate(typeof(Authorization));
-                            SelectedPage = -1;
                             break;
-
                     }
+                    SelectedPage = -1;
+                    IsPaneOpen = Consts.Width > 720 ? true : false;
                 });
             }
         }
-
-
-        //В ЭТОМ МЕТОДЕ ПОЛНАЯ ЖЕСТЬ, РЕШИТЬ ВОПРОС С МОБИЛЬНОЙ И ДЕСКТОПНОЙ ВЕРСИЕЙ
+        
         public ICommand Loaded
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
-                    /*DisplayMode = SplitViewDisplayMode.CompactOverlay;
-                    PaneVisibility = Visibility.Visible;
-                    IsPaneOpen = true ;*/
+                    FrameVisibility = Visibility.Visible;
                     SelectedPage = -1;
+                    FrameOpacity = 1;
                     DisplayMode = Consts.Width > 720 ? SplitViewDisplayMode.CompactInline : SplitViewDisplayMode.CompactOverlay;
                     PaneVisibility = Consts.Width > 720 ? Visibility.Visible : Visibility.Collapsed;
                     IsPaneOpen = Consts.Width > 720 ? true : false;
@@ -136,7 +148,7 @@ namespace UIModule.ViewModels
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     IsPaneOpen = !IsPaneOpen;
                     PaneVisibility = Visibility.Visible;
@@ -150,7 +162,7 @@ namespace UIModule.ViewModels
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     PaneVisibility = Visibility.Collapsed;
                     IsPaneOpen = false;
@@ -159,6 +171,6 @@ namespace UIModule.ViewModels
                 });
             }
         }
-        
+        #endregion
     }
 }

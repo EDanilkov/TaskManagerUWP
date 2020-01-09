@@ -30,7 +30,6 @@ namespace BusinessLogicModule.Repositories
             try
             {
                 return await RequestService.Get<List<Status>>(Consts.BaseAddress + "api/statuses/all");
-
             }
             catch
             {
@@ -43,7 +42,6 @@ namespace BusinessLogicModule.Repositories
             try
             {
                 return await RequestService.Get<Status>(Consts.BaseAddress + "api/statuses?name=" + name + "&id=" + id);
-
             }
             catch
             {

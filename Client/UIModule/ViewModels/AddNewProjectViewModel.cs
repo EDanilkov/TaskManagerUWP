@@ -3,28 +3,26 @@ using NLog;
 using SharedServicesModule;
 using SharedServicesModule.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using UIModule.Utils;
 using Windows.UI.Xaml;
 
 namespace UIModule.ViewModels
 {
-    class AddNewProjectViewModel : NavigateViewModel
+    public class AddNewProjectViewModel : NavigateViewModel
     {
         IUserRepository _userRepository;
         IProjectRepository _projectRepository;
         private static Logger logger;
 
-        public AddNewProjectViewModel()
+        public AddNewProjectViewModel(IUserRepository UserRepository, IProjectRepository ProjectRepository)
         {
-            _userRepository = new UserRepository();
-            _projectRepository = new ProjectRepository();
+            _userRepository = UserRepository;
+            _projectRepository = ProjectRepository;
             logger = LogManager.GetCurrentClassLogger();
         }
+
+        #region Properties
 
         private string _projectName;
         public string ProjectName
@@ -48,20 +46,24 @@ namespace UIModule.ViewModels
             }
         }
 
+        #endregion
+
+        #region Methods
+
         public ICommand Back
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     try
                     {
-                        NavigationService.Instance.NavigateTo(typeof(Pages.Project));
+                        NavigationService.Instance.NavigateTo(typeof(Pages.Projects));
                     }
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -91,16 +93,18 @@ namespace UIModule.ViewModels
                         }
                         else
                         {
-                            //ErrorHandler.Show(Application.Current.Resources["m_correct_entry"].ToString(), _dialogIdentifier);
+                            ErrorHandler.Show(Application.Current.Resources["m_correct_entry"].ToString());
                         }
                     }
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_create_project"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_create_project"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
         }
+
+        #endregion
     }
 }

@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="Add" TargetType="Button">
         <Setter Property="Margin" Value="10"/>
@@ -41,7 +41,7 @@
 
     <Style x:Key="BackButton" TargetType="Button">
 
-        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeWhiteBrush}"/>
+        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"/>
         <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
         <Setter Property="Content" Value="&#xE72B;"/>
         <Setter Property="Margin" Value="5"/>

@@ -1,20 +1,15 @@
 ﻿<Page
     x:Class="UIModule.Pages.Settings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:UIModule.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     MinWidth="300"
     MinHeight="470"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:vm="using:UIModule.ViewModels"
+    DataContext="{Binding Source={StaticResource Locator}, Path=SettingsViewModel}"
     mc:Ignorable="d">
-
-    <Page.DataContext>
-        <vm:SettingsViewModel/>
-    </Page.DataContext>
 
     <i:Interaction.Behaviors>
         <core:EventTriggerBehavior EventName="Loaded">
@@ -56,21 +51,14 @@
         <StackPanel
             Grid.Row="1">
             <StackPanel
-                Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                Orientation="Vertical"
                 Margin="30">
-                <TextBlock
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Center"
-                    Foreground="Black"
-                    Width="100"
-                    FontSize="34"
-                    Text="{StaticResource mLogin}"/>
                 <ComboBox 
-                    Foreground="Black"
                     x:Name="lang"
-                    
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
+                    Foreground="Black"
+                    Margin="10"
+                    Width="200"
                     Header="{StaticResource mMenuLanguage}"
                     ItemsSource="{Binding Languages}"
                     SelectedItem="{Binding SelectedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -81,23 +69,6 @@
                         </core:EventTriggerBehavior>
                     </i:Interaction.Behaviors>
                 </ComboBox>
-            </StackPanel>
-            <StackPanel
-                Orientation="Horizontal"
-                Margin="30">
-                <Button
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Center"
-                    Foreground="Black"
-                    Width="100"
-                    FontSize="34"
-                    Content="{StaticResource mLogin}">
-                    <i:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="Click">
-                            <core:InvokeCommandAction Command="{Binding Click}"/>
-                        </core:EventTriggerBehavior>
-                    </i:Interaction.Behaviors>
-                </Button>
             </StackPanel>
         </StackPanel>
         

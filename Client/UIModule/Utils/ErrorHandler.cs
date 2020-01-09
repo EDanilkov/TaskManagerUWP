@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace UIModule.Utils
@@ -13,13 +10,11 @@ namespace UIModule.Utils
         {
             ContentDialog deleteFileDialog = new ContentDialog()
             {
-                Title = "Ошибка",
+                Title = Application.Current.Resources["MError"].ToString(),
                 Content = error,
-                PrimaryButtonText = "ОК"
+                PrimaryButtonText = "ОK"
             };
-
             ContentDialogResult result = await deleteFileDialog.ShowAsync();
-            
         }
     }
 }

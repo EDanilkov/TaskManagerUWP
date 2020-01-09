@@ -4,18 +4,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d"
     MinWidth="300"
     MinHeight="470"
-    xmlns:vm="using:UIModule.ViewModels"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
     RequestedTheme="Light"
+    DataContext="{Binding Source={StaticResource Locator}, Path=MainPageViewModel}"
     SizeChanged="Page_SizeChanged">
-
-    <Page.DataContext>
-        <vm:MainPageViewModel/>
-    </Page.DataContext>
 
     <i:Interaction.Behaviors>
         <core:EventTriggerBehavior EventName="Loaded">
@@ -168,6 +164,7 @@
                         Content="&#xE700;"/>
                     <Frame 
                         Grid.Row="1"
+                        Visibility="{Binding FrameVisibility}"
                         Opacity="{Binding FrameOpacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Name="myFrame" />
                 </Grid>

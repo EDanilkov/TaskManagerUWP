@@ -4,27 +4,25 @@ using SharedServicesModule;
 using SharedServicesModule.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
 using UIModule.Utils;
 using Windows.UI.Xaml;
 
 namespace UIModule.ViewModels
 {
-    class ChangeTaskViewModel : NavigateViewModel
+    public class ChangeTaskViewModel : NavigateViewModel
     {
-        string _dialogIdentifier = "AddTaskDialog";
         private static Logger logger;
         IUserRepository _userRepository;
         ITaskRepository _taskRepository;
         IProjectRepository _projectRepository;
 
-        public ChangeTaskViewModel()
+        public ChangeTaskViewModel(IUserRepository UserRepository, ITaskRepository TaskRepository, IProjectRepository ProjectRepository)
         {
             logger = LogManager.GetCurrentClassLogger();
-            _userRepository = new UserRepository();
-            _taskRepository = new TaskRepository();
-            _projectRepository = new ProjectRepository();
+            _userRepository = UserRepository;
+            _taskRepository = TaskRepository;
+            _projectRepository = ProjectRepository;
         }
 
         #region Properties
@@ -120,20 +118,23 @@ namespace UIModule.ViewModels
                     {
                         PageVisibility = Visibility.Collapsed;
                         LoadingVisibility = Visibility.Visible;
-                        List<User> users = await _userRepository.GetUsersFromProject(Consts.ProjectId);
-                        Users = users;
+
+                        Users = await _userRepository.GetUsersFromProject(Consts.ProjectId);
+
                         Task task = (await _taskRepository.GetTask(Consts.TaskId));
                         TaskName = task.Name;
                         TaskDescription = task.Description;
                         TaskFinishDate = task.EndDate;
+
                         SelectedUser = (await _userRepository.GetUser(Consts.UserName));
+
                         LoadingVisibility = Visibility.Collapsed;
                         PageVisibility = Visibility.Visible;
                     }
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -143,7 +144,7 @@ namespace UIModule.ViewModels
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     try
                     {
@@ -152,7 +153,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -170,20 +171,21 @@ namespace UIModule.ViewModels
                         {
                             Task task = await _taskRepository.GetTask(Consts.TaskId);
                             await _taskRepository.ChangeTask(task, TaskName, TaskDescription, SelectedUser.Id, task.StatusId, TaskFinishDate.UtcDateTime);
+
                             logger.Debug("user " + Consts.UserName + " added task " + TaskName + " to the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
 
                             NavigationService.Instance.NavigateTo(typeof(Pages.Project));
                         }
                         else
                         {
-                            //ErrorHandler.Show(Application.Current.Resources["m_correct_entry"].ToString(), _dialogIdentifier);
+                            ErrorHandler.Show(Application.Current.Resources["m_correct_entry"].ToString());
                         }
 
                     }
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_create_task"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_create_task"].ToString() + "\n" + ex.Message);
                     }
                 });
             }

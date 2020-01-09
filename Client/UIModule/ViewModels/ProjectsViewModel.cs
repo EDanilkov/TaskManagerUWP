@@ -1,5 +1,4 @@
 ﻿using BusinessLogicModule.Interfaces;
-using GalaSoft.MvvmLight.Command;
 using NLog;
 using SharedServicesModule;
 using SharedServicesModule.Models;
@@ -9,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using UIModule.Utils;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace UIModule.ViewModels
 {
@@ -20,12 +18,12 @@ namespace UIModule.ViewModels
         IRoleRepository _roleRepository;
 
         private static Logger _logger;
-        
-        public ProjectsViewModel()
+
+        public ProjectsViewModel(IUserRepository userRepository, IProjectRepository projectRepository, IRoleRepository roleRepository)
         {
-            _userRepository = new UserRepository();
-            _projectRepository = new ProjectRepository();
-            _roleRepository = new RoleRepository();
+            _userRepository = userRepository;
+            _projectRepository = projectRepository;
+            _roleRepository = roleRepository;
 
             _logger = LogManager.GetCurrentClassLogger();
         }
@@ -97,7 +95,6 @@ namespace UIModule.ViewModels
                 OnPropertyChanged();
             }
         }
-
         #endregion
 
         #region Methods
@@ -106,7 +103,7 @@ namespace UIModule.ViewModels
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     Consts.ProjectId = SelectedProject.Id;
                     NavigationService.Instance.NavigateTo(typeof(Pages.Project));
@@ -120,11 +117,19 @@ namespace UIModule.ViewModels
             {
                 return new DelegateCommand(async (obj) =>
                 {
-                    PageVisibility = Visibility.Collapsed;
-                    LoadingVisibility = Visibility.Visible;
-                    ListProjects = await GetRecordListBoxes();
-                    PageVisibility = Visibility.Visible;
-                    LoadingVisibility = Visibility.Collapsed;
+                    try
+                    {
+                        PageVisibility = Visibility.Collapsed;
+                        LoadingVisibility = Visibility.Visible;
+                        ListProjects = await GetRecordListBoxes();
+                        PageVisibility = Visibility.Visible;
+                        LoadingVisibility = Visibility.Collapsed;
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error(ex.ToString());
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
+                    }
                 });
             }
         }
@@ -141,8 +146,7 @@ namespace UIModule.ViewModels
             CheckCountProjects(recordListBoxes);
             return recordListBoxes;
         }
-
-
+        
         private void CheckCountProjects(List<RecordListBox> recordListBoxes)
         {
             try
@@ -166,7 +170,7 @@ namespace UIModule.ViewModels
 
         public ICommand NewProjectClick => new DelegateCommand(NewProject);
 
-        private async void NewProject(object o)
+        private void NewProject(object o)
         {
             try
             {
@@ -174,7 +178,7 @@ namespace UIModule.ViewModels
             }
             catch (Exception ex)
             {
-                //logger.Error(ex.ToString());
+                _logger.Error(ex.ToString());
             }
         }
         #endregion

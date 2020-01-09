@@ -1,4 +1,5 @@
-﻿using BusinessLogicModule.Services;
+﻿using BusinessLogicModule.Interfaces;
+using BusinessLogicModule.Services;
 using Newtonsoft.Json;
 using SharedServicesModule;
 using SharedServicesModule.Models;
@@ -6,7 +7,7 @@ using SharedServicesModule.ResponseModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BusinessLogicModule.Interfaces
+namespace BusinessLogicModule.Repositories
 {
     public class RoleRepository : IRoleRepository
     {
@@ -16,7 +17,6 @@ namespace BusinessLogicModule.Interfaces
             {
                 string json = JsonConvert.SerializeObject(role);
                 return await RequestService.Post(Consts.BaseAddress + "api/roles/new", json);
-
             }
             catch
             {
@@ -41,7 +41,6 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 return await RequestService.Get<List<Role>>(Consts.BaseAddress + "api/roles/all");
-
             }
             catch
             {
@@ -54,7 +53,6 @@ namespace BusinessLogicModule.Interfaces
             try
             {
                 return await RequestService.Get<Role>(Consts.BaseAddress + "api/roles?name=" + name + "&id=" + id);
-
             }
             catch
             {

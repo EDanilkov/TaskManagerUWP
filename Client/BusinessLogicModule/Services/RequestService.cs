@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SharedServicesModule.ResponseModel;
 using System;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Web.Http;
 
@@ -38,7 +37,6 @@ namespace BusinessLogicModule.Services
         public static async Task<NewResponseModel> Post(string path, string json)
         {
             HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
-            //var content = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
             int attemptCount = 0;
             while (attemptCount < 5)
             {
@@ -64,7 +62,6 @@ namespace BusinessLogicModule.Services
         public static async Task<NewResponseModel> Put(string path, string json)
         {
             HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
-            //var content = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
             int attemptCount = 0;
             while (attemptCount < 5)
             {
@@ -110,5 +107,7 @@ namespace BusinessLogicModule.Services
             }
             throw new Exception("The user is not authorized");
         }
+
+        
     }
 }

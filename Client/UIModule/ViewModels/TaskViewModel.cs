@@ -1,13 +1,10 @@
 ﻿using BusinessLogicModule.Interfaces;
-using BusinessLogicModule.Repositories;
 using NLog;
 using SharedServicesModule;
 using SharedServicesModule.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using UIModule.Utils;
 using Windows.UI.Xaml;
@@ -15,7 +12,7 @@ using Task = SharedServicesModule.Models.Task;
 
 namespace UIModule.ViewModels
 {
-    class TaskViewModel : NavigateViewModel
+    public class TaskViewModel : NavigateViewModel
     {
 
         private static Logger logger;
@@ -27,17 +24,20 @@ namespace UIModule.ViewModels
         ICommentRepository _commentRepository;
         IStatusRepository _statusRepository;
         
-        public TaskViewModel()
+        public TaskViewModel(IUserRepository UserRepository, ITaskRepository TaskRepository, IRoleRepository RoleRepository, IPermissionRepository PermissionRepository,
+                                IProjectRepository ProjectRepository, ICommentRepository CommentRepository, IStatusRepository StatusRepository)
         {
             logger = LogManager.GetCurrentClassLogger();
-            _userRepository = new UserRepository();
-            _taskRepository = new TaskRepository();
-            _roleRepository = new RoleRepository();
-            _permissionRepository = new PermissionRepository();
-            _projectRepository = new ProjectRepository();
-            _commentRepository = new CommentRepository();
-            _statusRepository = new StatusRepository();
+            _userRepository = UserRepository;
+            _taskRepository = TaskRepository;
+            _roleRepository = RoleRepository;
+            _permissionRepository = PermissionRepository;
+            _projectRepository = ProjectRepository;
+            _commentRepository = CommentRepository;
+            _statusRepository = StatusRepository;
         }
+
+        #region Properties
 
         private string _titleName;
         public string TitleName
@@ -195,6 +195,10 @@ namespace UIModule.ViewModels
             }
         }
 
+        #endregion
+
+        #region Methods
+
         public ICommand Loaded
         {
             get
@@ -203,7 +207,6 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
-
                         PageVisibility = Visibility.Collapsed;
                         LoadingVisibility = Visibility.Visible;
                         List<Permission> permissions = await _permissionRepository.GetPermissionsFromRole((await _roleRepository.GetRoleFromUser(Consts.UserName, Consts.ProjectId)).Id);
@@ -237,7 +240,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -265,7 +268,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -292,13 +295,14 @@ namespace UIModule.ViewModels
                     {
                         string taskName = (await _taskRepository.GetTask(Consts.TaskId)).Name;
                         await _taskRepository.DeleteTask(Consts.TaskId);
+
                         NavigationService.Instance.NavigateTo(typeof(Pages.Project));
                         logger.Debug("user " + Consts.UserName + " deleted task " + taskName + " to the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
                     }
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_delete_task"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_delete_task"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -326,12 +330,11 @@ namespace UIModule.ViewModels
                             task.StatusId = (await _statusRepository.GetStatus("Open")).Id;
                             await _taskRepository.ChangeTask(task, task.Name, task.Description, task.UserId, task.StatusId, task.EndDate);
                         }
-                        //logger.Debug("user " + Consts.UserName + " deleted task " + task.Name + " to the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
                     }
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_delete_task"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_delete_task"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -341,7 +344,7 @@ namespace UIModule.ViewModels
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     try
                     {
@@ -350,42 +353,11 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_delete_task"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_delete_task"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
         }
-
-        /*public ICommand ChangeTaskClick => new DelegateCommand(ChangeTask);
-
-        private async void ChangeTask(object o)
-        {
-            try
-            {
-                var view = new Pages.ChangeTask
-                {
-                    DataContext = new ChangeTaskViewModel(_userRepository, _taskRepository, _projectRepository)
-                };
-
-                var result = await DialogHost.Show(view, _dialogIdentifier);
-
-                string userName = System.Windows.Application.Current.Properties["UserName"].ToString();
-                int taskId = int.Parse(System.Windows.Application.Current.Properties["TaskId"].ToString());
-                int projectId = int.Parse(System.Windows.Application.Current.Properties["ProjectId"].ToString());
-                Task task = await _taskRepository.GetTask(taskId);
-                TitleName = "";
-                TitleName += "/" + task.Name;
-                Project project = await _projectRepository.GetProject(projectId);
-                TitleProject = "";
-                TitleProject += project.Name;
-                UserName = ": " + (await _userRepository.GetUser(id: task.UserId)).Login;
-                TaskDescriprion = task.Description;
-                TaskFinishDate = ": " + task.EndDate.ToShortDateString();
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex.ToString());
-            }
-        }*/
+        #endregion
     }
 }

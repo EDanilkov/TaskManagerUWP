@@ -4,10 +4,7 @@ using Newtonsoft.Json;
 using SharedServicesModule;
 using SharedServicesModule.Models;
 using SharedServicesModule.ResponseModel;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BusinessLogicModule.Repositories
@@ -18,7 +15,6 @@ namespace BusinessLogicModule.Repositories
         {
             try
             {
-
                 string json = JsonConvert.SerializeObject(comment);
                 return await RequestService.Post(Consts.BaseAddress + "api/comments/new", json);
             }

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServerAPI.Data;
 using ServerAPI.Data.Models;
 using ServerAPI.Data.ResponseModel;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ServerAPI.Controllers
 {

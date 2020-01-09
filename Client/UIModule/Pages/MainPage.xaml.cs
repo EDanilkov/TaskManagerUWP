@@ -17,24 +17,10 @@ namespace UIModule.Pages
     public sealed partial class MainPage : Page
     {
         public Frame NavigationFrame => myFrame;
-
-
+        
         public MainPage()
         {
-            float x = 2160;
-            float y = 600;
-
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(360, 470));
-            ApplicationView.PreferredLaunchViewSize = new Size(x, y);
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-
             InitializeComponent();
-
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
-            // по умолчанию открываем страницу home.xaml
-            
-            myFrame.Navigate(typeof(Projects));
-            myFrame.Visibility = Visibility.Visible;
         }
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)

@@ -1,5 +1,4 @@
 ﻿using BusinessLogicModule.Interfaces;
-using BusinessLogicModule.Repositories;
 using NLog;
 using SharedServicesModule;
 using SharedServicesModule.Models;
@@ -17,7 +16,7 @@ using Task = SharedServicesModule.Models.Task;
 
 namespace UIModule.ViewModels
 {
-    class ProjectViewModel : NavigateViewModel
+    public class ProjectViewModel : NavigateViewModel
     {
         IUserRepository _userRepository;
         IRoleRepository _roleRepository;
@@ -26,22 +25,24 @@ namespace UIModule.ViewModels
         IPermissionRepository _permissionRepository;
         ICommentRepository _commentRepository;
         IStatusRepository _statusRepository;
-
-
+        
         private static Logger logger;
 
-        public ProjectViewModel()
+        public ProjectViewModel(IUserRepository UserRepository, IRoleRepository RoleRepository, IProjectRepository ProjectRepository, ITaskRepository TaskRepository,
+                                    IPermissionRepository PermissionRepository, ICommentRepository CommentRepository, IStatusRepository StatusRepository)
         {
-            _userRepository = new UserRepository();
-            _roleRepository = new RoleRepository();
-            _projectRepository = new ProjectRepository();
-            _taskRepository = new TaskRepository();
-            _permissionRepository = new PermissionRepository();
-            _commentRepository = new CommentRepository();
-            _statusRepository = new StatusRepository();
+            _userRepository = UserRepository;
+            _roleRepository = RoleRepository;
+            _projectRepository = ProjectRepository;
+            _taskRepository = TaskRepository;
+            _permissionRepository = PermissionRepository;
+            _commentRepository = CommentRepository;
+            _statusRepository = StatusRepository;
             
             logger = LogManager.GetCurrentClassLogger();
         }
+
+        #region Properties
 
         private bool _isPaneOpen = false;
         public bool IsPaneOpen
@@ -363,6 +364,10 @@ namespace UIModule.ViewModels
             }
         }
 
+        #endregion
+        
+        #region Methods
+
         public ICommand AddComment
         {
             get
@@ -385,7 +390,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -401,6 +406,7 @@ namespace UIModule.ViewModels
                     {
                         PageVisibility = Visibility.Collapsed;
                         LoadingVisibility = Visibility.Visible;
+
                         Role role = await _roleRepository.GetRoleFromUser(Consts.UserName, Consts.ProjectId);
                         Project project = await _projectRepository.GetProject(Consts.ProjectId);
                         await SelectVisibility(role);
@@ -422,12 +428,11 @@ namespace UIModule.ViewModels
                         CheckCountTasks(ListTasks);
                         PageVisibility = Visibility.Visible;
                         LoadingVisibility = Visibility.Collapsed;
-
                     }
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -475,37 +480,37 @@ namespace UIModule.ViewModels
                     switch (permission.Name)
                     {
                         case "AddNewTask":
-                            {
-                                AddNewTaskButtonVisibility = Visibility.Visible;
-                                break;
-                            }
+                        {
+                            AddNewTaskButtonVisibility = Visibility.Visible;
+                            break;
+                        }
                         case "DeleteTask":
-                            {
-                                DeleteTaskButtonVisibility = Visibility.Visible;
-                                break;
-                            }
+                        {
+                            DeleteTaskButtonVisibility = Visibility.Visible;
+                            break;
+                        }
                         case "AddNewMembers":
-                            {
-                                AddNewMembersButtonVisibility = Visibility.Visible;
-                                break;
-                            }
+                        {
+                            AddNewMembersButtonVisibility = Visibility.Visible;
+                            break;
+                        }
                         case "DeleteMembers":
-                            {
-                                DeleteMemberButtonVisibility = Visibility.Visible;
-                                break;
-                            }
+                        {
+                            DeleteMemberButtonVisibility = Visibility.Visible;
+                            break;
+                        }
                         case "ChangeRole":
-                            {
-                                ChangeRoleVisibility = Visibility.Visible;
-                                break;
-                            }
+                        {
+                            ChangeRoleVisibility = Visibility.Visible;
+                            break;
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
                 logger.Error(ex.ToString());
-                //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
             }
         }
 
@@ -539,7 +544,7 @@ namespace UIModule.ViewModels
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     IsPaneOpen = false;
                 });
@@ -568,7 +573,6 @@ namespace UIModule.ViewModels
 
                             ListUserTask = await _taskRepository.GetProjectTasksByUser(user.Id, Consts.ProjectId);
                             ListTasksText = ListUserTask.Count == 0 ? Application.Current.Resources["m_member_dont_have_tasks"].ToString() : Application.Current.Resources["mTasks"].ToString();
-                            //MemberInfo = Visibility.Visible;
                             Role memberRole = await _roleRepository.GetRoleFromUser(SelectedMember.Login, Consts.ProjectId);
                             SelectedChangeRole = RoleSourse.Find(c => c.Id == memberRole.Id);
                             IsPaneOpen = true;
@@ -578,7 +582,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -610,8 +614,7 @@ namespace UIModule.ViewModels
                                 await _taskRepository.DeleteTasksByUser(SelectedMember.Id, Consts.ProjectId);
                             }
                         }
-
-
+                        
                         await _userRepository.DeleteUserFromProject(SelectedMember.Id, Consts.ProjectId);
 
                         List<User> userInOtherProject = new List<User>();
@@ -639,7 +642,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_delete_member"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_delete_member"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -663,7 +666,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_delete_task"].ToString() + "\n" + ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_delete_task"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -683,7 +686,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString(), _dialogIdentifier);
+                        ErrorHandler.Show(Application.Current.Resources["m_error_download"].ToString());
                     }
                 });
             }
@@ -693,7 +696,7 @@ namespace UIModule.ViewModels
         {
             get
             {
-                return new DelegateCommand(async (obj) =>
+                return new DelegateCommand((obj) =>
                 {
                     SelectedMember = null;
                     SelectedTask = null;
@@ -730,7 +733,6 @@ namespace UIModule.ViewModels
         {
             try
             {
-
                 NavigationService.Instance.NavigateTo(typeof(Pages.AddNewTask));
                 ListTasks = await FilterTasks();
             }
@@ -755,7 +757,7 @@ namespace UIModule.ViewModels
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
-                        //ErrorHandler.Show(ex.Message, _dialogIdentifier);
+                        ErrorHandler.Show(ex.Message);
                     }
                 });
             }
@@ -823,7 +825,6 @@ namespace UIModule.ViewModels
         {
             try
             {
-                
                 await RefreshUsers();
                 NavigationService.Instance.NavigateTo(typeof(Pages.AddNewMember));
             }
@@ -832,5 +833,6 @@ namespace UIModule.ViewModels
                 logger.Error(ex.ToString());
             }
         }
+        #endregion
     }
 }

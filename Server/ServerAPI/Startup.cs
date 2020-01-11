@@ -41,7 +41,6 @@ namespace ServerAPI
                     ValidateIssuer = true,
                     // строка, представляющая издателя
                     ValidIssuer = AuthOptions.ISSUER,
-
                     // будет ли валидироваться потребитель токена
                     ValidateAudience = true,
                     // установка потребителя токена

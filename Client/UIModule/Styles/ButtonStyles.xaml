@@ -32,6 +32,15 @@
         <Setter Property="Foreground" Value="Gray"/>
     </Style>
 
+    <Style x:Key="HamburgerButton" TargetType="Button">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="FontSize" Value="25"/>
+        <Setter Property="FontWeight" Value="ExtraBold"/>
+        <Setter Property="Padding" Value="5"/>
+    </Style>
 
     <Style x:Key="AddNew" TargetType="Button">
         
@@ -50,12 +59,27 @@
     </Style>
 
     <Style x:Key="Button" TargetType="Button">
-
         <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeWhiteBrush}"/>
         <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
         <Setter Property="Margin" Value="5"/>
         <Setter Property="Height" Value="35"/>
         <Setter Property="Width" Value="35"/>
+    </Style>
+
+    <Style x:Key="AddComment" TargetType="Button">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Width" Value="35"/>
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="Content" Value="&#xE724;"/>
+    </Style>
+
+    <Style x:Key="AddNewButton" BasedOn="{StaticResource AddNew}" TargetType="Button">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="Content" Value="&#xE948;"/>
     </Style>
 
 </ResourceDictionary>

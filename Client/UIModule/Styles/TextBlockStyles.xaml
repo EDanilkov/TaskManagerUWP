@@ -21,11 +21,28 @@
         <Setter Property="FontSize" Value="14"/>
     </Style>
 
-    <Style x:Key="TitleAddNew" TargetType="TextBlock">
-        <Setter Property="Margin" Value="10" />
+    <Style x:Key="Title" TargetType="TextBlock">
+        <Setter Property="Margin" Value="15 0 0 0" />
+        <Setter Property="FontSize" Value="28" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Foreground"  Value="#5866B8" />
-        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="TitleWrap" BasedOn="{StaticResource Title}" TargetType="TextBlock">
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <Style x:Key="Comment" BasedOn="{StaticResource TitleWrap}" TargetType="TextBlock">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="TextTrimming" Value="WordEllipsis" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style x:Key="CommentDateTime" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
     </Style>
 
     <Style x:Key="TitleName" TargetType="TextBlock">
@@ -39,6 +56,86 @@
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Margin" Value="10 5 0 0"/>
         <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+    <Style x:Key="NoElementsIcon" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="36"/>
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="Text" Value="&#xE998;"/>
+    </Style>
+
+    <Style x:Key="NoElements" TargetType="TextBlock">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="24"/>
+    </Style>
+
+    <Style x:Key="CalendarIcon" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="5 0 3 0"/>
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="Text" Value="&#xE787;"/>
+    </Style>
+
+    <Style x:Key="PointIcon" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
+        <Setter Property="FontSize" Value="6"/>
+        <Setter Property="Margin" Value="5 0 5 0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="Text" Value="&#xE91F;"/>
+    </Style>
+
+    <Style x:Key="TaskName" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseHighBrush}"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="TextTrimming" Value="WordEllipsis"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="SelectedTaskName" TargetType="TextBlock">
+        <Setter Property="Margin" Value="10 0 0 0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="24"/>
+    </Style>
+
+    <Style x:Key="ProjectName" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TextTrimming" Value="WordEllipsis"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="CommentText"  TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TextTrimming" Value="WordEllipsis"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="UserName" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TextTrimming" Value="WordEllipsis"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
+    <Style x:Key="DateTime" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="TextTrimming" Value="WordEllipsis"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Opacity" Value="0.7"/>
+    </Style>
+    
+    <Style x:Key="Name" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="TextTrimming" Value="WordEllipsis"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
 
 </ResourceDictionary>

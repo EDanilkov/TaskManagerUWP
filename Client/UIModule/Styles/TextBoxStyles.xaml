@@ -24,4 +24,10 @@
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
 
+    <Style x:Key="Comment" TargetType="TextBox">
+        <Setter Property="Margin" Value="13"/>
+        <Setter Property="Width" Value="230"/>
+        <Setter Property="MaxLength" Value="250"/>
+    </Style>
+
 </ResourceDictionary>

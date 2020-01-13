@@ -35,30 +35,21 @@
 
         <StackPanel
             Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            VerticalAlignment="Center"
-            Orientation="Horizontal"
+            Style="{StaticResource CenterHorizontalStackPanel}"
             Grid.Row="0">
             <Button 
                 Style="{StaticResource BackButton}"
                 Command="{Binding Back}"/>
-
             <FontIcon 
                 Margin="15 0 0 0"
-                Foreground="Black"
-                Name="Icon"
                 Glyph="&#xE713;"/>
             <TextBlock 
-                Foreground="Black"
                 Text="{StaticResource MNewMember}"
-                Margin="15 0 0 0"
-                FontSize="28" 
-                FontWeight="Bold" />
+                Style="{StaticResource Title}"/>
         </StackPanel>
         <StackPanel
             Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            Orientation="Vertical"
+            Style="{StaticResource CenterVerticalStackPanel}"
             Grid.Row="1">
             <Grid Margin="15">
                 <Grid.ColumnDefinitions>
@@ -75,9 +66,6 @@
                 </Grid.RowDefinitions>
                 <StackPanel
                     Grid.Row="0"
-                    
-                    
-                    
                     Grid.Column="0"
                     Orientation="Vertical">
                     <TextBlock
@@ -85,11 +73,10 @@
                         Text="{StaticResource mUser}"/>
                     <ComboBox
                         HorizontalAlignment="Stretch"
+                        Margin="5"
                         DisplayMemberPath="Login"
-                        Foreground="Black"
                         SelectedValue="{Binding SelectedNewMember, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        ItemsSource="{Binding NewMembersSourse}"
-                        Margin="5">
+                        ItemsSource="{Binding NewMembersSourse}">
                         <i:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="PreviewTextInput">
                                 <core:InvokeCommandAction Command="{Binding ComboBoxNewMembersChanged}"/>
@@ -101,7 +88,6 @@
                         Text="{StaticResource mRole}"/>
                     <ComboBox
                         Margin="5"
-                        Foreground="Black"
                         HorizontalAlignment="Stretch"
                         DisplayMemberPath="Name"
                         SelectedValue="{Binding SelectedRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

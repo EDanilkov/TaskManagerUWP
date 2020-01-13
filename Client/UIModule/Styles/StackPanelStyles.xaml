@@ -31,11 +31,10 @@
         <Setter Property="MinHeight" Value="40"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
-    
+
     <Style x:Key="TitleHorizontalStackPanel" BasedOn="{StaticResource TitleStackPanel}" TargetType="StackPanel">
         <Setter Property="Orientation" Value="Horizontal"/>
     </Style>
-
 
     <Style x:Key="TitleHorizontalLeftStackPanel" BasedOn="{StaticResource TitleHorizontalStackPanel}" TargetType="StackPanel">
         <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -52,6 +51,20 @@
     <Style x:Key="LoginStackPanel" TargetType="StackPanel">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Margin" Value="15"/>
+    </Style>
+
+    <Style x:Key="CenterVerticalStackPanel" BasedOn="{StaticResource VerticalStackPanel}" TargetType="StackPanel">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="CenterStackPanel" TargetType="StackPanel">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="CenterHorizontalStackPanel" BasedOn="{StaticResource HorizontalStackPanel}" TargetType="StackPanel">
+        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
 </ResourceDictionary>

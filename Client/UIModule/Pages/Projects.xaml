@@ -42,22 +42,17 @@
                 </Grid.ColumnDefinitions>
                 <FontIcon 
                     Grid.Column="0"
-                    Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                    Name="Icon"
                     Glyph="&#xE713;"/>
                 <TextBlock 
                     Grid.Column="1"
-                    Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                    Text="{StaticResource mProjects}"
-                    FontSize="28" 
-                    Margin="15 0 0 0"
-                    FontWeight="Bold" />
+                    Style="{StaticResource Title}"
+                    Text="{StaticResource mProjects}"/>
             </Grid>
             <Button 
                 Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
                 HorizontalAlignment="Right"
-                Style="{StaticResource Button}"
                 Content="&#xE710;"
+                Style="{StaticResource Button}"
                 Command="{Binding NewProjectClick}"/>
         </Grid>
 
@@ -65,20 +60,12 @@
             Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Grid.Row="1">
             <StackPanel
-                VerticalAlignment="Center"
-                Visibility="{Binding NotProjectsVisibility}"
-                Orientation="Vertical">
+                Style="{StaticResource CenterVerticalStackPanel}"
+                Visibility="{Binding NotProjectsVisibility}">
                 <TextBlock 
-                    HorizontalAlignment="Center"
-                    Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                    FontSize="36" 
-                    FontFamily="Segoe MDL2 Assets" 
-                    Text="&#xE998;" />
+                    Style="{StaticResource NoElementsIcon}"/>
                 <TextBlock
-                    HorizontalAlignment="Center"
-                    TextAlignment="Center"
-                    TextWrapping="Wrap"
-                    FontSize="24"
+                    Style="{StaticResource NoElements}"
                     Text="{StaticResource mNoPersonalProjects}"/>
             </StackPanel>
             <ListBox
@@ -96,11 +83,8 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <TextBlock 
-                                Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                FontSize="24"
-                                TextTrimming="WordEllipsis"
-                                TextWrapping="Wrap"
+                            <TextBlock  
+                                Style="{StaticResource Name}"
                                 Text="{Binding ProjectName}"/>
                         </Grid>
                     </DataTemplate>

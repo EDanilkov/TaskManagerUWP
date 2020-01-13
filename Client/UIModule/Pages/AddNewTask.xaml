@@ -43,21 +43,14 @@
                 Command="{Binding Back}"/>
             <FontIcon 
                 Margin="15 0 0 0"
-                Foreground="Black"
-                Name="Icon"
                 Glyph="&#xE713;"/>
             <TextBlock 
-                Foreground="Black"
                 Text="{StaticResource MNewTask}"
-                Margin="15 0 0 0"
-                FontSize="28" 
-                FontWeight="Bold" />
+                Style="{StaticResource Title}"/>
         </StackPanel>
         <StackPanel
             Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            Orientation="Vertical"
+            Style="{StaticResource CenterVerticalStackPanel}"
             Grid.Row="1">
             <Grid Margin="15">
                 <Grid.RowDefinitions>
@@ -88,21 +81,20 @@
                         Text="{StaticResource mForUser}"/>
                     <ComboBox
                         HorizontalAlignment="Stretch"
+                        Margin="5"
                         DisplayMemberPath="Login"
                         SelectedValue="{Binding SelectedUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        ItemsSource="{Binding Users}"
-                        Margin="5"/>
+                        ItemsSource="{Binding Users}"/>
                     <DatePicker 
                         HorizontalAlignment="Stretch"
+                        Margin="5"
                         Header="{StaticResource mEndDate}"
-                        Date="{Binding TaskFinishDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="5"/>
+                        Date="{Binding TaskFinishDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
                 <Grid
                     Margin="0 10 0 0"
                     Grid.Row="1">
                     <Button
-                        Grid.Column="0"
                         HorizontalAlignment="Center"
                         Command="{Binding Accept}"
                         Content="{StaticResource MAccept}"/>

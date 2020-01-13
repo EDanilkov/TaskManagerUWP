@@ -19,183 +19,175 @@
     </i:Interaction.Behaviors>
 
 
-    <Grid
-        Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition
-                Width="50"/>
-            <ColumnDefinition 
-                Width="*"/>
-            <ColumnDefinition 
-                Width="25"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition 
-                Height="60"/>
-            <RowDefinition 
-                Height="500*"/>
-            <RowDefinition 
-                Height="30*"/>
-        </Grid.RowDefinitions>
-
-        <Button 
-            Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            Command="{Binding Back}"
-            Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
-            Style="{StaticResource BackButton}">
-        </Button>
-
-        <ProgressRing 
-            Grid.RowSpan="3"
-            Grid.ColumnSpan="3"
-            Visibility="{Binding LoadingVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            IsActive="True"/>
-
-        <Grid 
-            Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            Grid.Row="0"    
-            Grid.Column="1">
+    <ScrollViewer
+        VerticalAlignment="Stretch"
+        VerticalScrollBarVisibility="Auto">
+        <Grid
+            Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
-                    Width="50*"/>
+                    Width="50"/>
                 <ColumnDefinition 
-                    Width="160"/>
+                    Width="*"/>
+                <ColumnDefinition 
+                    Width="25"/>
             </Grid.ColumnDefinitions>
-            <StackPanel 
-                Grid.Column="0"
-                Style="{StaticResource TitleHorizontalLeftStackPanel}">
-                <TextBlock
-                    Text="{Binding TitleName}"
-                    Style="{StaticResource TitleName}"/>
-            </StackPanel>
+            <Grid.RowDefinitions>
+                <RowDefinition 
+                    Height="60"/>
+                <RowDefinition 
+                    Height="500*"/>
+                <RowDefinition 
+                    Height="30*"/>
+            </Grid.RowDefinitions>
+
+            <Button 
+                Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Command="{Binding Back}"
+                Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                Style="{StaticResource BackButton}">
+            </Button>
+
+            <ProgressRing 
+                Grid.RowSpan="3"
+                Grid.ColumnSpan="3"
+                Visibility="{Binding LoadingVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                IsActive="True"/>
+
+            <Grid 
+                Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Grid.Row="0"    
+                Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="50*"/>
+                    <ColumnDefinition 
+                        Width="160"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel 
+                    Grid.Column="0"
+                    Style="{StaticResource TitleHorizontalLeftStackPanel}">
+                    <TextBlock
+                        Text="{Binding TitleName}"
+                        Style="{StaticResource TitleName}"/>
+                </StackPanel>
+                <StackPanel
+                    Grid.Column="1"
+                    Style="{StaticResource RightHorizontalStackPanel}">
+                    <Button     
+                        Visibility="{Binding ChangeTaskVisibility}"
+                        Command="{Binding ChangeTaskClick}"
+                        Style="{StaticResource Button}"
+                        Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                        Content="&#xEC87;"/>
+                    <Button     
+                        Visibility="{Binding DeleteTaskVisibility}"
+                        Command="{Binding DeleteTask}"
+                        Style="{StaticResource Button}"
+                        Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                        Content="&#xE74D;"/>
+                    <Button     
+                        Visibility="{Binding DeleteTaskVisibility}"
+                        Command="{Binding ChangeStatusTask}"
+                        Content="{Binding Status}"/>
+                </StackPanel>
+            </Grid>
+
             <StackPanel
+                Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 Grid.Column="1"
-                Style="{StaticResource RightHorizontalStackPanel}">
-                <Button     
-                    Visibility="{Binding ChangeTaskVisibility}"
-                    Command="{Binding ChangeTaskClick}"
-                    Style="{StaticResource Button}"
-                    Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
-                    Content="&#xEC87;"/>
-                <Button     
-                    Visibility="{Binding DeleteTaskVisibility}"
-                    Command="{Binding DeleteTask}"
-                    Style="{StaticResource Button}"
-                    Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
-                    Content="&#xE74D;"/>
-                <Button     
-                    Visibility="{Binding DeleteTaskVisibility}"
-                    Command="{Binding ChangeStatusTask}"
-                    Content="{Binding Status}"/>
+                Grid.Row="1"  
+                Style="{StaticResource DescriprionStackPanel}">
+                <StackPanel
+                    Style="{StaticResource HorizontalStackPanel}">
+                    <TextBlock 
+                        Style="{StaticResource TaskInfo}"
+                        Text="{StaticResource mForUser}"/>
+                    <TextBlock 
+                        Style="{StaticResource TaskInfo}"
+                        Text="{Binding UserName}"/>
+                </StackPanel>
+                <StackPanel
+                    Style="{StaticResource HorizontalStackPanel}">
+                    <TextBlock 
+                        Style="{StaticResource TaskInfo}"
+                        Text="{StaticResource mBeginDate}"/>
+                    <TextBlock 
+                        Style="{StaticResource TaskInfo}"
+                        Text="{Binding TaskStartDate}"/>
+                </StackPanel>
+                <StackPanel
+                    Style="{StaticResource HorizontalStackPanel}">
+                    <TextBlock 
+                        Style="{StaticResource TaskInfo}"
+                        Text="{StaticResource mEndDate}"/>
+                    <TextBlock 
+                        Style="{StaticResource TaskInfo}"
+                        Text="{Binding TaskFinishDate}"/>
+                </StackPanel>
+                <StackPanel
+                    Style="{StaticResource HorizontalStackPanel}">
+                    <TextBlock 
+                        Style="{StaticResource TaskInfo}"
+                        Text="{StaticResource mStatus}"/>
+                    <TextBlock 
+                        Style="{StaticResource TaskInfo}"
+                        Text="{Binding Status}"/>
+                </StackPanel>
+
+                <RelativePanel 
+                    Visibility="{Binding CommentsVisibility}">
+                    <Button 
+                        x:Name="loginButton" 
+                        Command="{Binding AddComment}"
+                        Style="{StaticResource AddComment}"
+                        RelativePanel.AlignTopWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True"/>
+                    <TextBox 
+                        x:Name="loginBox" 
+                        Margin="10"
+                        Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        RelativePanel.LeftOf="loginButton"
+                        RelativePanel.AlignLeftWithPanel="True"/>
+                </RelativePanel>
+
+                <StackPanel
+                    Visibility="{Binding CommentsVisibility}"
+                    Grid.Row="2"
+                    Orientation="Vertical">
+                    <ListView
+                        Style="{StaticResource Comments}"
+                        ItemsSource="{Binding Comments}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    Margin="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="2*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel
+                                        Grid.Row="0"
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            Style="{StaticResource UserName}"
+                                            Text="{Binding UserName}"/>
+                                        <TextBlock
+                                            Style="{StaticResource CommentDateTime}"
+                                            Text="{Binding DateTime}"/>
+                                    </StackPanel>
+                                    <TextBlock 
+                                        Grid.Row="1"
+                                        Style="{StaticResource CommentText}"
+                                        Text="{Binding Text}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
             </StackPanel>
         </Grid>
-
-        <StackPanel
-            Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            Grid.Column="1"
-            Grid.Row="1"  
-            Style="{StaticResource DescriprionStackPanel}">
-            <StackPanel
-                Style="{StaticResource HorizontalStackPanel}">
-                <TextBlock 
-                    Style="{StaticResource TaskInfo}"
-                    Text="{StaticResource mForUser}"/>
-                <TextBlock 
-                    Style="{StaticResource TaskInfo}"
-                    Text="{Binding UserName}"/>
-            </StackPanel>
-            <StackPanel
-                Style="{StaticResource HorizontalStackPanel}">
-                <TextBlock 
-                    Style="{StaticResource TaskInfo}"
-                    Text="{StaticResource mBeginDate}"/>
-                <TextBlock 
-                    Style="{StaticResource TaskInfo}"
-                    Text="{Binding TaskStartDate}"/>
-            </StackPanel>
-            <StackPanel
-                Style="{StaticResource HorizontalStackPanel}">
-                <TextBlock 
-                    Style="{StaticResource TaskInfo}"
-                    Text="{StaticResource mEndDate}"/>
-                <TextBlock 
-                    Style="{StaticResource TaskInfo}"
-                    Text="{Binding TaskFinishDate}"/>
-            </StackPanel>
-            <StackPanel
-                Style="{StaticResource HorizontalStackPanel}">
-                <TextBlock 
-                    Style="{StaticResource TaskInfo}"
-                    Text="{StaticResource mStatus}"/>
-                <TextBlock 
-                    Style="{StaticResource TaskInfo}"
-                    Text="{Binding Status}"/>
-            </StackPanel>
-
-            <RelativePanel 
-                Visibility="{Binding CommentsVisibility}">
-                <Button 
-                    x:Name="loginButton" 
-                    Command="{Binding AddComment}"
-                    FontFamily="Segoe MDL2 Assets" 
-                    Content="&#xE724;"
-                    Margin="10"
-                    RelativePanel.AlignTopWithPanel="True"
-                    RelativePanel.AlignRightWithPanel="True"/>
-                <TextBox 
-                    x:Name="loginBox" 
-                    Margin="10"
-                    Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    RelativePanel.LeftOf="loginButton"
-                    RelativePanel.AlignLeftWithPanel="True"/>
-            </RelativePanel>
-
-            <StackPanel
-                Visibility="{Binding CommentsVisibility}"
-                Grid.Row="2"
-                Orientation="Vertical">
-                <ListView
-                    IsHitTestVisible="False"
-                    IsItemClickEnabled="False"
-                    IsSwipeEnabled="False"
-                    ItemsSource="{Binding Comments}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid
-                                Margin="5">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="2*"/>
-                                </Grid.RowDefinitions>
-                                <StackPanel
-                                        Grid.Row="0"
-                                    Orientation="Horizontal">
-                                    <TextBlock
-                                        FontWeight="Bold"
-                                        FontSize="14"
-                                        VerticalAlignment="Center"
-                                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                        Text="{Binding UserName}"/>
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        TextWrapping="Wrap"
-                                        FontSize="12"
-                                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                        Text="{Binding DateTime}"/>
-                                </StackPanel>
-                                <TextBlock 
-                                    TextWrapping="Wrap"
-                                    Grid.Row="1"
-                                    Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                    FontSize="18"
-                                    Text="{Binding Text}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackPanel>
-        </StackPanel>
-    </Grid>
+    </ScrollViewer>
 </Page>

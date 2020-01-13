@@ -12,10 +12,8 @@
     <Grid
         Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
         <Grid
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center">
+            Style="{StaticResource CenterGrid}">
             <Grid 
-                
                 Style="{StaticResource Authorization}">
                 <TextBlock  
                     Text="LOGIN" 

@@ -55,8 +55,8 @@
 
         <SplitView
             Grid.RowSpan="2"
-            x:Name="mySplitView"
             OpenPaneLength="280"
+            x:Name="mySplitView"
             DisplayMode="{Binding DisplayMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             CompactPaneLength="0">
@@ -73,15 +73,9 @@
                     <StackPanel
                         Orientation="Vertical">
                         <Button 
-                            VerticalAlignment="Center"
                             x:Name="HamburgerButtonMin"
-                            BorderThickness="0"
-                            RelativePanel.AlignLeftWithPanel="True"
-                            FontFamily="Segoe MDL2 Assets" 
-                            FontSize="25"
-                            FontWeight="ExtraBold"
-                            Padding="5"
                             Margin="15"
+                            Style="{StaticResource HamburgerButton}"
                             Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
                             Background="{Binding ElementName=menu, Path=Background}"
                             Content="&#xE700;">
@@ -93,7 +87,6 @@
                         </Button>
                         <ListBox 
                             Background="{Binding ElementName=menu, Path=Background}"
-                            SelectionMode="Single"
                             SelectedIndex="{Binding SelectedPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <i:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="SelectionChanged">
@@ -149,15 +142,9 @@
                         Visibility="{Binding InactiveAreaVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Grid.Row="1"/>
                     <Button 
-                        VerticalAlignment="Center"
-                        BorderThickness="0"
-                        BorderBrush="Transparent"
                         x:Name="HamburgerButton" 
-                        FontFamily="Segoe MDL2 Assets" 
-                        FontSize="25"
-                        FontWeight="ExtraBold"
-                        Padding="5"
                         Margin="15 15 0 0"
+                        Style="{StaticResource HamburgerButton}"
                         Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
                         Background="{Binding ElementName=menu, Path=Background}"
                         Command="{Binding HamburgerButtonClick}"

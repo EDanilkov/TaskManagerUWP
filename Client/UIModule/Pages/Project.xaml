@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:vm="using:UIModule.ViewModels"
     mc:Ignorable="d"
     Name="page"
     MinWidth="300"
@@ -35,16 +34,12 @@
 
         <Grid
             Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            Margin="20 0 20 0"
             VerticalAlignment="Center"
+            Margin="20 0 20 0"
             Grid.Row="0">
             <TextBlock 
                 Grid.Column="1"
-                Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                TextWrapping="Wrap"
-                Margin="15 0 0 0"
-                FontSize="28" 
-                FontWeight="Bold"
+                Style="{StaticResource TitleWrap}"
                 Text="{Binding TitleName}"/>
         </Grid>
 
@@ -54,15 +49,9 @@
             <PivotItem 
                 Margin="5"
                 Header="{StaticResource mTasks}">
-                <!--Pivot content goes here-->
-
-                <!--Panel task -->
                 <SplitView
-                    OpenPaneLength="310"
-                    PanePlacement="Right"
-                    DisplayMode="CompactOverlay"
-                    IsPaneOpen="{Binding IsPaneOpen}"
-                    CompactPaneLength="0">
+                    Style="{StaticResource SplitView}"
+                    IsPaneOpen="{Binding IsPaneOpen}">
                     <i:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="PaneClosing">
                             <core:InvokeCommandAction Command="{Binding PaneClosing}"/>
@@ -93,27 +82,21 @@
                                             Grid.Column="0"
                                             Orientation="Horizontal">
                                             <Button 
-                                                Style="{StaticResource Button}"
                                                 Content="&#xE76C;"
+                                                Style="{StaticResource Button}"
                                                 Command="{Binding HamHamburgerButtonClick}"/>
-
                                             <TextBlock
-                                                Margin="10 0 0 0"
-                                                Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                                VerticalAlignment="Center"
-                                                FontWeight="Bold"
-                                                FontSize="24"
+                                                Style="{StaticResource SelectedTaskName}"
                                                 Text="{Binding SelectedTask.TaskName}"/>
                                         </StackPanel>
                                         <Button
+                                            Grid.Column="1"
                                             HorizontalAlignment="Right"
                                             Content="&#xE74D;"
-                                            Grid.Column="1"
                                             Style="{StaticResource Button}"
                                             Visibility="{Binding DeleteTaskButtonVisibility}"
                                             Command="{Binding DeleteTaskClick}"/>
                                     </Grid>
-
                                     <StackPanel
                                         Style="{StaticResource HorizontalStackPanel}">
                                         <TextBlock 
@@ -157,17 +140,11 @@
                                     Orientation="Horizontal"
                                     Grid.Row="1">
                                     <TextBox
-                                        Margin="13"
-                                        Width="230"
-                                        MaxLength="250"
+                                        Style="{StaticResource Comment}"
                                         Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <Button
-                                        Margin="5"
-                                        Height="35"
-                                        Width="35"
-                                        Command="{Binding AddComment}"
-                                        FontFamily="Segoe MDL2 Assets" 
-                                        Content="&#xE724;"/>
+                                        Style="{StaticResource AddComment}"
+                                        Command="{Binding AddComment}"/>
                                 </StackPanel>
 
                                 <StackPanel
@@ -175,10 +152,7 @@
                                     Grid.Row="2"
                                     Orientation="Vertical">
                                     <ListView
-                                        VerticalAlignment="Stretch"
-                                        IsHitTestVisible="False"
-                                        IsItemClickEnabled="False"
-                                        IsSwipeEnabled="False"
+                                        Style="{StaticResource Comments}"
                                         ItemsSource="{Binding Comments}">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
@@ -192,35 +166,17 @@
                                                         Grid.Row="0"
                                                         Orientation="Horizontal">
                                                         <TextBlock
-                                                            FontWeight="Bold"
-                                                            FontSize="14"
-                                                            TextTrimming="WordEllipsis"
-                                                            TextWrapping="Wrap"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
+                                                            Style="{StaticResource UserName}"
                                                             Text="{Binding UserName}"/>
                                                         <TextBlock
-                                                            Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
-                                                            FontSize="6"
-                                                            Margin="5 0 5 0"
-                                                            VerticalAlignment="Center"
-                                                            FontFamily="Segoe MDL2 Assets"
-                                                            Text="&#xE91F;"/>
+                                                            Style="{StaticResource PointIcon}"/>
                                                         <TextBlock
-                                                            TextTrimming="WordEllipsis"
-                                                            TextWrapping="Wrap"
-                                                            VerticalAlignment="Center"
-                                                            Opacity="0.7"
-                                                            FontSize="12"
-                                                            Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
+                                                            Style="{StaticResource DateTime}"
                                                             Text="{Binding DateTime}"/>
                                                     </StackPanel>
                                                     <TextBlock 
-                                                        TextTrimming="WordEllipsis"
-                                                        TextWrapping="Wrap"
                                                         Grid.Row="1"
-                                                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                                        FontSize="14"
+                                                        Style="{StaticResource CommentText}"
                                                         Text="{Binding Text}"/>
                                                 </Grid>
                                             </DataTemplate>
@@ -247,20 +203,15 @@
                                 </Grid.ColumnDefinitions>
                                 <Button
                                     Grid.Column="0"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Left"
-                                    Style="{StaticResource AddNew}"
+                                    Style="{StaticResource AddNewButton}"
                                     Visibility="{Binding AddNewTaskButtonVisibility}"
                                     Command="{Binding AddNewTaskClick}"
-                                    FontSize="24"
-                                    Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
-                                    FontFamily="Segoe MDL2 Assets"
-                                    Content="&#xE948;"/>
+                                    Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"/>
                                 <TextBox 
                                     Margin="0 0 10 0"
-                                    Text="{Binding Path=Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Stretch"
+                                    Text="{Binding Path=Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Grid.Column="2">
                                     <i:Interaction.Behaviors>
                                         <core:EventTriggerBehavior EventName="TextChanged">
@@ -271,22 +222,12 @@
                             </Grid>
                             <StackPanel
                                 Grid.Row="1"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center" 
-                                Visibility="{Binding NotTasksVisibility}"
-                                Orientation="Vertical">
+                                Style="{StaticResource CenterVerticalStackPanel}"
+                                Visibility="{Binding NotTasksVisibility}">
                                 <TextBlock 
-                                    HorizontalAlignment="Center"
-                                    Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                    FontSize="36" 
-                                    FontFamily="Segoe MDL2 Assets" 
-                                    Text="&#xE998;" />
+                                    Style="{StaticResource NoElementsIcon}"/>
                                 <TextBlock
-                                    TextTrimming="WordEllipsis"
-                                    TextWrapping="Wrap"
-                                    HorizontalAlignment="Center"
-                                    TextAlignment="Center"
-                                    FontSize="24"
+                                    Style="{StaticResource NoElements}"
                                     Text="{StaticResource mNoProjectTasks}"/>
                             </StackPanel>
                             <Grid
@@ -312,10 +253,7 @@
                                                 <StackPanel
                                                     Orientation="Vertical">
                                                     <TextBlock 
-                                                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                                        FontSize="18"
-                                                        TextTrimming="WordEllipsis"
-                                                        TextWrapping="Wrap"
+                                                        Style="{StaticResource TaskName}"
                                                         Text="{Binding TaskName}"/>
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
@@ -325,32 +263,20 @@
                                                         <TextBlock 
                                                             Grid.Column="0"
                                                             Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
-                                                            FontSize="14"
-                                                            TextWrapping="Wrap"
-                                                            TextTrimming="WordEllipsis"
+                                                            Style="{StaticResource CommentText}"
                                                             Text="{Binding UserName}"/>
                                                         <StackPanel
-                                                            VerticalAlignment="Center"
-                                                            Grid.Column="1"
-                                                            Orientation="Horizontal">
+                                                            Style="{StaticResource CenterHorizontalStackPanel}"
+                                                            Grid.Column="1">
                                                             <TextBlock
-                                                                Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
-                                                                FontSize="6"
-                                                                Margin="5 0 5 0"
-                                                                VerticalAlignment="Center"
-                                                                FontFamily="Segoe MDL2 Assets"
-                                                                Text="&#xE91F;"/>
+                                                                Style="{StaticResource PointIcon}"/>
                                                             <TextBlock
                                                                 Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
                                                                 FontSize="14"
                                                                 Text="{Binding Status}"/>
                                                             <TextBlock
                                                                 Foreground="{Binding Foreground}" 
-                                                                FontSize="14"
-                                                                VerticalAlignment="Center"
-                                                                Margin="5 0 3 0"
-                                                                FontFamily="Segoe MDL2 Assets"
-                                                                Text="&#xE787;"/>
+                                                                Style="{StaticResource CalendarIcon}"/>
                                                             <TextBlock
                                                                 Foreground="{Binding Foreground}" 
                                                                 FontSize="14"
@@ -372,9 +298,7 @@
                 Header="{StaticResource mDescription}">
                 <TextBlock 
                     Margin="10"
-                    TextTrimming="WordEllipsis"
-                    TextWrapping="Wrap"
-                    FontSize="14"
+                    Style="{StaticResource CommentText}"
                     Text="{Binding ProjectDescription}"/>
             </PivotItem>
             <PivotItem 
@@ -382,18 +306,14 @@
                 Header="{StaticResource mMembers}">
                 <SplitView 
                     Grid.RowSpan="2"
-                    OpenPaneLength="310"
-                    PanePlacement="Right"
-                    DisplayMode="CompactOverlay"
-                    IsPaneOpen="{Binding IsPaneOpen}"
-                    CompactPaneLength="0">
+                    Style="{StaticResource SplitView}"
+                    IsPaneOpen="{Binding IsPaneOpen}">
                     <i:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="PaneClosing">
                             <core:InvokeCommandAction Command="{Binding PaneClosing}"/>
                         </core:EventTriggerBehavior>
                     </i:Interaction.Behaviors>
                     <SplitView.Pane>
-
                         <ScrollViewer
                             VerticalAlignment="Stretch"
                             VerticalScrollBarVisibility="Auto">
@@ -409,9 +329,9 @@
                                     Grid.Row="0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition
-                                                Width="50*"/>
+                                            Width="50*"/>
                                         <ColumnDefinition 
-                                                Width="50"/>
+                                            Width="50"/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel
                                         Grid.Column="0"
@@ -421,22 +341,17 @@
                                             Content="&#xE76C;"
                                             Command="{Binding HamHamburgerButtonClick}"/>
                                         <TextBlock
-                                            Margin="10 0 0 0"
-                                            Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                            VerticalAlignment="Center"
-                                            FontWeight="Bold"
-                                            FontSize="24"
+                                            Style="{StaticResource SelectedTaskName}"
                                             Text="{Binding SelectedMember.Login}"/>
                                     </StackPanel>
                                     <Button
                                         Grid.Column="1"
-                                        Style="{StaticResource Button}"
-                                        HorizontalAlignment="Right"
                                         Content="&#xE74D;"
+                                        HorizontalAlignment="Right"
+                                        Style="{StaticResource Button}"
                                         Visibility="{Binding DeleteMemberButtonVisibility}"
                                         Command="{Binding DeleteMemberClick}"/>
                                 </Grid>
-
                                 <Grid
                                     Margin="10"
                                     Grid.Row="1"
@@ -454,17 +369,17 @@
                                         Style="{StaticResource Role}"
                                         Text="{StaticResource mRole}"/>
                                     <ComboBox 
-                                        Margin="10 0 0 0"
                                         Grid.Column="1"
+                                        Margin="10 0 0 0"
                                         VerticalAlignment="Center"
                                         SelectedItem="{Binding SelectedChangeRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         ItemsSource="{Binding RoleSourse}"
                                         DisplayMemberPath="Name">
                                     </ComboBox>
                                     <Button 
-                                        VerticalAlignment="Center"
-                                        Margin="10 0 0 0"
                                         Grid.Column="2"
+                                        Margin="10 0 0 0"
+                                        VerticalAlignment="Center"
                                         Command="{Binding ChangeMemberRoleClick}"
                                         Content="{StaticResource mChange}"/>
                                 </Grid>
@@ -474,7 +389,6 @@
                                     Margin="10"
                                     FontSize="24"
                                     Text="{Binding ListTasksText}"/>
-
                                 <Grid
                                     Grid.Row="3">
                                     <ListBox
@@ -482,20 +396,18 @@
                                         ScrollViewer.VerticalScrollBarVisibility="Visible"
                                         Background="{ThemeResource SystemControlBackgroundChromeWhiteBrush}"
                                         ItemContainerStyle="{StaticResource ListBoxTasksFromUserStyle}"
-                                        SelectedItem="{Binding SelectedTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValue="{Binding SelectedTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         ItemsSource="{Binding ListUserTask}">
                                         <i:Interaction.Behaviors>
                                             <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                <core:InvokeCommandAction Command="{Binding SelectionChanged}"/>
+                                                <core:InvokeCommandAction Command="{Binding TaskOpenButtonClick}"/>
                                             </core:EventTriggerBehavior>
                                         </i:Interaction.Behaviors>
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid>
                                                     <TextBlock 
-                                                        TextTrimming="WordEllipsis"
-                                                        TextWrapping="Wrap"
-                                                        Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
+                                                        Style="{StaticResource TaskName}"
                                                         FontSize="24"
                                                         Text="{Binding Name}"/>
                                                 </Grid>
@@ -515,12 +427,9 @@
                             </Grid.RowDefinitions>
                             <Button
                                 Grid.Row="0"
-                                FontSize="24"
                                 Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
-                                Style="{StaticResource AddNew}"
+                                Style="{StaticResource AddNewButton}"
                                 Visibility="{Binding AddNewMembersButtonVisibility}"
-                                FontFamily="Segoe MDL2 Assets"
-                                Content="&#xE8FA;"
                                 Command="{Binding AddNewMemberClick}"/>
                             <Grid
                                 Grid.Row="1">
@@ -539,10 +448,7 @@
                                         <DataTemplate>
                                             <Grid>
                                                 <TextBlock 
-                                                    TextTrimming="WordEllipsis"
-                                                    TextWrapping="Wrap"
-                                                    Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                                    FontSize="24"
+                                                    Style="{StaticResource Name}"
                                                     Text="{Binding Login}"/>
                                             </Grid>
                                         </DataTemplate>

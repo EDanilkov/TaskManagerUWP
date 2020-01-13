@@ -33,27 +33,20 @@
 
         <StackPanel
             Margin="20 0 0 0"
-            
-            VerticalAlignment="Center"
-            Orientation="Horizontal"
+            Style="{StaticResource CenterHorizontalStackPanel}"
             Grid.Row="0">
             <FontIcon 
-                Foreground="Black"
-                Name="Icon"
                 Glyph="&#xE713;"/>
             <TextBlock 
-                Foreground="Black"
                 Text="{StaticResource mSettings}"
-                Margin="15 0 0 0"
-                FontSize="28" 
-                FontWeight="Bold" />
+                Style="{StaticResource Title}"/>
         </StackPanel>
         <StackPanel
             Grid.Row="1">
             <StackPanel
                 HorizontalAlignment="Left"
                 Orientation="Vertical"
-                Margin="30">
+                Margin="20">
                 <ComboBox 
                     x:Name="lang"
                     Foreground="Black"
@@ -71,6 +64,5 @@
                 </ComboBox>
             </StackPanel>
         </StackPanel>
-        
     </Grid>
 </Page>

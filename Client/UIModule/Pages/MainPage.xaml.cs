@@ -20,6 +20,13 @@ namespace UIModule.Pages
         
         public MainPage()
         {
+            float x = 2160;
+            float y = 600;
+
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(360, 470));
+            ApplicationView.PreferredLaunchViewSize = new Size(x, y);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+
             InitializeComponent();
         }
 

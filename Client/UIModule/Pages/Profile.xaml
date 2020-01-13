@@ -34,8 +34,8 @@
 
         <Grid
             Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            Margin="20 0 20 0"
             VerticalAlignment="Center"
+            Margin="20 0 20 0"
             Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="25"/>
@@ -43,18 +43,12 @@
             </Grid.ColumnDefinitions>
             <FontIcon 
                 Grid.Column="0"
-                Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
                 Glyph="&#xE77B;"/>
             <TextBlock 
                 Grid.Column="1"
-                Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"
-                TextWrapping="Wrap"
-                Margin="15 0 0 0"
-                FontSize="28" 
-                FontWeight="Bold"
+                Style="{StaticResource TitleWrap}"
                 Text="{Binding UserName}"/>
         </Grid>
-
         <Pivot 
             Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Grid.Row="1">
@@ -63,30 +57,22 @@
                 Header="{Binding OpenTasks}">
                 <Grid >
                     <StackPanel
-                        VerticalAlignment="Center"
-                        Visibility="{Binding NotTasksVisibility}"
-                        Orientation="Vertical">
+                        Style="{StaticResource CenterVerticalStackPanel}"
+                        Visibility="{Binding NotTasksVisibility}">
                         <TextBlock 
-                            HorizontalAlignment="Center"
-                            Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                            FontSize="36" 
-                            FontFamily="Segoe MDL2 Assets" 
-                            Text="&#xE998;" />
+                            Style="{StaticResource NoElementsIcon}"/>
                         <TextBlock
-                            HorizontalAlignment="Center"
-                            TextWrapping="Wrap"
-                            TextAlignment="Center"
-                            FontSize="24"
+                            Style="{StaticResource NoElements}"
                             Text="{StaticResource mNoPersonalTasks}"/>
                     </StackPanel>
                     <ListBox
-                        ScrollViewer.VerticalScrollBarVisibility="Visible"
                         VerticalAlignment="Stretch"
+                        ScrollViewer.VerticalScrollBarVisibility="Visible"
                         Background="{Binding ElementName=menu, Path=Background}"
                         ItemContainerStyle="{StaticResource ListBoxStyle}"
-                        ItemsSource="{Binding ListOpenTasks}"
                         Visibility="{Binding TasksVisibility}"
-                        SelectedValue="{Binding SelectedTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        SelectedValue="{Binding SelectedTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ItemsSource="{Binding ListOpenTasks}">
                         <i:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="SelectionChanged">
                                 <core:InvokeCommandAction Command="{Binding SelectionChanged}"/>
@@ -98,10 +84,7 @@
                                     <StackPanel
                                         Orientation="Vertical">
                                         <TextBlock 
-                                            Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                            FontSize="18"
-                                            TextTrimming="WordEllipsis"
-                                            TextWrapping="Wrap"
+                                            Style="{StaticResource TaskName}"
                                             Text="{Binding TaskName}"/>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -110,36 +93,23 @@
                                             </Grid.ColumnDefinitions>
                                             <TextBlock 
                                                 Grid.Column="0"
-                                                Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
-                                                FontSize="14"
-                                                TextWrapping="Wrap"
-                                                TextTrimming="WordEllipsis"
+                                                Style="{StaticResource ProjectName}"
                                                 Text="{Binding ProjectName}"/>
                                             <StackPanel
-                                                VerticalAlignment="Center"
-                                                Grid.Column="1"
-                                                Orientation="Horizontal">
+                                                Style="{StaticResource CenterHorizontalStackPanel}"
+                                                Grid.Column="1">
+                                                <TextBlock 
+                                                    Style="{StaticResource PointIcon}"/>
                                                 <TextBlock
-                                                    Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
-                                                    FontSize="6"
-                                                    Margin="5 0 5 0"
-                                                    VerticalAlignment="Center"
-                                                    FontFamily="Segoe MDL2 Assets"
-                                                    Text="&#xE91F;"/>
-                                                <TextBlock
-                                                    Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
                                                     FontSize="14"
+                                                    Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
                                                     Text="{Binding Status}"/>
                                                 <TextBlock
                                                     Foreground="{Binding Foreground}" 
-                                                    FontSize="14"
-                                                    VerticalAlignment="Center"
-                                                    Margin="5 0 3 0"
-                                                    FontFamily="Segoe MDL2 Assets"
-                                                    Text="&#xE787;"/>
+                                                    Style="{StaticResource CalendarIcon}"/>
                                                 <TextBlock
-                                                    Foreground="{Binding Foreground}" 
                                                     FontSize="14"
+                                                    Foreground="{Binding Foreground}" 
                                                     Text="{Binding FinishDate}"/>
                                             </StackPanel>
                                         </Grid>
@@ -157,25 +127,17 @@
                 Header="{Binding ClosedTasks}">
                 <Grid >
                     <StackPanel
-                        VerticalAlignment="Center"
-                        Visibility="{Binding NotTasksVisibility}"
-                        Orientation="Vertical">
+                        Style="{StaticResource CenterVerticalStackPanel}"
+                        Visibility="{Binding NotTasksVisibility}">
                         <TextBlock 
-                            HorizontalAlignment="Center"
-                            Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                            FontSize="36" 
-                            FontFamily="Segoe MDL2 Assets" 
-                            Text="&#xEC6C;" />
+                            Style="{StaticResource NoElementsIcon}"/>
                         <TextBlock
-                            HorizontalAlignment="Center"
-                            TextWrapping="Wrap"
-                            TextAlignment="Center"
-                            FontSize="24"
+                            Style="{StaticResource NoElements}"
                             Text="{StaticResource mNoPersonalTasks}"/>
                     </StackPanel>
                     <ListBox
-                        ScrollViewer.VerticalScrollBarVisibility="Visible"
                         VerticalAlignment="Stretch"
+                        ScrollViewer.VerticalScrollBarVisibility="Visible"
                         Background="{Binding ElementName=menu, Path=Background}"
                         ItemContainerStyle="{StaticResource ListBoxStyle}"
                         ItemsSource="{Binding ListClosedTasks}"
@@ -192,10 +154,7 @@
                                     <StackPanel
                                         Orientation="Vertical">
                                         <TextBlock 
-                                            Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                            FontSize="18"
-                                            TextTrimming="WordEllipsis"
-                                            TextWrapping="Wrap"
+                                            Style="{StaticResource TaskName}"
                                             Text="{Binding TaskName}"/>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -204,36 +163,23 @@
                                             </Grid.ColumnDefinitions>
                                             <TextBlock 
                                                 Grid.Column="0"
-                                                Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
-                                                FontSize="14"
-                                                TextWrapping="Wrap"
-                                                TextTrimming="WordEllipsis"
+                                                Style="{StaticResource ProjectName}"
                                                 Text="{Binding ProjectName}"/>
                                             <StackPanel
-                                                VerticalAlignment="Center"
                                                 Grid.Column="1"
-                                                Orientation="Horizontal">
+                                                Style="{StaticResource CenterHorizontalStackPanel}">
+                                                <TextBlock 
+                                                    Style="{StaticResource PointIcon}"/>
                                                 <TextBlock
-                                                    Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
-                                                    FontSize="6"
-                                                    Margin="5 0 5 0"
-                                                    VerticalAlignment="Center"
-                                                    FontFamily="Segoe MDL2 Assets"
-                                                    Text="&#xE91F;"/>
-                                                <TextBlock
-                                                    Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
                                                     FontSize="14"
+                                                    Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
                                                     Text="{Binding Status}"/>
                                                 <TextBlock
                                                     Foreground="{Binding Foreground}" 
-                                                    FontSize="14"
-                                                    VerticalAlignment="Center"
-                                                    Margin="5 0 3 0"
-                                                    FontFamily="Segoe MDL2 Assets"
-                                                    Text="&#xE787;"/>
+                                                    Style="{StaticResource CalendarIcon}"/>
                                                 <TextBlock
-                                                    Foreground="{Binding Foreground}" 
                                                     FontSize="14"
+                                                    Foreground="{Binding Foreground}" 
                                                     Text="{Binding FinishDate}"/>
                                             </StackPanel>
                                         </Grid>
@@ -250,25 +196,17 @@
                 Header="{Binding AllTasks}">
                 <Grid >
                     <StackPanel
-                        VerticalAlignment="Center"
-                        Visibility="{Binding NotTasksVisibility}"
-                        Orientation="Vertical">
+                        Style="{StaticResource CenterVerticalStackPanel}"
+                        Visibility="{Binding NotTasksVisibility}">
                         <TextBlock 
-                            HorizontalAlignment="Center"
-                            Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                            FontSize="36" 
-                            FontFamily="Segoe MDL2 Assets" 
-                            Text="&#xEC6C;" />
+                            Style="{StaticResource NoElementsIcon}"/>
                         <TextBlock
-                            HorizontalAlignment="Center"
-                            TextWrapping="Wrap"
-                            TextAlignment="Center"
-                            FontSize="24"
+                            Style="{StaticResource NoElements}"
                             Text="{StaticResource mNoPersonalTasks}"/>
                     </StackPanel>
                     <ListBox
-                        ScrollViewer.VerticalScrollBarVisibility="Visible"
                         VerticalAlignment="Stretch"
+                        ScrollViewer.VerticalScrollBarVisibility="Visible"
                         Background="{Binding ElementName=menu, Path=Background}"
                         ItemContainerStyle="{StaticResource ListBoxStyle}"
                         ItemsSource="{Binding ListTasks}"
@@ -285,10 +223,7 @@
                                     <StackPanel
                                         Orientation="Vertical">
                                         <TextBlock 
-                                            Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" 
-                                            FontSize="18"
-                                            TextTrimming="WordEllipsis"
-                                            TextWrapping="Wrap"
+                                            Style="{StaticResource TaskName}"
                                             Text="{Binding TaskName}"/>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -297,33 +232,20 @@
                                             </Grid.ColumnDefinitions>
                                             <TextBlock 
                                                 Grid.Column="0"
-                                                Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
-                                                FontSize="14"
-                                                TextWrapping="Wrap"
-                                                TextTrimming="WordEllipsis"
+                                                Style="{StaticResource ProjectName}"
                                                 Text="{Binding ProjectName}"/>
                                             <StackPanel
-                                                VerticalAlignment="Center"
                                                 Grid.Column="1"
-                                                Orientation="Horizontal">
+                                                Style="{StaticResource CenterHorizontalStackPanel}">
                                                 <TextBlock
-                                                    Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
-                                                    FontSize="6"
-                                                    Margin="5 0 5 0"
-                                                    VerticalAlignment="Center"
-                                                    FontFamily="Segoe MDL2 Assets"
-                                                    Text="&#xE91F;"/>
+                                                    Style="{StaticResource PointIcon}"/>
                                                 <TextBlock
                                                     Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" 
                                                     FontSize="14"
                                                     Text="{Binding Status}"/>
                                                 <TextBlock
                                                     Foreground="{Binding Foreground}" 
-                                                    FontSize="14"
-                                                    VerticalAlignment="Center"
-                                                    Margin="5 0 3 0"
-                                                    FontFamily="Segoe MDL2 Assets"
-                                                    Text="&#xE787;"/>
+                                                    Style="{StaticResource CalendarIcon}"/>
                                                 <TextBlock
                                                     Foreground="{Binding Foreground}" 
                                                     FontSize="14"

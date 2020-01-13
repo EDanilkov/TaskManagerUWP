@@ -35,31 +35,24 @@
 
         <StackPanel
             Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            VerticalAlignment="Center"
-            Orientation="Horizontal"
+            Style="{StaticResource CenterHorizontalStackPanel}"
             Grid.Row="0">
             <Button 
                 Style="{StaticResource BackButton}" 
                 Command="{Binding Back}"/>
             <FontIcon 
                 Margin="15 0 0 0"
-                Foreground="Black"
-                Name="Icon"
                 Glyph="&#xE713;"/>
             <TextBlock 
-                Foreground="Black"
                 Text="{StaticResource MChangeTask}"
-                Margin="15 0 0 0"
-                FontSize="28" 
-                FontWeight="Bold" />
+                Style="{StaticResource Title}"/>
         </StackPanel>
         <StackPanel
             Visibility="{Binding PageVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            Orientation="Vertical"
+            Style="{StaticResource CenterVerticalStackPanel}"
             Grid.Row="1">
-            <Grid Margin="15">
+            <Grid 
+                Margin="15">
                 <Grid.RowDefinitions>
                     <RowDefinition 
                         Height="70*"/>

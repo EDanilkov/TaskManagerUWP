@@ -396,7 +396,7 @@
                                         ScrollViewer.VerticalScrollBarVisibility="Visible"
                                         Background="{ThemeResource SystemControlBackgroundChromeWhiteBrush}"
                                         ItemContainerStyle="{StaticResource ListBoxTasksFromUserStyle}"
-                                        SelectedValue="{Binding SelectedTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValue="{Binding SelectedMemberTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         ItemsSource="{Binding ListUserTask}">
                                         <i:Interaction.Behaviors>
                                             <core:EventTriggerBehavior EventName="SelectionChanged">

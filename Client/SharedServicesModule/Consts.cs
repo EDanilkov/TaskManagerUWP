@@ -9,7 +9,7 @@
         public static int TaskId { get; set; }
         public static int UserId { get; set; }
         
-        public const string BaseAddress = "https://192.168.100.60:44393/";
+        public const string BaseAddress = "https://192.168.100.7:44393/";
         public const string Success = "#64DD17";
         public const string Error = "#d50000";
     }

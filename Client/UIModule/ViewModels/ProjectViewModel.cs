@@ -88,6 +88,17 @@ namespace UIModule.ViewModels
             }
         }
 
+        private Task _selectedMemberTask;
+        public Task SelectedMemberTask
+        {
+            get { return _selectedMemberTask; }
+            set
+            {
+                _selectedMemberTask = value;
+                OnPropertyChanged();
+            }
+        }
+
         private Visibility _changeRoleVisibility = Visibility.Collapsed;
         public Visibility ChangeRoleVisibility
         {
@@ -680,7 +691,7 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
-                        Consts.TaskId = SelectedTask.TaskId;
+                        Consts.TaskId = SelectedMemberTask.Id;
                         NavigationService.Instance.NavigateTo(typeof(Pages.Task));
                     }
                     catch (Exception ex)

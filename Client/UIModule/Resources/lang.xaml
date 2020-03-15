@@ -5,6 +5,7 @@
     <x:String x:Key="m_projects/">Projects/</x:String>
     <x:String x:Key="MNewProject">NEW PROJECT</x:String>
     <x:String x:Key="MNewMember">NEW MEMBER</x:String>
+    <x:String x:Key="MSuccess">SUCCESS</x:String>
     <x:String x:Key="MNewTask">NEW TASK</x:String>
     <x:String x:Key="MAccept">ACCEPT</x:String>
     <x:String x:Key="MChangeTask">CHANGE TASK</x:String>
@@ -14,6 +15,7 @@
     <x:String x:Key="MNew">NEW</x:String>
     <x:String x:Key="MOk">OK</x:String>
     <x:String x:Key="MCancel">CANCEL</x:String>
+    <x:String x:Key="mWelcome">Welcome</x:String>
     <x:String x:Key="mExit">Exit</x:String>
     <x:String x:Key="MError">ERROR</x:String>
     <x:String x:Key="mLogin">Login</x:String>
@@ -29,6 +31,16 @@
     <x:String x:Key="mNoPersonalProjects">This user doesn't have any personal projects</x:String>
     <x:String x:Key="mNoPersonalTasks">This user doesn't have any personal tasks</x:String>
     <x:String x:Key="mNoProjectTasks">This project doesn't have any tasks</x:String>
+    <x:String x:Key="mSuccessDeleteUserFromProject">The user was successfully removed from the project.</x:String>
+    <x:String x:Key="mSuccessAddUserToProject">The user was successfully added to the project.</x:String>
+    <x:String x:Key="mSuccessAddNewProject">The project was successfully created.</x:String>
+    <x:String x:Key="mSuccessAddNewTask">The task was successfully created.</x:String>
+    <x:String x:Key="mSuccessChangeTask">The task was successfully changed.</x:String>
+    <x:String x:Key="mSuccessDeleteProject">The project was successfully deleted.</x:String>
+    <x:String x:Key="mSuccessChangeRole">The role was successfully changed.</x:String> 
+    <x:String x:Key="mSuccessDeleteTask">The task was successfully deleted.</x:String>
+
+
     <x:String x:Key="mNoTasks">You don't have any tasks</x:String>
     <x:String x:Key="mProjects">Projects</x:String>
     <x:String x:Key="mTasks">Tasks</x:String>

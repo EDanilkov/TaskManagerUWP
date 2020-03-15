@@ -6,9 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SharedServicesModule.Models
 {
     [Table("User")]
-    public partial class User
+    public class User
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
             UserProject = new HashSet<UserProject>();
@@ -25,8 +24,7 @@ namespace SharedServicesModule.Models
         public string Password { get; set; }
 
         public DateTime? RegistrationDate { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
         public virtual ICollection<UserProject> UserProject { get; set; }
     }
 }

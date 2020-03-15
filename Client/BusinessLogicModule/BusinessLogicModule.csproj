@@ -140,6 +140,7 @@
     <Compile Include="Repositories\UserProjectRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\HttpClientAccessor.cs" />
+    <Compile Include="Services\Notification.cs" />
     <Compile Include="Services\RequestService.cs" />
     <Compile Include="Services\TokenService.cs" />
     <EmbeddedResource Include="Properties\BusinessLogicModule.rd.xml" />
@@ -147,6 +148,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
+      <Version>6.0.0</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.2</Version>

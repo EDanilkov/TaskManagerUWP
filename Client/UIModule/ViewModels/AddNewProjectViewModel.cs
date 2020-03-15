@@ -1,4 +1,5 @@
 ﻿using BusinessLogicModule.Interfaces;
+using BusinessLogicModule.Services;
 using NLog;
 using SharedServicesModule;
 using SharedServicesModule.Models;
@@ -79,7 +80,7 @@ namespace UIModule.ViewModels
                     {
                         if (ProjectName != null && ProjectDescription != null)
                         {
-                            Project project = new Project()
+                            var project = new Project()
                             {
                                 Name = ProjectName,
                                 Description = ProjectDescription,
@@ -87,8 +88,9 @@ namespace UIModule.ViewModels
                                 RegistrationDate = DateTime.Now
                             };
                             await _projectRepository.AddProject(project);
-                            logger.Debug("user " + Consts.UserName + " added project " + ProjectName);
 
+                            Notification.ShowToastNotification(Application.Current.Resources["mSuccessAddNewProject"].ToString());
+                            logger.Debug("user " + Consts.UserName + " added project " + ProjectName);
                             NavigationService.Instance.NavigateTo(typeof(Pages.Projects));
                         }
                         else

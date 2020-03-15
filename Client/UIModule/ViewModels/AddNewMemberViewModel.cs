@@ -1,4 +1,5 @@
 ﻿using BusinessLogicModule.Interfaces;
+using BusinessLogicModule.Services;
 using NLog;
 using SharedServicesModule;
 using SharedServicesModule.Models;
@@ -155,9 +156,9 @@ namespace UIModule.ViewModels
                 {
                     try
                     {
-                        List<User> userInOtherProject = new List<User>();
-                        List<User> users = (await _userRepository.GetUsers());
-                        List<User> usersInProject = (await _userRepository.GetUsersFromProject(Consts.ProjectId));
+                        var users = (await _userRepository.GetUsers());
+                        var usersInProject = (await _userRepository.GetUsersFromProject(Consts.ProjectId));
+                        var userInOtherProject = new List<User>();
                         int number = 0;
                         int countUsersInProject = usersInProject.Count;
                         foreach (User user in users)
@@ -198,9 +199,10 @@ namespace UIModule.ViewModels
                         if (SelectedNewMember != null && SelectedRole != null)
                         {
                             Project project = await _projectRepository.GetProject(Consts.ProjectId);
-                            UserProject userProject = new UserProject() { UserId = SelectedNewMember.Id, ProjectId = project.Id, RoleId = SelectedRole.Id };
+                            var userProject = new UserProject() { UserId = SelectedNewMember.Id, ProjectId = project.Id, RoleId = SelectedRole.Id };
                             await _userProjectRepository.AddUserProject(userProject);
 
+                            Notification.ShowToastNotification(Application.Current.Resources["mSuccessAddUserToProject"].ToString());
                             logger.Debug("user " + Consts.UserName + " added user " + SelectedNewMember.Login + " to the project " + project.Name + " with the " + SelectedRole.Name + " role");
                             NavigationService.Instance.NavigateTo(typeof(Pages.Project));
                         }
@@ -263,9 +265,9 @@ namespace UIModule.ViewModels
 
         public async System.Threading.Tasks.Task RefreshUsers()
         {
-            List<User> userInOtherProject = new List<User>();
-            List<User> users = (await _userRepository.GetUsers());
-            List<User> usersInProject = (await _userRepository.GetUsersFromProject(Consts.ProjectId));
+            var users = (await _userRepository.GetUsers());
+            var usersInProject = (await _userRepository.GetUsersFromProject(Consts.ProjectId));
+            var userInOtherProject = new List<User>();
             int number = 0;
             int countUsersInProject = usersInProject.Count;
             foreach (User user in users)

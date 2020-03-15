@@ -1,5 +1,6 @@
 ﻿using BusinessLogicModule.Interfaces;
 using BusinessLogicModule.Repositories;
+using BusinessLogicModule.Services;
 using NLog;
 using SharedServicesModule;
 using SharedServicesModule.Models;
@@ -77,7 +78,7 @@ namespace UIModule.ViewModels
 
         #region Methods
 
-        private void ShowError(string textError, string colorError)
+        private void ShowError(string textError)
         {
             TextError = textError;
             VisibilityError = Visibility.Visible;
@@ -95,7 +96,7 @@ namespace UIModule.ViewModels
                         var password = passwordBox.Password;
                         if (!string.Equals(password, "") && !string.Equals(Login, ""))
                         {
-                            User user = new User()
+                            var user = new User()
                             {
                                 Login = Login.ToString(),
                                 Password = password
@@ -105,18 +106,19 @@ namespace UIModule.ViewModels
                             Consts.UserName = Login;
                             Consts.UserId = (await _userRepository.GetUser(Login)).Id;
 
+                            Notification.ShowToastNotification(Application.Current.Resources["mWelcome"].ToString() + ", " + Login);
                             _logger.Debug("The user " + user.Login + " is logged in to the app");
                             NavigationService.Instance.Navigate(typeof(MainPage));
                         }
                         else
                         {
-                            ShowError(Application.Current.Resources["m_error_enter_all_fields"].ToString(), Consts.Error);
+                            ShowError(Application.Current.Resources["m_error_enter_all_fields"].ToString());
                         }
                     }
                     catch (Exception ex)
                     {
                         _logger.Error(ex.ToString());
-                        ShowError(Application.Current.Resources["m_error_enter"].ToString() + "\n" + ex.Message, Consts.Error);
+                        ShowError(Application.Current.Resources["m_error_enter"].ToString() + "\n" + ex.Message);
                     }
                 });
             }
@@ -139,23 +141,23 @@ namespace UIModule.ViewModels
                             {
                                 User user = new User() { Login = Login, Password = password, RegistrationDate = DateTime.Now };
                                 await _userRepository.AddUser(user);
-                                ShowError(Application.Current.Resources["m_success_registered"].ToString(), Consts.Success);
+                                ShowError(Application.Current.Resources["m_success_registered"].ToString());
                                 _logger.Debug("The user " + user.Login + " is registered");
                             }
                             else
                             {
-                                ShowError(Application.Current.Resources["m_error_bad_login"].ToString(), Consts.Error);
+                                ShowError(Application.Current.Resources["m_error_bad_login"].ToString());
                             }
                         }
                         else
                         {
-                            ShowError(Application.Current.Resources["m_error_enter_all_fields"].ToString(), Consts.Error);
+                            ShowError(Application.Current.Resources["m_error_enter_all_fields"].ToString());
                         }
                     }
                     catch (Exception ex)
                     {
                         _logger.Error(ex.ToString());
-                        ShowError(Application.Current.Resources["m_error_add_user"].ToString(), Consts.Error);
+                        ShowError(Application.Current.Resources["m_error_add_user"].ToString());
                     }
                 });
             }

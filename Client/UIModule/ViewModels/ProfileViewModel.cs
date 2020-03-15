@@ -229,14 +229,14 @@ namespace UIModule.ViewModels
 
         private async Task<List<RecordListBoxTasks>> GetRecordListBoxes()
         {
-            List<Status> statuses = await _statusRepository.GetStatuses();
-            List<SharedServicesModule.Models.Task> tasks = await _projectRepository.GetTasksFromUser((await _userRepository.GetUser(Consts.UserName)).Id);
-            List<RecordListBoxTasks> records = new List<RecordListBoxTasks>();
+            var statuses = await _statusRepository.GetStatuses();
+            var tasks = await _projectRepository.GetTasksFromUser((await _userRepository.GetUser(Consts.UserName)).Id);
+            var records = new List<RecordListBoxTasks>();
             foreach (SharedServicesModule.Models.Task task in tasks)
             {
                 Project project = await _projectRepository.GetProject(task.ProjectId);
 
-                RecordListBoxTasks record = new RecordListBoxTasks()
+                var record = new RecordListBoxTasks()
                 {
                     TaskId = task.Id,
                     ProjectId = project.Id,

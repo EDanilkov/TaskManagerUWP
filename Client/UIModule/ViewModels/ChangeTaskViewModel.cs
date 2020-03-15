@@ -1,4 +1,5 @@
 ﻿using BusinessLogicModule.Interfaces;
+using BusinessLogicModule.Services;
 using NLog;
 using SharedServicesModule;
 using SharedServicesModule.Models;
@@ -174,6 +175,7 @@ namespace UIModule.ViewModels
 
                             logger.Debug("user " + Consts.UserName + " added task " + TaskName + " to the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
 
+                            Notification.ShowToastNotification(Application.Current.Resources["mSuccessChangeTask"].ToString());
                             NavigationService.Instance.NavigateTo(typeof(Pages.Project));
                         }
                         else

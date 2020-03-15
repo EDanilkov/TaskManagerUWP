@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SharedServicesModule.Models
 {
-    public partial class Comment
+    public class Comment
     {
         [Key]
         [Column(Order = 0)]

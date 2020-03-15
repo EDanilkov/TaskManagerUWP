@@ -1,4 +1,5 @@
 ﻿using BusinessLogicModule.Interfaces;
+using BusinessLogicModule.Services;
 using NLog;
 using SharedServicesModule;
 using SharedServicesModule.Models;
@@ -25,11 +26,13 @@ namespace UIModule.ViewModels
         IPermissionRepository _permissionRepository;
         ICommentRepository _commentRepository;
         IStatusRepository _statusRepository;
+        IUserProjectRepository _userProjectRepository;
         
         private static Logger logger;
 
-        public ProjectViewModel(IUserRepository UserRepository, IRoleRepository RoleRepository, IProjectRepository ProjectRepository, ITaskRepository TaskRepository,
-                                    IPermissionRepository PermissionRepository, ICommentRepository CommentRepository, IStatusRepository StatusRepository)
+        public ProjectViewModel(IUserRepository UserRepository, IRoleRepository RoleRepository, IProjectRepository ProjectRepository, 
+                                    ITaskRepository TaskRepository, IPermissionRepository PermissionRepository, ICommentRepository CommentRepository, 
+                                        IStatusRepository StatusRepository, IUserProjectRepository UserProjectRepository)
         {
             _userRepository = UserRepository;
             _roleRepository = RoleRepository;
@@ -38,7 +41,8 @@ namespace UIModule.ViewModels
             _permissionRepository = PermissionRepository;
             _commentRepository = CommentRepository;
             _statusRepository = StatusRepository;
-            
+            _userProjectRepository = UserProjectRepository;
+
             logger = LogManager.GetCurrentClassLogger();
         }
 
@@ -375,8 +379,19 @@ namespace UIModule.ViewModels
             }
         }
 
+        private Visibility _changeTaskVisibility = Visibility.Collapsed;
+        public Visibility ChangeTaskVisibility
+        {
+            get { return _changeTaskVisibility; }
+            set
+            {
+                _changeTaskVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
-        
+
         #region Methods
 
         public ICommand AddComment
@@ -451,13 +466,13 @@ namespace UIModule.ViewModels
         
         private async Task<List<RecordListBoxTasks>> GetRecordListBoxes()
         {
-            List<Status> statuses = await _statusRepository.GetStatuses();
-            List<Task> tasks = await _taskRepository.GetTasksFromProject(Consts.ProjectId);
-            List<RecordListBoxTasks> records = new List<RecordListBoxTasks>();
+            var statuses = await _statusRepository.GetStatuses();
+            var tasks = await _taskRepository.GetTasksFromProject(Consts.ProjectId);
+            var records = new List<RecordListBoxTasks>();
             foreach (Task task in tasks)
             {
                 Project project = await _projectRepository.GetProject(task.ProjectId);
-                RecordListBoxTasks record = new RecordListBoxTasks()
+                var record = new RecordListBoxTasks()
                 {
                     TaskId = task.Id,
                     UserId = task.UserId,
@@ -485,7 +500,7 @@ namespace UIModule.ViewModels
         {
             try
             {
-                List<Permission> permissions = await _permissionRepository.GetPermissionsFromRole(role.Id);
+                var permissions = await _permissionRepository.GetPermissionsFromRole(role.Id);
                 foreach (Permission permission in permissions)
                 {
                     switch (permission.Name)
@@ -527,9 +542,9 @@ namespace UIModule.ViewModels
 
         public async System.Threading.Tasks.Task RefreshUsers()
         {
-            List<User> userInOtherProject = new List<User>();
-            List<User> users = (await _userRepository.GetUsers());
-            List<User> usersInProject = (await _userRepository.GetUsersFromProject(Consts.ProjectId));
+            var userInOtherProject = new List<User>();
+            var users = (await _userRepository.GetUsers());
+            var usersInProject = (await _userRepository.GetUsersFromProject(Consts.ProjectId));
             int number = 0;
             int countUsersInProject = usersInProject.Count;
             foreach (User user in users)
@@ -561,6 +576,30 @@ namespace UIModule.ViewModels
                 });
             }
         }
+        
+        public ICommand DeleteProject
+{
+            get
+            {
+                return new DelegateCommand(async (obj) =>
+                {
+                    try
+                    {
+                        string projectName = (await _projectRepository.GetProject(Consts.ProjectId)).Name;
+                        await _projectRepository.DeleteProject(Consts.ProjectId);
+
+                        Notification.ShowToastNotification(Application.Current.Resources["mSuccessDeleteProject"].ToString());
+                        NavigationService.Instance.NavigateTo(typeof(Pages.Projects));
+                        logger.Debug("user " + Consts.UserName + " deleted project " + projectName);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex.ToString());
+                        ErrorHandler.Show(Application.Current.Resources["m_error_delete_task"].ToString() + "\n" + ex.Message);
+                    }
+                });
+            }
+        }
 
         public ICommand MemberSelectionChanged
         {
@@ -576,7 +615,7 @@ namespace UIModule.ViewModels
                             User user = await _userRepository.GetUser(SelectedMember.Login);
                             int adminId = (await _userRepository.GetUser(SelectedMember.Login)).Id;
 
-                            List<Permission> permissions = await _permissionRepository.GetPermissionsFromRole((await _roleRepository.GetRoleFromUser(Consts.UserName, Consts.ProjectId)).Id);
+                            var permissions = await _permissionRepository.GetPermissionsFromRole((await _roleRepository.GetRoleFromUser(Consts.UserName, Consts.ProjectId)).Id);
                             DeleteMemberButtonVisibility = (project.AdminId == adminId ? Visibility.Collapsed :
                                                             permissions.Where(c => string.Equals(c.Name, "DeleteMembers")).ToList().Count == 0 ? Visibility.Collapsed : Visibility.Visible);
                             ChangeRoleVisibility = (project.AdminId == adminId ? Visibility.Collapsed :
@@ -609,7 +648,7 @@ namespace UIModule.ViewModels
                     {
                         if ((await _taskRepository.GetProjectTasksByUser(SelectedMember.Id, Consts.ProjectId)).Count != 0)
                         {
-                            ContentDialog deleteFileDialog = new ContentDialog()
+                            var deleteFileDialog = new ContentDialog()
                             {
                                 Title = Application.Current.Resources["MConfirm"].ToString(),
                                 Content = Application.Current.Resources["m_delete_all_task"].ToString(),
@@ -626,11 +665,12 @@ namespace UIModule.ViewModels
                             }
                         }
                         
+                        string login = SelectedMember.Login;
                         await _userRepository.DeleteUserFromProject(SelectedMember.Id, Consts.ProjectId);
 
-                        List<User> userInOtherProject = new List<User>();
-                        List<User> users = (await _userRepository.GetUsers());
-                        List<User> usersInProject = (await _userRepository.GetUsersFromProject(Consts.ProjectId));
+                        var users = (await _userRepository.GetUsers());
+                        var usersInProject = (await _userRepository.GetUsersFromProject(Consts.ProjectId));
+                        var userInOtherProject = new List<User>();
                         int number = 0;
                         int countUsersInProject = usersInProject.Count;
                         foreach (User user in users)
@@ -647,7 +687,9 @@ namespace UIModule.ViewModels
                         }
                         NewMembersSourse = userInOtherProject;
                         ListMembers = await _userRepository.GetUsersFromProject(Consts.ProjectId);
-                        logger.Debug("user " + Consts.UserName + " deleted user " + SelectedMember.Login + " from the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
+                        Notification.ShowToastNotification(Application.Current.Resources["mSuccessDeleteUserFromProject"].ToString());
+                        
+                        logger.Debug("user " + Consts.UserName + " deleted user " + login + " from the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
                         IsPaneOpen = false;
                     }
                     catch (Exception ex)
@@ -672,12 +714,42 @@ namespace UIModule.ViewModels
 
                         ListTasks = await FilterTasks();
                         IsPaneOpen = false;
+
+                        Notification.ShowToastNotification(Application.Current.Resources["mSuccessDeleteTask"].ToString());
                         logger.Debug("user " + Consts.UserName + " deleted task " + taskName + " to the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
                     }
                     catch (Exception ex)
                     {
                         logger.Error(ex.ToString());
                         ErrorHandler.Show(Application.Current.Resources["m_error_delete_task"].ToString() + "\n" + ex.Message);
+                    }
+                });
+            }
+        }
+
+        public ICommand ChangeMemberRoleClick
+        {
+            get
+            {
+                return new DelegateCommand(async (obj) =>
+                {
+                    try
+                    {
+                        string userName = Consts.UserName;
+                        int projectId =Consts.ProjectId;
+
+                        Project project = await _projectRepository.GetProject(projectId);
+                        await _userRepository.DeleteUserFromProject(SelectedMember.Id, projectId);
+                        UserProject userProject = new UserProject() { UserId = SelectedMember.Id, ProjectId = project.Id, RoleId = SelectedChangeRole.Id };
+                        await _userProjectRepository.AddUserProject(userProject);
+
+                        Notification.ShowToastNotification(Application.Current.Resources["mSuccessChangeRole"].ToString());
+                        logger.Debug("user " + userName + " changed the role of user " + SelectedMember.Login + "to the project " + project.Name + " to " + SelectedChangeRole.Name);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex.ToString());
+                        ErrorHandler.Show(Application.Current.Resources["m_error_change_role"].ToString());
                     }
                 });
             }
@@ -729,6 +801,10 @@ namespace UIModule.ViewModels
                         {
                             CommentsVisibility = Visibility.Visible;
                         }
+                        if (string.Equals(userRole, "Admin") || string.Equals(userRole, "Manager"))
+                        {
+                            ChangeTaskVisibility = Visibility.Visible;
+                        }
                         SelectedTaskUserName = (await _userRepository.GetUser(null, SelectedTask.UserId)).Login;
                         Comments = (await _commentRepository.GetComment(SelectedTask.TaskId)).OrderByDescending(c => c.DateTime).ToList();
                     }
@@ -737,6 +813,25 @@ namespace UIModule.ViewModels
             }
         }
 
+        public ICommand ChangeTaskClick
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    try
+                    {
+                        Consts.TaskId = SelectedTask.TaskId;
+                        NavigationService.Instance.NavigateTo(typeof(Pages.ChangeTask));
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex.ToString());
+                        ErrorHandler.Show(Application.Current.Resources["m_error_delete_task"].ToString() + "\n" + ex.Message);
+                    }
+                });
+            }
+        }
 
         public ICommand AddNewTaskClick => new DelegateCommand(AddNewTask);
 
@@ -776,10 +871,10 @@ namespace UIModule.ViewModels
 
         private async Task<List<RecordListBoxTasks>> FilterTasks()
         {
-            if (Filter != null || Filter != "")
+            if (!(Filter == null || Filter == ""))
             {
                 List<Status> statuses = await _statusRepository.GetStatuses();
-                List<RecordListBoxTasks> filteredTasks = new List<RecordListBoxTasks>();
+                var filteredTasks = new List<RecordListBoxTasks>();
                 List<Task> tasks = await _taskRepository.GetTasksFromProject(Consts.ProjectId);
                 foreach (Task task in tasks)
                 {

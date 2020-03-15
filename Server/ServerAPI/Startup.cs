@@ -40,11 +40,11 @@ namespace ServerAPI
                     // укзывает, будет ли валидироваться издатель при валидации токена
                     ValidateIssuer = true,
                     // строка, представляющая издателя
-                    ValidIssuer = AuthOptions.ISSUER,
+                    ValidIssuer = AuthOptions.Issuer,
                     // будет ли валидироваться потребитель токена
                     ValidateAudience = true,
                     // установка потребителя токена
-                    ValidAudience = AuthOptions.AUDIENCE,
+                    ValidAudience = AuthOptions.Audience,
                     // будет ли валидироваться время существования
                     ValidateLifetime = true,
 

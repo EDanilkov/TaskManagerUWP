@@ -22,7 +22,7 @@ namespace SharedServicesModule.Services
 
             HttpClient httpClient = new HttpClient(filter);
             
-            HttpResponseMessage response = await httpClient.PostAsync(new Uri(Consts.BaseAddress + "api/accounts/token"), content);
+            HttpResponseMessage response = await httpClient.PostAsync(new Uri("https://localhost:44393/api/accounts/token"), content);
             if (response.StatusCode == HttpStatusCode.BadRequest)
             {
                 throw new Exception(Windows.UI.Xaml.Application.Current.Resources["m_error_bad_signup"].ToString());

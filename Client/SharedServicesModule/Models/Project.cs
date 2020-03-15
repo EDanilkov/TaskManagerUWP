@@ -6,9 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SharedServicesModule.Models
 {
     [Table("Project")]
-    public partial class Project
+    public class Project
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Project()
         {
             Task = new HashSet<Task>();
@@ -30,11 +29,9 @@ namespace SharedServicesModule.Models
         public DateTime? FinishDate { get; set; }
 
         public int AdminId { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
         public virtual ICollection<Task> Task { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
         public virtual ICollection<UserProject> UserProject { get; set; }
     }
 }

@@ -136,8 +136,8 @@ namespace UIModule.ViewModels
 
         private async Task<List<RecordListBox>> GetRecordListBoxes()
         {
-            List<RecordListBox> recordListBoxes = new List<RecordListBox>();
-            List<Project> projects = await _projectRepository.GetProjectsFromUser(Consts.UserName);
+            var recordListBoxes = new List<RecordListBox>();
+            var projects = await _projectRepository.GetProjectsFromUser(Consts.UserName);
             foreach (Project project in projects)
             {
                 RecordListBox recordListBox = new RecordListBox() { Id = project.Id, ProjectName = project.Name, AdminId = project.AdminId, ChipRole = (await _roleRepository.GetRoleFromUser(Consts.UserName, project.Id)).Name };

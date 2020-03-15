@@ -5,9 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SharedServicesModule.Models
 {
     [Table("Permission")]
-    public partial class Permission
+    public class Permission
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Permission()
         {
             Role = new HashSet<Role>();
@@ -18,8 +17,7 @@ namespace SharedServicesModule.Models
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
         public virtual ICollection<Role> Role { get; set; }
     }
 }

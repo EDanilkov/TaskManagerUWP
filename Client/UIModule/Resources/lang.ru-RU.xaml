@@ -6,6 +6,7 @@
     <x:String x:Key="m_projects/">Проекты/</x:String>
     <x:String x:Key="MNewProject">НОВЫЙ ПРОЕКТ</x:String>
     <x:String x:Key="MNewMember">НОВЫЙ ПОЛЬЗОВАТЕЛЬ</x:String>
+    <x:String x:Key="MSuccess">ГОТОВО</x:String>
     <x:String x:Key="MNewTask">НОВАЯ ЗАДАЧА</x:String>
     <x:String x:Key="MAccept">ОК</x:String>
     <x:String x:Key="MChangeTask">ИЗМЕНИТЬ ЗАДАЧУ</x:String>
@@ -15,6 +16,7 @@
     <x:String x:Key="MNew">НОВЫЙ</x:String>
     <x:String x:Key="MOk">OK</x:String>
     <x:String x:Key="MCancel">ОТМЕНА</x:String>
+    <x:String x:Key="mWelcome">Добро пожаловать</x:String>
     <x:String x:Key="mExit">Выход</x:String>
     <x:String x:Key="MError">ОШИБКА</x:String>
     <x:String x:Key="mStatus">Статус</x:String>
@@ -31,7 +33,16 @@
     <x:String x:Key="mNoPersonalProjects">У этого пользователя нет никаких личных проектов</x:String>
     <x:String x:Key="mNoPersonalTasks">У этого пользователя нет никаких личных заданий</x:String>
     <x:String x:Key="mNoProjectTasks">У этого проекта нет никаких заданий</x:String>
-    
+    <x:String x:Key="mSuccessDeleteUserFromProject">Пользователь успешно удалён из проекта.</x:String>
+    <x:String x:Key="mSuccessAddUserToProject">Пользователь успешно добавлен в проект.</x:String>
+    <x:String x:Key="mSuccessAddNewProject">Проект был успешно создан.</x:String>
+    <x:String x:Key="mSuccessAddNewTask">Задание было успешно создано.</x:String>
+    <x:String x:Key="mSuccessChangeTask">Задание было успешно изменено.</x:String>
+    <x:String x:Key="mSuccessDeleteProject">Проект был успешно удалён.</x:String>
+    <x:String x:Key="mSuccessChangeRole">Роль была успешно изменена.</x:String>
+    <x:String x:Key="mSuccessDeleteTask">Задание было успешно удалено.</x:String>
+
+
     <x:String x:Key="mNoTasks">У Вас нет никаких задач</x:String>
     <x:String x:Key="mProjects">Проекты</x:String>
     <x:String x:Key="mTasks">Задачи</x:String>

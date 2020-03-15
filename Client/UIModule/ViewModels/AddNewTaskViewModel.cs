@@ -1,4 +1,5 @@
 ﻿using BusinessLogicModule.Interfaces;
+using BusinessLogicModule.Services;
 using NLog;
 using SharedServicesModule;
 using SharedServicesModule.Models;
@@ -165,7 +166,7 @@ namespace UIModule.ViewModels
                     {
                         if (TaskName != null && TaskDescription != null && SelectedUser != null && TaskFinishDate != null && TaskFinishDate >= DateTime.Today)
                         {
-                            SharedServicesModule.Models.Task task = new SharedServicesModule.Models.Task()
+                           var task = new Task()
                             {
                                 Name = TaskName,
                                 Description = TaskDescription,
@@ -177,8 +178,9 @@ namespace UIModule.ViewModels
                             };
 
                             await _taskRepository.AddTask(task);
-                            logger.Debug("user " + Consts.UserName + " added task " + TaskName + " to the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
 
+                            Notification.ShowToastNotification(Application.Current.Resources["mSuccessAddNewTask"].ToString());
+                            logger.Debug("user " + Consts.UserName + " added task " + TaskName + " to the project " + (await _projectRepository.GetProject(Consts.ProjectId)).Name);
                             NavigationService.Instance.NavigateTo(typeof(Pages.Project));
                         }
                         else

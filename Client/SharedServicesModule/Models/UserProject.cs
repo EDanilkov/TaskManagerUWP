@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SharedServicesModule.Models
 {
     [Table("UserProject")]
-    public partial class UserProject
+    public class UserProject
     {
         [Key]
         [Column(Order = 0)]

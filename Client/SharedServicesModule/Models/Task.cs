@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SharedServicesModule.Models
 {
     [Table("Task")]
-    public partial class Task
+    public class Task
     {
         public int Id { get; set; }
 
